@@ -1,0 +1,526 @@
+/* =========================================================
+   Maquette — Clémentine Olive
+   Pédicure-Podologue D.E · Réflexologue
+   Esprit : douceur naturelle, aquarelle, rassurant & médical
+   Inspiration : somatopathie.com + lecoledubiennaitre.com
+   Accessibilité : pensée pour les personnes âgées
+   (grandes typographies, contrastes soignés, boutons larges)
+   ========================================================= */
+
+/* ---------- Palette (tirée des cartes de visite, resaturée) ---------- */
+:root {
+  --creme:        #FBF6EE;   /* fond chaud principal */
+  --creme-fonce:  #F3EADD;   /* alternance de section */
+  --blanc:        #FFFFFF;
+
+  --vert:         #6FB1A2;   /* sauge / turquoise (podologie) */
+  --vert-fonce:   #2E6E60;   /* vert profond, titres & texte accent */
+  --vert-clair:   #E7F1ED;   /* lavis vert */
+
+  --rose:         #E7A79A;   /* rose poudré / pêche (réflexologie) */
+  --rose-fonce:   #A85D51;   /* rose profond lisible (contraste AA) */
+  --rose-clair:   #FBEBE6;   /* lavis rosé */
+
+  --sable:        #D8C4A2;   /* beige doré (touches) */
+
+  --texte:        #3B4642;   /* texte courant (chaud, très lisible) */
+  --texte-doux:   #59645D;   /* texte secondaire (contraste AA sur crème) */
+
+  --ombre:        0 12px 30px rgba(46, 110, 96, 0.10);
+  --ombre-douce:  0 6px 18px rgba(59, 70, 66, 0.08);
+  --radius:       18px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+body {
+  font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 19px;            /* base généreuse pour la lisibilité */
+  line-height: 1.7;
+  color: var(--texte);
+  background: var(--creme);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .brand-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--vert-fonce);
+  letter-spacing: 0.2px;
+}
+
+h2 { font-size: clamp(2rem, 4vw, 2.9rem); }
+h3 { font-size: 1.5rem; }
+
+p { margin-bottom: 1rem; }
+a { color: var(--vert-fonce); }
+
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Focus visible marqué (accessibilité clavier) */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--vert-fonce);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 54px;            /* cible tactile large */
+  padding: 0 30px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: 'Nunito Sans', sans-serif;
+  text-decoration: none;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn-primary { background: var(--vert-fonce); color: #fff; box-shadow: var(--ombre); }
+.btn-primary:hover { background: #275c50; transform: translateY(-2px); }
+.btn-rose { background: var(--rose-fonce); color: #fff; }
+.btn-rose:hover { background: #a05a4f; transform: translateY(-2px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--vert-fonce);
+  border: 2px solid var(--vert);
+}
+.btn-ghost:hover { background: var(--vert-clair); transform: translateY(-2px); }
+
+/* ---------- En-tête / navigation ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(251, 246, 238, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(46, 110, 96, 0.10);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding-top: 14px; padding-bottom: 14px;
+}
+.brand { text-decoration: none; line-height: 1.1; }
+.brand-name { display: block; font-size: 1.55rem; color: var(--vert-fonce); }
+.brand-sub {
+  display: block; font-size: 0.72rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--texte-doux); font-weight: 600;
+}
+.nav { display: flex; align-items: center; gap: 2px; flex-wrap: nowrap; }
+.nav a {
+  text-decoration: none; color: var(--texte); font-weight: 600;
+  padding: 9px 12px; border-radius: 999px; font-size: 0.98rem;
+  white-space: nowrap;
+  transition: background .2s ease, color .2s ease;
+}
+.nav a:hover { background: var(--vert-clair); color: var(--vert-fonce); }
+.nav a.is-active { color: var(--vert-fonce); background: var(--vert-clair); }
+.nav .nav-cta {
+  background: var(--vert-fonce); color: #fff; margin-left: 6px;
+}
+.nav .nav-cta:hover { background: #275c50; color: #fff; }
+.nav a.nav-cta.is-active { color: #fff; }
+
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+.nav-toggle span {
+  display: block; width: 26px; height: 3px; margin: 5px 0;
+  background: var(--vert-fonce); border-radius: 3px; transition: .3s;
+}
+
+/* ---------- Bande aquarelle (rappel des cartes) ---------- */
+.aquarelle {
+  height: 14px;
+  background:
+    linear-gradient(115deg,
+      var(--vert) 0%, var(--vert-clair) 18%,
+      var(--sable) 34%, var(--rose-clair) 55%,
+      var(--rose) 72%, var(--vert) 100%);
+  opacity: .55;
+}
+
+/* ---------- Hero / Accueil ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 60% at 8% 0%, rgba(111,177,162,0.28), transparent 60%),
+    radial-gradient(ellipse 50% 55% at 96% 100%, rgba(231,167,154,0.28), transparent 62%),
+    radial-gradient(ellipse 40% 40% at 88% 6%, rgba(216,196,162,0.22), transparent 60%),
+    var(--creme);
+  padding: 90px 0 80px;
+  text-align: center;
+}
+.hero-eyebrow {
+  color: var(--vert-fonce); font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; font-size: .9rem; margin-bottom: 14px;
+}
+.hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 22px; }
+.hero-lead {
+  max-width: 640px; margin: 0 auto 32px; font-size: 1.22rem;
+  color: var(--texte);
+}
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- Sections génériques ---------- */
+.section { padding: 84px 0; }
+.section-creme { background: var(--creme-fonce); }
+.section-vert { background: var(--vert-clair); }
+.section-rose { background: var(--rose-clair); }
+
+.section-eyebrow {
+  color: var(--vert-fonce); font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; font-size: .85rem; margin-bottom: 10px;
+}
+.section-rose .section-eyebrow { color: var(--rose-fonce); }
+.section-head { max-width: 720px; margin: 0 auto 48px; text-align: center; }
+.section-head p { color: var(--texte-doux); font-size: 1.1rem; margin-top: 12px; }
+
+/* ---------- Motifs de consultation (grille) ---------- */
+.motifs-grid {
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.motif {
+  background: var(--blanc); border-radius: var(--radius); padding: 28px 26px;
+  box-shadow: var(--ombre-douce);
+  border: 1px solid rgba(46,110,96,0.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.motif:hover { transform: translateY(-4px); box-shadow: var(--ombre); }
+.motif .ico { font-size: 2rem; display: block; margin-bottom: 12px; }
+.motif h3 { font-size: 1.3rem; margin-bottom: 6px; }
+.motif p { color: var(--texte-doux); font-size: 1rem; margin: 0; }
+
+/* ---------- Sections détail (texte + visuel) ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.split-inverse .split-text { order: 2; }
+.split-inverse .split-media { order: 1; }
+.split-text h2 { margin-bottom: 18px; }
+.split-text ul { list-style: none; margin: 20px 0 26px; }
+.split-text li {
+  position: relative; padding-left: 32px; margin-bottom: 12px; font-size: 1.08rem;
+}
+.split-text li::before {
+  content: '✓'; position: absolute; left: 0; top: 0;
+  color: var(--vert-fonce); font-weight: 800;
+}
+.section-rose .split-text li::before { color: var(--rose-fonce); }
+
+.split-media {
+  min-height: 340px; border-radius: 24px; box-shadow: var(--ombre);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(59,70,66,.5); font-style: italic; text-align: center; padding: 20px;
+}
+.media-vert { background:
+  linear-gradient(135deg, rgba(111,177,162,.35), rgba(216,196,162,.30)); }
+.media-rose { background:
+  linear-gradient(135deg, rgba(231,167,154,.38), rgba(216,196,162,.30)); }
+
+.mention {
+  font-size: .98rem; color: var(--texte-doux); font-style: italic;
+  border-left: 3px solid var(--rose); padding-left: 14px; margin-top: 6px;
+}
+.bloc-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+
+/* ---------- Tarifs ---------- */
+.tarifs-grid {
+  display: grid; gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 900px; margin: 0 auto;
+}
+.tarif-carte {
+  background: var(--blanc); border-radius: var(--radius); padding: 34px 32px;
+  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
+  display: flex; flex-direction: column;
+}
+.tarif-carte.tarif-rose { border-top-color: var(--rose); }
+.tarif-carte h3 { font-size: 1.6rem; margin-bottom: 18px; }
+.tarif-carte.tarif-rose h3 { color: var(--rose-fonce); }
+.tarif-liste { list-style: none; margin-bottom: 22px; }
+.tarif-liste li {
+  display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px dashed rgba(59,70,66,.15);
+}
+.tarif-liste li:last-child { border-bottom: none; }
+.tarif-liste .prix { font-weight: 800; color: var(--vert-fonce); white-space: nowrap; }
+.tarif-rose .tarif-liste .prix { color: var(--rose-fonce); }
+.tarif-carte .btn { margin-top: auto; align-self: flex-start; }
+.tarifs-note {
+  text-align: center; margin: 34px auto 0; max-width: 700px;
+  color: var(--texte-doux); font-size: .98rem;
+}
+
+/* ---------- Qualifications (à propos) ---------- */
+.qualifications { list-style: none; margin: 24px 0 8px; }
+.qualifications li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; font-size: 1.06rem; font-weight: 600; color: var(--texte);
+}
+.qualifications .q-ico { font-size: 1.4rem; }
+
+/* ---------- À propos ---------- */
+.apropos { display: grid; grid-template-columns: 320px 1fr; gap: 56px; align-items: center; }
+.apropos-photo {
+  aspect-ratio: 3/4; border-radius: 24px; box-shadow: var(--ombre);
+  background: linear-gradient(135deg, rgba(111,177,162,.30), rgba(231,167,154,.28));
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(59,70,66,.5); font-style: italic; text-align: center; padding: 20px;
+}
+
+/* ---------- Prise de rendez-vous ---------- */
+.rdv { text-align: center; }
+.calendly-placeholder {
+  max-width: 780px; margin: 30px auto 0; min-height: 420px;
+  background: var(--blanc); border: 2px dashed var(--vert);
+  border-radius: var(--radius); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; padding: 40px;
+  color: var(--texte-doux);
+}
+.calendly-placeholder .big { font-size: 3rem; }
+.rdv-tel { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+
+/* ---------- Infos pratiques ---------- */
+.infos-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+.info-bloc {
+  background: var(--blanc); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--ombre-douce);
+}
+.info-bloc h3 { color: var(--vert-fonce); margin-bottom: 12px; }
+.info-bloc a { font-weight: 700; }
+.info-note { color: var(--texte-doux); font-size: .98rem; margin-top: 10px; }
+
+/* ---------- Pied de page ---------- */
+.site-footer { background: var(--vert-fonce); color: #eaf3ef; padding: 54px 0 26px; }
+.site-footer h3, .footer-brand { color: #fff; }
+.footer-inner {
+  display: grid; gap: 30px;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+}
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 8px; }
+.footer-brand-col a { color: #cfe4dc; }
+.footer-col { display: flex; flex-direction: column; gap: 8px; }
+.footer-col a { color: #cfe4dc; text-decoration: none; font-size: .96rem; }
+.footer-col a:hover { color: #fff; text-decoration: underline; }
+.footer-col .footer-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+.footer-links { display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { color: #cfe4dc; text-decoration: none; }
+.footer-links a:hover { color: #fff; text-decoration: underline; }
+.footer-copy {
+  text-align: center; margin-top: 34px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.15); font-size: .9rem; color: #bcd6cd;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .nav-toggle { display: block; }
+  .nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--creme); border-bottom: 1px solid rgba(46,110,96,.12);
+    padding: 10px 24px 20px; box-shadow: var(--ombre-douce);
+    display: none;
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 14px 10px; font-size: 1.1rem; border-radius: 12px; }
+  .nav .nav-cta { margin: 8px 0 0; text-align: center; }
+  .split, .apropos { grid-template-columns: 1fr; gap: 34px; }
+  .split-inverse .split-text { order: 1; }
+  .split-inverse .split-media { order: 2; }
+  .apropos { grid-template-columns: 1fr; }
+  .apropos-photo { max-width: 320px; margin: 0 auto; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Pages intérieures (multi-pages) — architecture hybride
+   ========================================================= */
+
+/* ---------- En-tête compact des pages intérieures ---------- */
+.page-hero {
+  position: relative; overflow: hidden; text-align: center;
+  padding: 64px 0 54px;
+  background:
+    radial-gradient(ellipse 55% 70% at 8% 0%, rgba(111,177,162,0.24), transparent 60%),
+    radial-gradient(ellipse 50% 65% at 96% 100%, rgba(231,167,154,0.22), transparent 62%),
+    var(--creme);
+}
+.page-hero.hero-rose {
+  background:
+    radial-gradient(ellipse 55% 70% at 8% 0%, rgba(231,167,154,0.26), transparent 60%),
+    radial-gradient(ellipse 50% 65% at 96% 100%, rgba(216,196,162,0.20), transparent 62%),
+    var(--creme);
+}
+.page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 12px; }
+.page-hero .lead { max-width: 640px; margin: 0 auto; color: var(--texte); font-size: 1.15rem; }
+
+/* ---------- Fil d'Ariane ---------- */
+.breadcrumb {
+  font-size: .95rem; color: var(--texte-doux); margin-bottom: 14px;
+}
+.breadcrumb a { color: var(--vert-fonce); text-decoration: none; font-weight: 600; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb .sep { margin: 0 8px; color: var(--sable); }
+
+/* ---------- Cartes cliquables (accueil : activités / landing : sous-pages) ---------- */
+.card-grid {
+  display: grid; gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
+.card-link {
+  display: flex; flex-direction: column; text-decoration: none;
+  background: var(--blanc); border-radius: var(--radius); padding: 30px 28px;
+  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
+  border-top: 5px solid var(--vert); color: var(--texte);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card-link.accent-rose { border-top-color: var(--rose); }
+.card-link:hover { transform: translateY(-5px); box-shadow: var(--ombre); }
+.card-link .ico { font-size: 2.1rem; margin-bottom: 12px; }
+.card-link h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.card-link.accent-rose h3 { color: var(--rose-fonce); }
+.card-link p { color: var(--texte-doux); font-size: 1rem; margin: 0 0 16px; }
+.card-link .go {
+  margin-top: auto; font-weight: 700; color: var(--vert-fonce);
+}
+.card-link.accent-rose .go { color: var(--rose-fonce); }
+
+/* ---------- Grande carte activité (accueil) ---------- */
+.activity-card { padding: 36px 32px; }
+.activity-card h3 { font-size: 1.7rem; }
+
+/* ---------- FAQ (accordéon accessible, sans JS) ---------- */
+.faq { max-width: 820px; margin: 0 auto; }
+.faq details {
+  background: var(--blanc); border-radius: 14px; margin-bottom: 14px;
+  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
+  overflow: hidden;
+}
+.faq summary {
+  cursor: pointer; list-style: none; padding: 20px 24px;
+  font-weight: 700; font-size: 1.12rem; color: var(--vert-fonce);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.section-rose .faq summary { color: var(--rose-fonce); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 1.6rem; line-height: 1; color: var(--sable); }
+.faq details[open] summary::after { content: '–'; }
+.faq details[open] summary { padding-bottom: 6px; }
+.faq .faq-body { padding: 0 24px 22px; color: var(--texte); }
+
+/* ---------- Bloc tarif en bas d'activité ---------- */
+.tarif-bloc {
+  max-width: 780px; margin: 0 auto;
+  background: var(--blanc); border-radius: var(--radius); padding: 36px 34px;
+  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
+}
+.tarif-bloc.accent-rose { border-top-color: var(--rose); }
+.tarif-bloc h2 { text-align: center; margin-bottom: 22px; }
+.tarif-bloc.accent-rose h2 { color: var(--rose-fonce); }
+.tarif-note {
+  text-align: center; margin-top: 22px; color: var(--texte-doux); font-size: .96rem;
+}
+
+/* ---------- Article de sous-page ---------- */
+.article { max-width: 760px; margin: 0 auto; }
+.article h2 { font-size: 1.7rem; margin: 34px 0 12px; }
+.article h2:first-child { margin-top: 0; }
+.article p { font-size: 1.1rem; }
+.article ul { margin: 0 0 18px 0; padding-left: 0; list-style: none; }
+.article ul li {
+  position: relative; padding-left: 30px; margin-bottom: 10px; font-size: 1.08rem;
+}
+.article ul li::before {
+  content: '✓'; position: absolute; left: 0; color: var(--vert-fonce); font-weight: 800;
+}
+.article-cta {
+  margin-top: 34px; padding: 28px 30px; border-radius: var(--radius);
+  background: var(--vert-clair); text-align: center;
+}
+.article-cta.accent-rose { background: var(--rose-clair); }
+.article-cta p { margin-bottom: 16px; font-size: 1.1rem; }
+.back-link { display: inline-block; margin-top: 30px; font-weight: 700; text-decoration: none; }
+
+/* ---------- Lien d'évitement (accessibilité clavier) ---------- */
+.skip-link {
+  position: absolute; left: -999px; top: 0; z-index: 200;
+  background: var(--vert-fonce); color: #fff; padding: 12px 18px;
+  border-radius: 0 0 10px 0; font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------- Page Contact : réservation ---------- */
+.booking-grid {
+  display: grid; gap: 24px; max-width: 900px; margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.booking-card {
+  background: var(--blanc); border-radius: var(--radius); padding: 32px 30px;
+  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
+  display: flex; flex-direction: column; text-align: center;
+}
+.booking-card.accent-rose { border-top-color: var(--rose); }
+.booking-card .ico { font-size: 2.2rem; margin-bottom: 10px; }
+.booking-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.booking-card.accent-rose h3 { color: var(--rose-fonce); }
+.booking-card p { color: var(--texte-doux); }
+.booking-card .btn { margin-top: auto; align-self: center; }
+
+/* ---------- Horaires ---------- */
+.horaires-wrap { max-width: 620px; margin: 0 auto; }
+.horaires {
+  width: 100%; background: var(--blanc); border-radius: var(--radius);
+  box-shadow: var(--ombre-douce); overflow: hidden; border-collapse: collapse;
+}
+.horaires th, .horaires td { padding: 15px 22px; text-align: left; font-size: 1.06rem; }
+.horaires tr { border-bottom: 1px solid rgba(46,110,96,.08); }
+.horaires tr:last-child { border-bottom: none; }
+.horaires .jour { font-weight: 700; color: var(--vert-fonce); }
+.horaires .ferme { color: var(--texte-doux); font-style: italic; }
+.horaires-note { text-align: center; margin-top: 16px; color: var(--texte-doux); }
+
+/* ---------- Carte (click-to-load, RGPD) ---------- */
+.map-embed {
+  max-width: 900px; margin: 0 auto; border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--ombre-douce);
+}
+.map-consent {
+  min-height: 360px; display: flex; flex-direction: column; gap: 14px;
+  align-items: center; justify-content: center; text-align: center; padding: 40px;
+  background:
+    radial-gradient(ellipse 60% 60% at 30% 20%, rgba(111,177,162,.20), transparent 60%),
+    radial-gradient(ellipse 55% 55% at 80% 90%, rgba(231,167,154,.18), transparent 60%),
+    var(--creme-fonce);
+}
+.map-consent .ico { font-size: 2.6rem; }
+.map-consent p { color: var(--texte-doux); max-width: 440px; margin: 0; }
+.map-embed iframe { display: block; width: 100%; height: 380px; border: 0; }
+
+/* ---------- Pages légales (texte long) ---------- */
+.legal { max-width: 760px; margin: 0 auto; }
+.legal h2 { font-size: 1.5rem; margin: 30px 0 10px; }
+.legal p, .legal li { color: var(--texte); }
+.legal ul { margin: 0 0 16px 1.2em; }
+.legal .todo { background: var(--rose-clair); padding: 2px 6px; border-radius: 4px; font-style: italic; }
+
+/* ---------- Liens légaux du pied de page ---------- */
+.footer-legal {
+  text-align: center; margin-top: 10px; display: flex; gap: 18px;
+  justify-content: center; flex-wrap: wrap;
+}
+.footer-legal a { color: #bcd6cd; text-decoration: none; font-size: .9rem; }
+.footer-legal a:hover { color: #fff; text-decoration: underline; }
+
+/* Respect des préférences de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

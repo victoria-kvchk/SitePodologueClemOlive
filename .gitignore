@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Fichiers temporaires d'aperçu
+**/_*.png
