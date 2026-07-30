@@ -81,7 +81,7 @@ si vous l'avez (☐ → ✅) :
 ## 7. Textes des pages
 
 > Pour chaque bloc : écrivez **OK** pour garder le texte de démo actuel,
-> ou collez votre texte à la place. (Les textes de démo sont déjà visibles sur la maquette.)
+> ou collez votre texte à la place. (Les textes de démo sont déjà visibles sur le site.)
 
 ### Accueil
 - ☐ Phrase d'accroche (titre) : `Prendre soin de vos pieds, en douceur et en confiance` — OK / remplacer : >>>

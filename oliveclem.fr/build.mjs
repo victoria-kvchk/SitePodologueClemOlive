@@ -1,9 +1,7 @@
 /* =========================================================
-   Générateur de la maquette — Clémentine Olive
+   Générateur du site oliveclem.fr — Clémentine Olive
    Source unique -> pages HTML statiques (en-tête/pied partagés)
-   Lancer : node build.mjs
-   (Outil de maquette uniquement — le socle final sera choisi
-    une fois la maquette validée.)
+   Lancer : node build.mjs  (régénère toutes les pages + sitemap/robots)
    ========================================================= */
 import { writeFileSync } from 'node:fs';
 
@@ -266,7 +264,7 @@ ${horairesFooter()}
   </footer>`;
 }
 
-const SITE = 'https://www.clementine-olive.fr'; // TODO : nom de domaine définitif
+const SITE = 'https://oliveclem.fr';
 
 function jsonLd() {
   const SCHEDULE = [
@@ -309,6 +307,7 @@ function shell({ title, description, active, body, bodyClass = '' }) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 ${jsonLd()}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
@@ -549,7 +548,9 @@ function mentionsLegales() {
         <h2>Directrice de la publication</h2>
         <p>Clémentine Olive</p>
         <h2>Hébergement</h2>
-        <p><span class="todo">Nom, adresse et téléphone de l'hébergeur à compléter une fois l'hébergeur choisi.</span></p>
+        <p>Ce site est hébergé par <strong>GitHub Pages</strong> — GitHub, Inc.<br />
+        88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis<br />
+        <a href="https://github.com" target="_blank" rel="noopener">github.com</a></p>
         <h2>Propriété intellectuelle</h2>
         <p>L'ensemble du contenu de ce site (textes, images, logo) est protégé. Toute reproduction sans autorisation est interdite.</p>
         <h2>Données personnelles</h2>
@@ -714,6 +715,32 @@ ${faqBlock(a, 'faq')}`;
   });
 }
 
+/* ---------- Page 404 (servie automatiquement par GitHub Pages) ---------- */
+function notFoundPage() {
+  const body = `    <section class="page-hero">
+      <div class="container">
+        <h1>Page introuvable</h1>
+        <p class="lead">Désolée, cette page n'existe pas ou a été déplacée.</p>
+        <div class="hero-actions" style="justify-content:center; margin-top:8px">
+          <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+      </div>
+    </section>`;
+  return shell({ title: "Page introuvable — Clémentine Olive", description: "Page introuvable.", active: '', body });
+}
+
+/* ---------- robots.txt & sitemap.xml ---------- */
+function robotsTxt() {
+  return `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`;
+}
+function sitemapXml(pages) {
+  const urls = pages
+    .filter(p => p.endsWith('.html') && p !== '404.html')
+    .map(p => `  <url><loc>${p === 'index.html' ? SITE + '/' : SITE + '/' + p}</loc></url>`)
+    .join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+}
+
 /* ---------------- Écriture des fichiers ---------------- */
 const out = [];
 const write = (name, html) => { writeFileSync(new URL(`./${name}`, import.meta.url), html); out.push(name); };
@@ -729,4 +756,8 @@ for (const a of ACTIVITIES) {
   // on ne génère que les pages détaillées de chaque soin.
   for (const s of a.subpages) write(`${a.slug}-${s.slug}.html`, subPage(a, s));
 }
-console.log(`✓ ${out.length} pages générées :\n  ` + out.join('\n  '));
+write('404.html', notFoundPage());
+// robots.txt & sitemap.xml (dérivés de la liste des pages)
+writeFileSync(new URL('./robots.txt', import.meta.url), robotsTxt());
+writeFileSync(new URL('./sitemap.xml', import.meta.url), sitemapXml(out));
+console.log(`✓ ${out.length} pages générées + robots.txt + sitemap.xml :\n  ` + out.join('\n  '));
