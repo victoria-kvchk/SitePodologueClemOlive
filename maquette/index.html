@@ -115,12 +115,26 @@
       </button>
       <nav id="menu" class="nav" aria-label="Navigation principale">
         <a href="index.html" aria-current="page" class="is-active">Accueil</a>
-        <a href="pedicurie.html">Pédicurie</a>
-        <a href="podologie.html">Podologie</a>
-        <a href="reflexologie.html">Réflexologie</a>
-        <a href="apropos.html">À propos</a>
-        <a href="contact.html">Contact</a>
-        <a href="contact.html#rendez-vous" class="nav-cta">Rendez-vous</a>
+        <a href="index.html#apropos">À propos</a>
+        <div class="nav-group is-active">
+          <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">Pédicurie & Podologie<span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-submenu">
+            <a href="index.html#pedicurie">Soins de pédicurie</a>
+            <a href="index.html#podologie">La Podologie</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">Réflexologie<span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-submenu">
+            <a href="reflexologie.html#presentation">Qu'est-ce que c'est ?</a>
+            <a href="reflexologie.html#dans-quel-cas">Dans quel cas ?</a>
+            <a href="reflexologie.html#bienfaits">Le déroulé et les bienfaits</a>
+            <a href="reflexologie.html#faq">FAQ</a>
+          </div>
+        </div>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener" class="nav-cta">Prendre rendez-vous</a>
       </nav>
     </div>
   </header>
@@ -128,15 +142,9 @@
   <main id="contenu">
     <section id="accueil" class="hero">
       <div class="container">
-        <p class="hero-eyebrow">À Fosses (95) · Au cabinet et à domicile</p>
-        <h1>Prendre soin de vos pieds,<br />en douceur et en confiance</h1>
-        <p class="hero-lead">
-          Je suis <strong>Clémentine Olive</strong>, pédicure-podologue diplômée d'État
-          et réflexologue certifiée. Je vous accompagne pour la santé de vos pieds
-          et votre bien-être, dans un cadre calme et rassurant.
-        </p>
+        <h1>Prenez soin de vous,<br />en commençant par vos pieds</h1>
         <div class="hero-actions">
-          <a href="contact.html#rendez-vous" class="btn btn-primary">Prendre rendez-vous</a>
+          <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener" class="btn btn-primary">Prendre rendez-vous</a>
           <a href="#activites" class="btn btn-ghost">Découvrir mes soins</a>
         </div>
       </div>
@@ -145,67 +153,97 @@
     <section id="activites" class="section section-creme">
       <div class="container">
         <div class="section-head">
-          <p class="section-eyebrow">Mes activités</p>
           <h2>Trois manières de prendre soin de vous</h2>
-          <p>Choisissez le domaine qui vous concerne.</p>
         </div>
+        <p class="info-callout">Consulter un pédicure-podologue ne nécessite plus d'ordonnance de la part de votre médecin traitant dans le cadre des soins diabétiques, des semelles orthopédiques et des verrues plantaires. Votre praticien peut lui-même la rédiger.</p>
         <div class="card-grid">
-          <a class="card-link activity-card" href="pedicurie.html">
-            <span class="ico" aria-hidden="true">🦶</span>
+          <div class="activity-card" id="pedicurie">
             <h3>Pédicurie</h3>
-            <p>Diplômée d'État, je prends soin de vos pieds avec douceur et précision, au cabinet comme à votre domicile.</p>
-            <span class="go">Découvrir →</span>
-          </a>
-          <a class="card-link activity-card" href="podologie.html">
-            <span class="ico" aria-hidden="true">👣</span>
+            <p class="card-intro">Prendre soin de vos pieds au quotidien, au cabinet comme à domicile.</p>
+            <ul class="card-list">
+              <li><a href="pedicurie-affections-ongle-peau.html">Affections de l'ongle et de la peau</a></li>
+              <li><a href="pedicurie-patients-diabetiques.html">Suivi des patients diabétiques</a></li>
+              <li><a href="pedicurie-verrue-plantaire.html">Verrues plantaires par cryothérapie</a></li>
+              <li><a href="pedicurie-coupe-ongles.html">Conseils pour bien couper ses ongles</a></li>
+            </ul>
+          </div>
+          <div class="activity-card" id="podologie">
             <h3>Podologie</h3>
-            <p>J'analyse votre posture et votre marche pour soulager les douleurs et prévenir les troubles du pied et du corps.</p>
-            <span class="go">Découvrir →</span>
-          </a>
-          <a class="card-link activity-card accent-rose" href="reflexologie.html">
-            <span class="ico" aria-hidden="true">🌸</span>
+            <p class="card-intro">Analyser votre posture et votre marche pour soulager et prévenir durablement.</p>
+            <ul class="card-list">
+              <li><a href="podologie-bilan-podologique.html">Bilan podologique</a></li>
+              <li><a href="podologie-semelles.html">Semelles orthopédiques sur mesure</a></li>
+            </ul>
+          </div>
+          <div class="activity-card" id="reflexologie">
             <h3>Réflexologie</h3>
-            <p>Certifiée par l'école E.T.R.E, je vous propose un vrai moment de détente et d'apaisement.</p>
-            <span class="go">Découvrir →</span>
-          </a>
+            <p class="card-intro">Un vrai moment de détente et de bien-être, par les pieds.</p>
+            <ul class="card-list">
+              <li><a href="reflexologie.html#presentation">Qu'est-ce que c'est ?</a></li>
+              <li><a href="reflexologie.html#dans-quel-cas">Dans quel cas ?</a></li>
+              <li><a href="reflexologie.html#bienfaits">Le déroulé et les bienfaits</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section id="apropos" class="section">
       <div class="container apropos">
-        <div class="apropos-photo">Portrait de Clémentine ici</div>
+        <div class="apropos-photo">
+          <img src="assets/portrait-clementine.jpg" alt="Clémentine Olive, pédicure-podologue et réflexologue à Fosses" width="732" height="1280" loading="lazy" />
+        </div>
         <div>
-          <p class="section-eyebrow">La praticienne</p>
-          <h2>Clémentine Olive</h2>
-          <p><strong>Pédicure-podologue diplômée d'État</strong> et <strong>réflexologue certifiée</strong>,
-             j'ai à cœur de prendre soin de chacun avec écoute et bienveillance, au cabinet comme à domicile.</p>
-          <ul class="qualifications">
-            <li><span class="q-ico" aria-hidden="true">🎓</span> Pédicure-Podologue — Diplôme d'État (D.E)</li>
-            <li><span class="q-ico" aria-hidden="true">🌸</span> Réflexologue certifiée — école E.T.R.E</li>
-            <li><span class="q-ico" aria-hidden="true">🏡</span> Soins possibles à domicile</li>
+          <h2>À propos de Clémentine Olive</h2>
+          <p>Diplômée de pédicurie-podologie depuis juillet 2019, j'ai d'abord effectué des remplacements
+             dans plusieurs cabinets et des collaborations, avant de m'installer à mon compte en avril 2023.</p>
+          <p>Au cabinet, je pratique la <strong>pédicurie</strong> (coupe d'ongles, soin des mycoses,
+             ongles incarnés…), la <strong>podologie</strong> (bilan podologique, confection de semelles
+             orthopédiques) et la <strong>réflexologie plantaire</strong>.</p>
+          <p>Je porte un intérêt particulier au bien-être de l'autre, et cela se retranscrit dans mes soins.</p>
+          <h3 class="dip-titre">Diplômes</h3>
+          <ul class="diplomes">
+            <li><span class="dip-annee">2019</span> <span>Diplôme d'État de pédicure-podologue — École Supérieure de Masseurs-Kinésithérapeutes et Pédicures (ESMKP), Paris</span></li>
+            <li><span class="dip-annee">2024</span> <span>Bilan diagnostique en podo-pédiatrie — connaissance et évolution</span></li>
+            <li><span class="dip-annee">2026</span> <span>Certificat de Réflexologue — école E.T.R.E, Paris</span></li>
           </ul>
-          <div class="bloc-actions"><a href="apropos.html" class="btn btn-ghost">En savoir plus</a></div>
         </div>
       </div>
     </section>
 
-    <section class="section section-vert">
-      <div class="container infos-grid">
-        <div class="info-bloc">
-          <h3>Adresse</h3>
-          <p>5 place Denis Papin<br />95470 Fosses</p>
-          <p class="info-note">Soins possibles à domicile</p>
+    <section id="cabinet" class="section section-creme">
+      <div class="container">
+        <div class="section-head">
+          <h2>Infos pratiques &amp; accès</h2>
         </div>
-        <div class="info-bloc">
-          <h3>Téléphone</h3>
-          <p>Pédicurie / Podologie<br /><a href="tel:+33652860996">06 52 86 09 96</a></p>
-          <p>Réflexologie<br /><a href="tel:+33688419379">06 88 41 93 79</a></p>
+        <div class="cabinet-top">
+          <figure class="cabinet-photo">
+            <img src="assets/cabinet.webp" alt="Le cabinet de Clémentine Olive à Fosses : espace lumineux et apaisant" width="933" height="700" loading="lazy" />
+            <figcaption>5 place Denis Papin · 95470 Fosses</figcaption>
+          </figure>
+          <div class="pratique-card">
+            <h3>Horaires du cabinet</h3>
+          <table class="horaires">
+            <tbody>
+            <tr><td class="jour">Lundi</td><td>09h00 – 12h30  ·  13h00 – 18h30</td></tr>
+            <tr><td class="jour">Mardi</td><td>09h30 – 12h30  ·  13h00 – 17h00</td></tr>
+            <tr><td class="jour">Mercredi</td><td>09h00 – 12h30  ·  13h00 – 18h30</td></tr>
+            <tr><td class="jour">Jeudi</td><td>09h00 – 12h30  ·  13h00 – 19h00</td></tr>
+            <tr><td class="jour">Vendredi</td><td>09h00 – 12h30  ·  13h00 – 18h00</td></tr>
+            <tr><td class="jour">Samedi</td><td>09h00 – 16h00  ·  <span class="hor-note">un samedi par mois</span></td></tr>
+            <tr><td class="jour">Dimanche</td><td class="ferme">Fermé</td></tr>
+            </tbody>
+          </table>
+            <p class="pratique-note">Uniquement sur rendez-vous.</p>
+          </div>
         </div>
-        <div class="info-bloc">
-          <h3>Sur rendez-vous</h3>
-          <p>Les consultations se font uniquement sur rendez-vous, pour vous accueillir dans les meilleures conditions.</p>
-          <a href="contact.html#rendez-vous">Prendre rendez-vous →</a>
+        <div class="map-embed" id="map-embed" data-src="https://www.google.fr/maps/embed?pb=!1m18!1m12!1m3!1d1132.3976116027156!2d2.5233593!3d49.0994058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e639a7517a79b9%3A0x2a8a210e8c90f8fb!2sOLIVE%20Cl%C3%A9mentine%20Cabinet%20de%20p%C3%A9dicurie-podologie!5e0!3m2!1sfr!2sfr!4v1694123456789!5m2!1sfr!2sfr">
+          <div class="map-consent">
+            <span class="ico" aria-hidden="true">🗺️</span>
+            <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
+            <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
+            <p><a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
+          </div>
         </div>
       </div>
     </section>
@@ -215,26 +253,27 @@
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
         <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p>5 place Denis Papin, 95470 Fosses</p>
-        <p><a href="tel:+33652860996">06 52 86 09 96</a> · <a href="tel:+33688419379">06 88 41 93 79</a></p>
+        <p>5 place Denis Papin<br />95470 Fosses</p>
+        <p>Consultations sur rendez-vous, en ligne sur <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Doctolib</a>.</p>
       </div>
       <div class="footer-col">
-        <a class="footer-title" href="pedicurie.html">Pédicurie</a>
-        <a href="pedicurie-cors-durillons.html">Cors & durillons</a>
-        <a href="pedicurie-mycoses.html">Mycoses des pieds et des ongles</a>
-        <a href="pedicurie-ongle-incarne.html">Ongle incarné</a>
-        <a href="pedicurie-verrue-plantaire.html">Verrue plantaire</a>
-        <a href="pedicurie-coupe-ongles.html">Bien couper ses ongles</a>
+        <p class="footer-title">Horaires</p>
+        <ul class="footer-horaires">
+          <li><span class="fh-jour">Lun</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
+          <li><span class="fh-jour">Mar</span><span>09h30 – 12h30 · 13h00 – 17h00</span></li>
+          <li><span class="fh-jour">Mer</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
+          <li><span class="fh-jour">Jeu</span><span>09h00 – 12h30 · 13h00 – 19h00</span></li>
+          <li><span class="fh-jour">Ven</span><span>09h00 – 12h30 · 13h00 – 18h00</span></li>
+          <li><span class="fh-jour">Sam</span><span>09h00 – 16h00 · un samedi par mois</span></li>
+          <li><span class="fh-jour">Dim</span><span>Fermé</span></li>
+        </ul>
+        <p class="footer-note">Sur rendez-vous · soins possibles à domicile</p>
       </div>
       <div class="footer-col">
-        <a class="footer-title" href="podologie.html">Podologie</a>
-        <a href="podologie-bilan-podologique.html">Bilan podologique</a>
-        <a href="podologie-semelles.html">Semelles orthopédiques</a>
-      </div>
-      <div class="footer-col">
-        <a class="footer-title" href="reflexologie.html">Réflexologie</a>
-        <a href="reflexologie-presentation.html">Qu'est-ce que la réflexologie ?</a>
-        <a href="reflexologie-types-seances.html">Les types de séances</a>
+        <p class="footer-title">Accès &amp; rendez-vous</p>
+        <a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Voir sur Google Maps →</a>
+        <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Rendez-vous sur Doctolib →</a>
+        <a href="index.html#cabinet">Horaires &amp; plan d'accès →</a>
       </div>
     </div>
     <p class="footer-copy">
@@ -243,7 +282,6 @@
     <nav class="footer-legal" aria-label="Liens légaux">
       <a href="mentions-legales.html">Mentions légales</a>
       <a href="confidentialite.html">Politique de confidentialité</a>
-      <a href="contact.html">Contact</a>
     </nav>
   </footer>
   <script src="menu.js"></script>

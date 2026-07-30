@@ -15,6 +15,29 @@
   });
 })();
 
+// Sous-menus déroulants (ex. « Pédicurie & Podologie »)
+(function () {
+  var triggers = document.querySelectorAll('.nav-group-trigger');
+  triggers.forEach(function (btn) {
+    var group = btn.closest('.nav-group');
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var open = group.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  // Fermer les sous-menus ouverts au clic à l'extérieur
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.nav-group.open').forEach(function (group) {
+      if (!group.contains(e.target)) {
+        group.classList.remove('open');
+        var t = group.querySelector('.nav-group-trigger');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
+
 // Carte Google Maps : chargement au clic uniquement (RGPD)
 (function () {
   var btn = document.getElementById('map-load');

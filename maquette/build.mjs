@@ -8,9 +8,7 @@
 import { writeFileSync } from 'node:fs';
 
 const TEL_PODO = { txt: '06 52 86 09 96', tel: '+33652860996' };
-const TEL_REFLEX = { txt: '06 88 41 93 79', tel: '+33688419379' };
 
-// TODO : remplacer par le vrai lien Doctolib du cabinet
 const DOCTOLIB = 'https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive';
 
 const ADRESSE = { rue: '5 place Denis Papin', cp: '95470', ville: 'Fosses' };
@@ -25,42 +23,37 @@ const HORAIRES = [
   { jour: 'Mercredi', creneaux: '09h00 – 12h30  ·  13h00 – 18h30', spec: ['We 09:00-12:30', 'We 13:00-18:30'] },
   { jour: 'Jeudi',    creneaux: '09h00 – 12h30  ·  13h00 – 19h00', spec: ['Th 09:00-12:30', 'Th 13:00-19:00'] },
   { jour: 'Vendredi', creneaux: '09h00 – 12h30  ·  13h00 – 18h00', spec: ['Fr 09:00-12:30', 'Fr 13:00-18:00'] },
-  { jour: 'Samedi',   creneaux: null },
+  { jour: 'Samedi',   creneaux: '09h00 – 16h00  ·  <span class="hor-note">un samedi par mois</span>' },
   { jour: 'Dimanche', creneaux: null },
 ];
 
 /* ---------------- Données des activités ---------------- */
 const pedicurie = {
-  slug: 'pedicurie', label: 'Pédicurie', color: 'vert', phone: TEL_PODO, booking: 'doctolib',
+  slug: 'pedicurie', label: 'Pédicurie', color: 'vert',
   lead: "Diplômée d'État, je prends soin de vos pieds avec douceur et précision, au cabinet comme à votre domicile.",
   subpages: [
-    { slug: 'cors-durillons', title: 'Cors & durillons', ico: '🦶',
-      teaser: "Ces épaississements de la peau, souvent douloureux, se traitent simplement.",
+    { slug: 'affections-ongle-peau', title: "Affections de l'ongle et de la peau", ico: '🦶',
+      teaser: "Ongle incarné, mycoses, cors, durillons, affections de la peau : je prends soin de tout cela.",
       blocks: [
-        ['En quelques mots', "Le cor et le durillon sont des épaississements de la peau qui se forment sous l'effet de frottements ou de pressions répétées (chaussures, appui, déformation du pied). Ils peuvent devenir douloureux à la marche."],
-        ['Les signes qui doivent alerter', ['Une zone dure et sensible sous le pied ou sur un orteil', "Une douleur à l'appui ou dans certaines chaussures", 'Une peau qui s\'épaissit et jaunit']],
-        ['Comment je vous accompagne', "Je retire la corne en excès de façon indolore, je soulage la zone et je recherche la cause (appui, chaussage) pour éviter la récidive. Des conseils personnalisés et, si besoin, un petit appareillage ou des semelles complètent le soin."],
+        ['En quelques mots', "C'est un acte paramédical qui permet de traiter et de soulager, en douceur, les principales affections de l'ongle et de la peau du pied — avec des conseils personnalisés pour éviter qu'elles ne reviennent."],
+        ['Ce que je prends en charge', ["Prise en charge et conseils de l'ongle incarné", "Prise en charge et conseils des ongles épais et/ou mycosés", "Prise en charge et conseils des ongles traumatisés et décollés", "Prise en charge et conseils des cors et durillons", "Prise en charge et conseils des affections de la peau (mycose, hypersudation, …)"]],
+        ['En toute douceur', "Les soins sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
       ] },
-    { slug: 'mycoses', title: 'Mycoses des pieds et des ongles', ico: '🍄',
-      teaser: "Ongles jaunis ou épaissis, peau qui pèle : la mycose se soigne et se prévient.",
+    { slug: 'patients-diabetiques', title: 'Patients diabétiques', ico: '🩺',
+      teaser: "Un suivi régulier pour prévenir les complications du pied diabétique.",
       blocks: [
-        ['En quelques mots', "La mycose est une infection due à un champignon. Elle touche la peau (entre les orteils) ou les ongles, qui s'épaississent et changent de couleur. Elle est fréquente et contagieuse, mais se traite bien."],
-        ['Les signes qui doivent alerter', ['Un ongle jauni, épaissi ou qui s\'effrite', 'Des démangeaisons ou une peau qui pèle entre les orteils', 'Une gêne ou une odeur inhabituelle']],
-        ['Comment je vous accompagne', "J'assainis l'ongle ou la peau, je réduis l'épaisseur pour améliorer le confort et l'efficacité des soins, et je vous conseille sur l'hygiène et la prévention au quotidien."],
+        ['En quelques mots', "Une consultation régulière chez un pédicure-podologue permet de prévenir les risques de complication des pieds diabétiques liés à une neuropathie."],
+        ['Une prise en charge par la Sécurité sociale', "Toute personne diabétique bénéficie d'au moins une séance par an prise en charge par la Sécurité sociale. Selon l'atteinte des membres inférieurs (gradation), cette prise en charge peut aller jusqu'à 8 séances par an, sur ordonnance."],
+        ['Tarifs & prise en charge', "<strong>Grade 0 et 1</strong> — 38 € la séance.<br />Prise en charge : 1 séance par an à hauteur de 30 € par la Sécurité sociale (pensez à demander votre bilan).<br /><br /><strong>Grade 2 et 3</strong> — prise en charge à 100 %, sur ordonnance : 1ʳᵉ séance 35,70 €, puis 30 € les séances suivantes.<br />Une gradation est réalisée à chaque nouvelle ordonnance."],
+        ['Les grades de prise en charge', ["<strong>Grade 0</strong> — absence de neuropathie sensitive (1 séance/an).", "<strong>Grade 1</strong> — neuropathie sensitive isolée, légère perte de sensibilité (1 séance/an).", "<strong>Grade 2</strong> — neuropathie sensitive associée à une artériopathie des membres inférieurs et/ou une déformation des pieds (5 séances/an).", "<strong>Grade 3</strong> — antécédent d'ulcération ou d'amputation, ou plaie ne cicatrisant pas depuis plus de 3 mois (8 séances/an)."]],
+        ['Syndrome main-pied', "Une prise en charge du syndrome main-pied est également possible pour les patients sous traitement anti-cancéreux : 2 séances remboursées par la Sécurité sociale, sur prescription de votre oncologue."],
       ] },
-    { slug: 'ongle-incarne', title: 'Ongle incarné', ico: '💅',
-      teaser: "Un ongle qui pénètre dans la peau, ça fait mal — mais il existe des solutions douces.",
+    { slug: 'verrue-plantaire', title: 'Soin des verrues plantaires par cryothérapie', ico: '❄️',
+      teaser: "Un traitement par le froid, sans douleur, sans saignement et sans anesthésie.",
       blocks: [
-        ['En quelques mots', "L'ongle incarné se produit lorsqu'un bord de l'ongle s'enfonce dans la peau, provoquant douleur, rougeur et parfois inflammation. Une coupe inadaptée ou des chaussures serrées en sont souvent la cause."],
-        ['Les signes qui doivent alerter', ['Une douleur au bord de l\'ongle, surtout au gros orteil', 'Une rougeur ou un gonflement', 'Un écoulement ou une chaleur locale']],
-        ['Comment je vous accompagne', "Je dégage délicatement l'ongle, je soulage la douleur et je vous montre la bonne façon de couper vos ongles pour éviter que cela ne revienne. En cas d'infection, je vous oriente si nécessaire vers votre médecin."],
-      ] },
-    { slug: 'verrue-plantaire', title: 'Verrue plantaire', ico: '🔎',
-      teaser: "Une petite lésion sous le pied qui peut gêner à la marche.",
-      blocks: [
-        ['En quelques mots', "La verrue plantaire est une lésion bénigne causée par un virus. Située sous le pied, elle peut être douloureuse à l'appui. Elle est fréquente, notamment après une fréquentation de piscines ou de vestiaires."],
-        ['Les signes qui doivent alerter', ['Une petite excroissance rugueuse sous le pied', 'Une douleur en marchant ou en pinçant la zone', 'De petits points noirs au centre de la lésion']],
-        ['Comment je vous accompagne', "J'évalue la lésion, je réduis la corne qui la recouvre pour diminuer la douleur et je vous conseille sur la prise en charge la plus adaptée, en lien avec votre médecin si besoin."],
+        ['En quelques mots', "Le traitement des verrues plantaires utilise le Freezpen, un instrument de cryochirurgie précis. On vient « geler » la verrue : c'est sans douleur, sans saignement et sans anesthésie."],
+        ['Comment ça fonctionne', "Le Freezpen utilise l'oxyde nitreux, un gaz cryogénique qui agit à -85 °C. Cette basse température produit un choc thermique très rapide qui congèle les cellules de la verrue en toute sécurité. Grâce à trois embouts de diamètres différents, le geste est précis et protège les tissus sains autour de la lésion."],
+        ['Prise en charge', "Le soin est pris en charge par la Sécurité sociale : jusqu'à 5 séances, à hauteur de 20 € par consultation."],
       ] },
     { slug: 'coupe-ongles', title: 'Bien couper ses ongles', ico: '✂️',
       teaser: "Quelques gestes simples pour éviter ongles incarnés et petites blessures.",
@@ -74,24 +67,26 @@ const pedicurie = {
     ['Le soin est-il douloureux ?', "Non. Les soins de pédicurie sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
     ['À quelle fréquence consulter ?', "Cela dépend de vos besoins. À titre indicatif, un soin tous les 1 à 3 mois convient à beaucoup de personnes. Je vous conseille selon votre situation."],
     ['Puis-je être soigné(e) à domicile ?', "Oui, je me déplace à domicile, en particulier si vous avez des difficultés à vous déplacer. Contactez-moi pour organiser le rendez-vous."],
-    ['Faut-il une ordonnance ?', "Non, vous pouvez consulter directement, sans ordonnance."],
+    ['Faut-il une ordonnance ?', "Pour les soins diabétiques, les semelles orthopédiques et les verrues plantaires, vous pouvez consulter directement, sans ordonnance : je peux la rédiger moi-même si nécessaire."],
   ],
   tarifs: [
-    ['Soin de pédicurie', 'à partir de 35 €'],
-    ['Soin à domicile', 'sur devis'],
-    ['Petit appareillage (orthoplastie)', 'sur devis'],
+    ['Soin de pédicurie', '38 €'],
+    ['Soin à domicile (selon la localisation)', '45 – 47 €'],
+    ['Soin à domicile pour deux personnes', '83 €'],
+    ['Verrue plantaire par cryothérapie (la séance)', '20 – 38 €'],
+    ['Soins pour patients diabétiques', '<a href="pedicurie-patients-diabetiques.html">voir le détail</a>'],
   ],
-  tarifNote: "Tarifs indicatifs, à confirmer lors de la prise de rendez-vous. Paiement : carte bancaire, chèque, espèces.",
+  tarifNote: "Paiement : carte bancaire, chèque, espèces.",
 };
 
 const podologie = {
-  slug: 'podologie', label: 'Podologie', color: 'vert', phone: TEL_PODO, booking: 'doctolib',
+  slug: 'podologie', label: 'Podologie', color: 'vert',
   lead: "J'analyse votre posture et votre marche pour soulager les douleurs et prévenir les troubles du pied et du corps.",
   subpages: [
     { slug: 'bilan-podologique', title: 'Bilan podologique', ico: '🩺',
-      teaser: "Un examen complet du pied, de la posture et de la marche.",
+      teaser: "Une évaluation détaillée de la posture et de la marche, à tout âge.",
       blocks: [
-        ['En quelques mots', "Le bilan podologique est un examen complet qui permet de comprendre l'origine de vos douleurs ou de votre gêne. J'observe la posture, la marche, les appuis et l'état de vos pieds."],
+        ['En quelques mots', "Le bilan podologique est une évaluation détaillée de la posture et de la marche, à tout âge et pour tout le monde. Il permet de comprendre l'origine de vos douleurs ou de votre gêne : j'observe la posture, la marche, les appuis et l'état de vos pieds, et je vous conseille sur le chaussant."],
         ['Dans quels cas ?', ['Douleurs aux pieds, aux genoux, aux hanches ou au dos', 'Gêne à la marche ou déséquilibre', 'Suivi de croissance chez l\'enfant', 'Contrôle chez le sportif']],
         ['Comment ça se passe', "Le bilan est indolore. À l'issue, je vous explique clairement mes constats et, si nécessaire, je vous propose des semelles sur mesure ou des conseils adaptés."],
       ] },
@@ -109,61 +104,107 @@ const podologie = {
     ['Combien de temps durent des semelles ?', "En général un à deux ans, selon l'usage. Un contrôle régulier permet de les ajuster ou de les renouveler au bon moment."],
   ],
   tarifs: [
-    ['Bilan podologique', 'sur devis'],
-    ['Semelles orthopédiques sur mesure', '135 – 150 €'],
-    ['Orthoplasties / petits appareillages', 'sur devis'],
+    ['Bilan podologique', '50 €'],
+    ['Bilan avec confection de semelles orthopédiques :', ''],
+    ["Pointures inférieures au 37<span class='tarif-sub'>Base de remboursement Sécu : 14,02 € l'unité, soit 28,04 € la paire.</span>", '135 €', 'sub'],
+    ["Pointure 37 et pointures supérieures au 37<span class='tarif-sub'>Base de remboursement Sécu : 14,43 € l'unité, soit 28,86 € la paire.</span>", '140 €', 'sub'],
   ],
-  tarifNote: "Tarifs indicatifs, à confirmer lors du rendez-vous. Une prise en charge partielle est parfois possible selon votre mutuelle.",
+  tarifNote: "Une prise en charge partielle est parfois possible selon votre mutuelle. Paiement : carte bancaire, chèque, espèces.",
 };
 
 const reflexologie = {
-  slug: 'reflexologie', label: 'Réflexologie', color: 'rose', phone: TEL_REFLEX, booking: 'phone',
+  slug: 'reflexologie', label: 'Réflexologie', color: 'rose',
   lead: "Certifiée par l'école E.T.R.E, je vous propose un vrai moment de détente et d'apaisement.",
   subpages: [
     { slug: 'presentation', title: "Qu'est-ce que la réflexologie ?", ico: '🌸',
       teaser: "Une pratique de bien-être douce, par des pressions sur des zones du pied.",
       blocks: [
-        ['En quelques mots', "La réflexologie est une pratique de bien-être qui consiste à exercer des pressions douces sur des zones précises des pieds. L'objectif : favoriser la détente, aider à relâcher les tensions et procurer un sentiment d'apaisement."],
-        ['Ce qu\'elle peut apporter', ['Un moment de relaxation profonde', 'Un relâchement des tensions du quotidien', 'Une sensation de bien-être général']],
-        ['Bon à savoir', "La réflexologie est une pratique de bien-être. Elle ne pose pas de diagnostic et ne se substitue pas à un suivi ou à un traitement médical."],
+        ['En quelques mots', "La réflexologie plantaire est une technique manuelle qui consiste à exercer des pressions rythmées sur des zones réflexes de vos pieds. Ces zones sont reliées, par l'intermédiaire de terminaisons nerveuses, à différents organes, glandes ou parties du corps."],
+        ["L'objectif", "Aider le corps à retrouver son équilibre naturel par auto-régulation, soulager les tensions et favoriser le bien-être global."],
+        ['Bon à savoir', "La réflexologie plantaire est une pratique de bien-être complémentaire à la pédicurie-podologie. Elle ne se substitue en aucun cas à un suivi médical. Le bilan n'est pas un diagnostic, mais il sert au praticien à établir un protocole de massage adapté. Le réflexologue ne soigne pas, ne guérit pas."],
       ] },
-    { slug: 'types-seances', title: 'Les types de séances', ico: '🕊️',
-      teaser: "Des séances adaptées à votre besoin : détente, réconfort, accompagnement.",
+    { slug: 'dans-quel-cas', title: 'Dans quel cas ?', ico: '🕊️',
+      teaser: "Les indications et les contre-indications d'une séance.",
       blocks: [
-        ['Des séances sur mesure', "Chaque séance s'adapte à vous. Après un court échange, je choisis les gestes les plus appropriés pour un moment qui vous corresponde."],
-        ['Quelques formules', ['Séance découverte, pour un premier moment de détente', 'Séance bien-être, pour relâcher les tensions', 'Accompagnement en plusieurs séances, dans la durée']],
-        ['Le déroulé', "Vous restez habillé(e), confortablement installé(e). Une séance dure environ 45 à 60 minutes, dans un cadre calme et bienveillant."],
+        ['Indications', ["En cas de stress : chronique, à l'approche d'un examen, à la suite d'un événement marquant…", "En cas de déséquilibre ou de troubles d'un système : respiratoire, digestif, sommeil…", "En cas de douleurs musculaires et/ou articulaires : arthrose, troubles inflammatoires, tendinite", "Au début du printemps, avant l'arrivée des pollens, en cas d'allergie", "En cas de problèmes cutanés : psoriasis, eczéma…", "Si vous ressentez une sensation de jambes lourdes"]],
+        ['Contre-indications', "Il n'est pas recommandé de faire une séance si :"],
+        ['', ["Vous êtes malade ou avez de la fièvre", "Vous êtes enceinte de moins de 3 mois", "Vous avez une phlébite", "Vous avez eu une entorse à une cheville il y a moins de 3 mois"]],
+      ] },
+    { slug: 'bienfaits', title: 'Le déroulé et les bienfaits', ico: '🌿',
+      teaser: "Comment se passe une séance et ce qu'elle peut apporter.",
+      blocks: [
+        ["Déroulé d'une séance", "La séance débute par un échange, afin d'évoquer les raisons de votre venue et d'estimer le degré d'inconfort ressenti au quotidien. Cela me permet d'établir un protocole adapté à vos besoins."],
+        ['', "Une fois dans le fauteuil, je commence toujours par des mouvements de détente du pied, ce qui permet à mes mains de faire connaissance avec vos pieds. Je réalise ensuite le protocole complet envisagé pour vous, que j'ajuste selon vos besoins et mes ressentis."],
+        ['', "Vous êtes confortablement installé(e) dans un fauteuil de soin, en position semi-allongée, centre de gravité zéro et jambes relevées. Un plaid est à votre disposition si vous le souhaitez (en vous détendant, le corps se refroidit légèrement). Il se peut que vous bâilliez, que vous vous endormiez ou que vos yeux pleurent de détente : chaque corps réagit à sa manière."],
+        ['Les bienfaits', ["Réduction du stress en favorisant un état de relaxation", "Diminution de l'anxiété", "Soulagement de certaines douleurs, en complément des traitements habituels", "Amélioration du bien-être général et de la qualité de vie", "Amélioration du cycle de sommeil", "Diminution de certains troubles du quotidien"]],
+        ['Effets secondaires possibles', "Ils peuvent survenir 2 à 3 semaines après la séance. La réflexologie contribuant à la détoxification du corps, ce processus peut entraîner une modification temporaire du transit, de légers maux de tête, des urines plus foncées, une faim plus importante et un regain d'énergie, une brève sensation nauséeuse… Cela varie selon la personne, son niveau de vitalité et le type de séance."],
+        ['', "Il est conseillé de se reposer après la séance et de bien s'hydrater. Le nombre de séances varie selon chaque individu, la durée du trouble et la capacité du corps à évoluer."],
       ] },
   ],
   faq: [
-    ['La réflexologie remplace-t-elle un médecin ?', "Non. C'est une pratique de bien-être qui ne pose pas de diagnostic et ne remplace ni une consultation, ni un traitement médical. Elle vient en complément, pour votre détente."],
-    ['Combien de temps dure une séance ?', "Environ 45 à 60 minutes, échange compris. Vous restez habillé(e) et confortablement installé(e)."],
-    ['Est-ce adapté à tout le monde ?', "La réflexologie s'adresse à la plupart des personnes en recherche de détente. En cas de situation particulière (grossesse, problème de santé), n'hésitez pas à m'en parler avant la séance."],
+    ['La réflexologie aide-t-elle à gérer le stress et l\'anxiété ?', "La réflexologie est avant tout une pratique de détente. En favorisant un relâchement profond, elle peut aider à apaiser les tensions liées au stress et à retrouver un sentiment de calme. C'est un accompagnement du bien-être, qui ne remplace pas un suivi médical ou psychologique si celui-ci est nécessaire."],
+    ['Combien de séances sont nécessaires pour ressentir des effets ?', "Cela varie d'une personne à l'autre. Beaucoup ressentent une détente dès la première séance. Pour un réel bénéfice dans la durée, 3 à 5 séances sont généralement recommandées. Nous en parlons ensemble selon votre ressenti."],
+    ['La réflexologie peut-elle agir sur les douleurs chroniques ?', "La réflexologie n'est pas un traitement de la douleur et ne se substitue pas à une prise en charge médicale. En procurant un moment de détente et en aidant à relâcher les tensions, elle peut toutefois être un complément agréable au bien-être. En cas de douleur, parlez-en d'abord à votre médecin."],
+    ['Comment se préparer avant une séance ?', "Aucune préparation particulière n'est nécessaire. Prévoyez simplement une tenue confortable, évitez un repas trop lourd juste avant, et venez avec des pieds propres. Pour le reste, vous n'avez qu'à vous détendre."],
+    ['Est-ce que c\'est douloureux ?', "Non. Les pressions sont douces et adaptées à votre sensibilité. La séance doit rester un moment agréable : n'hésitez jamais à me signaler une gêne, j'ajuste aussitôt."],
+    ['La réflexologie est-elle sans danger ?', "Pratiquée dans le respect de quelques précautions, la réflexologie est douce et non invasive. Elle reste une pratique de bien-être : en cas de problème de santé, elle vient en complément d'un suivi médical, jamais à sa place."],
+    ['Y a-t-il des contre-indications ?', "Quelques situations demandent des précautions (phlébite récente, plaies ou infections du pied, certaines pathologies…). Signalez-moi votre situation avant la séance et, en cas de doute, demandez l'avis de votre médecin. J'adapte ou je préfère reporter si nécessaire."],
+    ['Peut-on pratiquer la réflexologie sur les femmes enceintes ?', "La réflexologie peut être envisagée pendant la grossesse, avec précautions et généralement pas durant le premier trimestre. Prévenez-moi si vous êtes enceinte : j'adapte la séance, et l'accord de votre médecin ou de votre sage-femme est recommandé."],
+    ['Est-ce adapté aux enfants et aux personnes âgées ?', "Oui. La douceur de la pratique convient aussi bien aux enfants qu'aux personnes âgées. La séance est simplement adaptée (durée, intensité des pressions) à chacun."],
+    ['Y a-t-il des effets secondaires possibles ?', "La réflexologie est bien tolérée. Après une séance, on peut parfois ressentir une grande détente, une fatigue passagère ou une envie d'uriner plus fréquente : ce sont des réactions bénignes et temporaires. Pensez à bien vous hydrater."],
+    ['Faut-il prendre rendez-vous à l\'avance ?', "Oui, les séances se font uniquement sur rendez-vous, en ligne sur Doctolib. Cela me permet de vous accueillir dans les meilleures conditions et de vous consacrer tout le temps nécessaire."],
+    ['Quel est le tarif d\'une séance ?', "Les tarifs vont de 30 € (séance découverte) à 70 € (séance à domicile), selon le type et la durée de la séance. Le détail complet figure dans la rubrique Tarifs."],
+    ['Comment puis-je régler ma séance ?', "Le règlement se fait en fin de séance, par carte bancaire ou espèces."],
+    ['La réflexologie est-elle remboursée par la sécurité sociale ou les mutuelles ?', "La réflexologie est une pratique de bien-être : elle n'est pas remboursée par l'Assurance Maladie. Certaines mutuelles proposent toutefois une prise en charge partielle des médecines douces — renseignez-vous auprès de la vôtre."],
+    ['Peut-on offrir une séance en bon cadeau ?', "Oui, avec plaisir : une séance de réflexologie peut être offerte sous forme de bon cadeau. Parlez-m'en lors de votre venue au cabinet et je vous l'établis."],
   ],
   tarifs: [
-    ['Séance de réflexologie (env. 45–60 min)', 'à préciser'],
-    ['Forfait plusieurs séances', 'sur devis'],
+    ["Séance découverte ou relaxation<span class='tarif-sub'>De 20 à 30 min · pour découvrir la réflexologie ou simplement se détendre.</span>", '30 €'],
+    ["Séance longue sur-mesure :<span class='tarif-sub'>De 45 min à 1h15 · bilan complet et suivi personnalisé.</span>", ''],
+    ['1ʳᵉ séance', '60 €', 'sub'],
+    ['Séances de suivi', '55 €', 'sub'],
+    ['Pour les plus jeunes :', ''],
+    ["Séance enfant<span class='tarif-sub'>De 15 à 30 min</span>", '30 €', 'sub'],
+    ["Séance étudiante<span class='tarif-sub'>De 30 à 45 min · sur présentation d'un justificatif</span>", '40 €', 'sub'],
+    ["Séance à domicile<span class='tarif-sub'>Environ 1h · selon le périmètre d'action (à préciser)</span>", '70 €'],
   ],
-  tarifNote: "Pratique de bien-être, non remboursée par l'Assurance Maladie. Tarifs à confirmer lors de la prise de rendez-vous.",
+  tarifNote: "Pensez à demander une facture pour votre mutuelle. Paiement accepté : carte bancaire et espèces.",
 };
 
 const ACTIVITIES = [pedicurie, podologie, reflexologie];
-const byslug = Object.fromEntries(ACTIVITIES.map(a => [a.slug, a]));
 
 /* ---------------- Chrome partagé (en-tête / pied) ---------------- */
 const NAV = [
-  ['index.html', 'Accueil'],
-  ['pedicurie.html', 'Pédicurie'],
-  ['podologie.html', 'Podologie'],
-  ['reflexologie.html', 'Réflexologie'],
-  ['apropos.html', 'À propos'],
-  ['contact.html', 'Contact'],
+  { href: 'index.html', label: 'Accueil' },
+  { href: 'index.html#apropos', label: 'À propos' },
+  { label: 'Pédicurie & Podologie', children: [
+    { href: 'index.html#pedicurie', label: 'Soins de pédicurie' },
+    { href: 'index.html#podologie', label: 'La Podologie' },
+    { href: 'faq.html', label: 'FAQ' },
+  ] },
+  { label: 'Réflexologie', children: [
+    { href: 'reflexologie.html#presentation', label: "Qu'est-ce que c'est ?" },
+    { href: 'reflexologie.html#dans-quel-cas', label: 'Dans quel cas ?' },
+    { href: 'reflexologie.html#bienfaits', label: 'Le déroulé et les bienfaits' },
+    { href: 'reflexologie.html#faq', label: 'FAQ' },
+  ] },
+  { href: 'tarifs.html', label: 'Tarifs' },
 ];
 
 function header(active) {
-  const links = NAV.map(([href, label]) =>
-    `<a href="${href}"${href === active ? ' aria-current="page" class="is-active"' : ''}>${label}</a>`
-  ).join('\n        ');
+  const navLink = (href, label) =>
+    `<a href="${href}"${href === active ? ' aria-current="page" class="is-active"' : ''}>${label}</a>`;
+  const items = NAV.map(item => {
+    if (!item.children) return navLink(item.href, item.label);
+    const childActive = item.children.some(c => c.href === active || c.href.startsWith(active + '#'));
+    const sub = item.children.map(c => navLink(c.href, c.label)).join('\n            ');
+    return `<div class="nav-group${childActive ? ' is-active' : ''}">
+          <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">${item.label}<span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-submenu">
+            ${sub}
+          </div>
+        </div>`;
+  }).join('\n        ');
   return `  <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="brand">
@@ -174,28 +215,46 @@ function header(active) {
         <span></span><span></span><span></span>
       </button>
       <nav id="menu" class="nav" aria-label="Navigation principale">
-        ${links}
-        <a href="contact.html#rendez-vous" class="nav-cta">Rendez-vous</a>
+        ${items}
+        <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="nav-cta">Prendre rendez-vous</a>
       </nav>
     </div>
   </header>
   <div class="aquarelle" aria-hidden="true"></div>`;
 }
 
+// Horaires compacts pour le pied de page
+function horairesFooter() {
+  const rows = HORAIRES.map(h => {
+    const abbr = h.jour.slice(0, 3);
+    const val = h.creneaux
+      ? h.creneaux.replace(/<[^>]+>/g, '').replace(/\s{2,}/g, ' ').trim()
+      : 'Fermé';
+    return `          <li><span class="fh-jour">${abbr}</span><span>${val}</span></li>`;
+  }).join('\n');
+  return `        <ul class="footer-horaires">\n${rows}\n        </ul>`;
+}
+
 function footer() {
-  const cols = ACTIVITIES.map(a => `
-      <div class="footer-col">
-        <a class="footer-title" href="${a.slug}.html">${a.label}</a>
-        ${a.subpages.map(s => `<a href="${a.slug}-${s.slug}.html">${s.title}</a>`).join('\n        ')}
-      </div>`).join('');
   return `  <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
         <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p>5 place Denis Papin, 95470 Fosses</p>
-        <p><a href="tel:${TEL_PODO.tel}">${TEL_PODO.txt}</a> · <a href="tel:${TEL_REFLEX.tel}">${TEL_REFLEX.txt}</a></p>
-      </div>${cols}
+        <p>5 place Denis Papin<br />95470 Fosses</p>
+        <p>Consultations sur rendez-vous, en ligne sur <a href="${DOCTOLIB}" target="_blank" rel="noopener">Doctolib</a>.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Horaires</p>
+${horairesFooter()}
+        <p class="footer-note">Sur rendez-vous · soins possibles à domicile</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Accès &amp; rendez-vous</p>
+        <a href="${MAPS_LINK}" target="_blank" rel="noopener">Voir sur Google Maps →</a>
+        <a href="${DOCTOLIB}" target="_blank" rel="noopener">Rendez-vous sur Doctolib →</a>
+        <a href="index.html#cabinet">Horaires &amp; plan d'accès →</a>
+      </div>
     </div>
     <p class="footer-copy">
       © 2026 Clémentine Olive · La réflexologie est une pratique de bien-être qui ne se substitue pas à un suivi médical.
@@ -203,7 +262,6 @@ function footer() {
     <nav class="footer-legal" aria-label="Liens légaux">
       <a href="mentions-legales.html">Mentions légales</a>
       <a href="confidentialite.html">Politique de confidentialité</a>
-      <a href="contact.html">Contact</a>
     </nav>
   </footer>`;
 }
@@ -267,33 +325,20 @@ ${footer()}
 }
 
 /* ---------------- Composants réutilisables ---------------- */
-const telBtn = (a, cls = 'btn-ghost') =>
-  `<a href="tel:${a.phone.tel}" class="btn ${cls}">${a.phone.txt}</a>`;
+// Bouton de réservation : toutes les activités passent par Doctolib.
+const bookActions = () =>
+  `<a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>`;
 
-// Bouton de réservation adapté : Doctolib (pédicurie/podologie) ou téléphone (réflexologie)
-function bookBtn(a) {
-  if (a.booking === 'doctolib') {
-    return `<a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>`;
-  }
-  return `<a href="tel:${a.phone.tel}" class="btn btn-rose">Rendez-vous par téléphone</a>`;
-}
-// Boutons combinés pour les encarts d'action (réservation + rappel téléphone)
-function bookActions(a) {
-  const secondary = a.booking === 'doctolib' ? '\n            ' + telBtn(a) : '';
-  return bookBtn(a) + secondary;
-}
-
-function faqBlock(a) {
+function faqBlock(a, id = '') {
   const items = a.faq.map(([q, ans]) =>
     `        <details>
           <summary>${q}</summary>
           <div class="faq-body">${ans}</div>
         </details>`).join('\n');
-  return `    <section class="section ${a.color === 'rose' ? 'section-rose' : ''}">
+  return `    <section${id ? ` id="${id}"` : ''} class="section ${a.color === 'rose' ? 'section-rose' : ''}">
       <div class="container">
         <div class="section-head">
-          <p class="section-eyebrow">Questions fréquentes</p>
-          <h2>Vous vous posez peut-être ces questions</h2>
+          <h2>Questions fréquentes</h2>
         </div>
         <div class="faq">
 ${items}
@@ -302,67 +347,33 @@ ${items}
     </section>`;
 }
 
-function tarifBlock(a) {
-  const rose = a.color === 'rose';
-  const rows = a.tarifs.map(([label, prix]) =>
-    `          <li><span>${label}</span><span class="prix">${prix}</span></li>`).join('\n');
-  return `    <section id="tarifs" class="section section-creme">
-      <div class="container">
-        <p class="section-eyebrow" style="text-align:center">Tarifs</p>
-        <div class="tarif-bloc${rose ? ' accent-rose' : ''}">
-          <h2>Tarifs ${a.label.toLowerCase()}</h2>
-          <ul class="tarif-liste">
+// Table des horaires (réutilisée : accueil + contact)
+function horairesTable() {
+  const rows = HORAIRES.map(h =>
+    h.creneaux
+      ? `            <tr><td class="jour">${h.jour}</td><td>${h.creneaux}</td></tr>`
+      : `            <tr><td class="jour">${h.jour}</td><td class="ferme">Fermé</td></tr>`
+  ).join('\n');
+  return `          <table class="horaires">
+            <tbody>
 ${rows}
-          </ul>
-          <div class="bloc-actions" style="justify-content:center">
-            ${bookActions(a)}
+            </tbody>
+          </table>`;
+}
+
+// Carte Google Maps en chargement au clic (RGPD) — réutilisée : accueil + contact
+function mapEmbed() {
+  return `        <div class="map-embed" id="map-embed" data-src="${MAPS_EMBED}">
+          <div class="map-consent">
+            <span class="ico" aria-hidden="true">🗺️</span>
+            <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
+            <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
+            <p><a href="${MAPS_LINK}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
           </div>
-        </div>
-        <p class="tarif-note">${a.tarifNote}</p>
-      </div>
-    </section>`;
+        </div>`;
 }
 
 /* ---------------- Pages ---------------- */
-function activityLanding(a) {
-  const rose = a.color === 'rose';
-  const cards = a.subpages.map(s =>
-    `          <a class="card-link${rose ? ' accent-rose' : ''}" href="${a.slug}-${s.slug}.html">
-            <span class="ico" aria-hidden="true">${s.ico}</span>
-            <h3>${s.title}</h3>
-            <p>${s.teaser}</p>
-            <span class="go">En savoir plus →</span>
-          </a>`).join('\n');
-  const body = `    <section class="page-hero${rose ? ' hero-rose' : ''}">
-      <div class="container">
-        <h1>${a.label}</h1>
-        <p class="lead">${a.lead}</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-eyebrow">${a.label}</p>
-          <h2>Ce que je peux faire pour vous</h2>
-          <p>Choisissez le sujet qui vous concerne pour en savoir plus.</p>
-        </div>
-        <div class="card-grid">
-${cards}
-        </div>
-      </div>
-    </section>
-
-${faqBlock(a)}
-
-${tarifBlock(a)}`;
-  return shell({
-    title: `${a.label} — Clémentine Olive à Fosses (95)`,
-    description: `${a.label} par Clémentine Olive à Fosses (95470). ${a.lead}`,
-    active: `${a.slug}.html`, body,
-  });
-}
-
 function subPage(a, s) {
   const rose = a.color === 'rose';
   const blocks = s.blocks.map(([h, content]) => {
@@ -380,19 +391,14 @@ function subPage(a, s) {
     <section class="section">
       <div class="container">
         <div class="article">
-          <p class="breadcrumb">
-            <a href="index.html">Accueil</a><span class="sep">›</span>
-            <a href="${a.slug}.html">${a.label}</a><span class="sep">›</span>
-            ${s.title}
-          </p>
 ${blocks}
           <div class="article-cta${rose ? ' accent-rose' : ''}">
             <p>Une question ou envie de prendre rendez-vous ?</p>
             <div class="bloc-actions" style="justify-content:center">
-              ${bookActions(a)}
+              ${bookActions()}
             </div>
           </div>
-          <a class="back-link" href="${a.slug}.html">← Retour à ${a.label}</a>
+          <a class="back-link" href="index.html#${a.slug}">← Retour à ${a.label}</a>
         </div>
       </div>
     </section>`;
@@ -404,26 +410,52 @@ ${blocks}
 }
 
 function homePage() {
+  const HOME_CARDS = {
+    pedicurie: {
+      intro: "Prendre soin de vos pieds au quotidien, au cabinet comme à domicile.",
+      items: [
+        { label: "Affections de l'ongle et de la peau", href: 'pedicurie-affections-ongle-peau.html' },
+        { label: 'Suivi des patients diabétiques', href: 'pedicurie-patients-diabetiques.html' },
+        { label: 'Verrues plantaires par cryothérapie', href: 'pedicurie-verrue-plantaire.html' },
+        { label: 'Conseils pour bien couper ses ongles', href: 'pedicurie-coupe-ongles.html' },
+      ],
+    },
+    podologie: {
+      intro: "Analyser votre posture et votre marche pour soulager et prévenir durablement.",
+      items: [
+        { label: 'Bilan podologique', href: 'podologie-bilan-podologique.html' },
+        { label: 'Semelles orthopédiques sur mesure', href: 'podologie-semelles.html' },
+      ],
+    },
+    reflexologie: {
+      intro: "Un vrai moment de détente et de bien-être, par les pieds.",
+      items: [
+        { label: "Qu'est-ce que c'est ?", href: 'reflexologie.html#presentation' },
+        { label: 'Dans quel cas ?', href: 'reflexologie.html#dans-quel-cas' },
+        { label: 'Le déroulé et les bienfaits', href: 'reflexologie.html#bienfaits' },
+      ],
+    },
+  };
   const cards = ACTIVITIES.map(a => {
-    const rose = a.color === 'rose';
-    return `          <a class="card-link activity-card${rose ? ' accent-rose' : ''}" href="${a.slug}.html">
-            <span class="ico" aria-hidden="true">${rose ? '🌸' : (a.slug === 'podologie' ? '👣' : '🦶')}</span>
+    const c = HOME_CARDS[a.slug];
+    const items = c.items.map(i =>
+      i.href
+        ? `              <li><a href="${i.href}">${i.label}</a></li>`
+        : `              <li>${i.label}</li>`
+    ).join('\n');
+    return `          <div class="activity-card" id="${a.slug}">
             <h3>${a.label}</h3>
-            <p>${a.lead}</p>
-            <span class="go">Découvrir →</span>
-          </a>`;
+            <p class="card-intro">${c.intro}</p>
+            <ul class="card-list">
+${items}
+            </ul>
+          </div>`;
   }).join('\n');
   const body = `    <section id="accueil" class="hero">
       <div class="container">
-        <p class="hero-eyebrow">À Fosses (95) · Au cabinet et à domicile</p>
-        <h1>Prendre soin de vos pieds,<br />en douceur et en confiance</h1>
-        <p class="hero-lead">
-          Je suis <strong>Clémentine Olive</strong>, pédicure-podologue diplômée d'État
-          et réflexologue certifiée. Je vous accompagne pour la santé de vos pieds
-          et votre bien-être, dans un cadre calme et rassurant.
-        </p>
+        <h1>Prenez soin de vous,<br />en commençant par vos pieds</h1>
         <div class="hero-actions">
-          <a href="contact.html#rendez-vous" class="btn btn-primary">Prendre rendez-vous</a>
+          <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Prendre rendez-vous</a>
           <a href="#activites" class="btn btn-ghost">Découvrir mes soins</a>
         </div>
       </div>
@@ -432,51 +464,55 @@ function homePage() {
     <section id="activites" class="section section-creme">
       <div class="container">
         <div class="section-head">
-          <p class="section-eyebrow">Mes activités</p>
           <h2>Trois manières de prendre soin de vous</h2>
-          <p>Choisissez le domaine qui vous concerne.</p>
         </div>
+        <p class="info-callout">Consulter un pédicure-podologue ne nécessite plus d'ordonnance de la part de votre médecin traitant dans le cadre des soins diabétiques, des semelles orthopédiques et des verrues plantaires. Votre praticien peut lui-même la rédiger.</p>
         <div class="card-grid">
 ${cards}
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section id="apropos" class="section">
       <div class="container apropos">
-        <div class="apropos-photo">Portrait de Clémentine ici</div>
+        <div class="apropos-photo">
+          <img src="assets/portrait-clementine.jpg" alt="Clémentine Olive, pédicure-podologue et réflexologue à Fosses" width="732" height="1280" loading="lazy" />
+        </div>
         <div>
-          <p class="section-eyebrow">La praticienne</p>
-          <h2>Clémentine Olive</h2>
-          <p><strong>Pédicure-podologue diplômée d'État</strong> et <strong>réflexologue certifiée</strong>,
-             j'ai à cœur de prendre soin de chacun avec écoute et bienveillance, au cabinet comme à domicile.</p>
-          <ul class="qualifications">
-            <li><span class="q-ico" aria-hidden="true">🎓</span> Pédicure-Podologue — Diplôme d'État (D.E)</li>
-            <li><span class="q-ico" aria-hidden="true">🌸</span> Réflexologue certifiée — école E.T.R.E</li>
-            <li><span class="q-ico" aria-hidden="true">🏡</span> Soins possibles à domicile</li>
+          <h2>À propos de Clémentine Olive</h2>
+          <p>Diplômée de pédicurie-podologie depuis juillet 2019, j'ai d'abord effectué des remplacements
+             dans plusieurs cabinets et des collaborations, avant de m'installer à mon compte en avril 2023.</p>
+          <p>Au cabinet, je pratique la <strong>pédicurie</strong> (coupe d'ongles, soin des mycoses,
+             ongles incarnés…), la <strong>podologie</strong> (bilan podologique, confection de semelles
+             orthopédiques) et la <strong>réflexologie plantaire</strong>.</p>
+          <p>Je porte un intérêt particulier au bien-être de l'autre, et cela se retranscrit dans mes soins.</p>
+          <h3 class="dip-titre">Diplômes</h3>
+          <ul class="diplomes">
+            <li><span class="dip-annee">2019</span> <span>Diplôme d'État de pédicure-podologue — École Supérieure de Masseurs-Kinésithérapeutes et Pédicures (ESMKP), Paris</span></li>
+            <li><span class="dip-annee">2024</span> <span>Bilan diagnostique en podo-pédiatrie — connaissance et évolution</span></li>
+            <li><span class="dip-annee">2026</span> <span>Certificat de Réflexologue — école E.T.R.E, Paris</span></li>
           </ul>
-          <div class="bloc-actions"><a href="apropos.html" class="btn btn-ghost">En savoir plus</a></div>
         </div>
       </div>
     </section>
 
-    <section class="section section-vert">
-      <div class="container infos-grid">
-        <div class="info-bloc">
-          <h3>Adresse</h3>
-          <p>5 place Denis Papin<br />95470 Fosses</p>
-          <p class="info-note">Soins possibles à domicile</p>
+    <section id="cabinet" class="section section-creme">
+      <div class="container">
+        <div class="section-head">
+          <h2>Infos pratiques &amp; accès</h2>
         </div>
-        <div class="info-bloc">
-          <h3>Téléphone</h3>
-          <p>Pédicurie / Podologie<br /><a href="tel:${TEL_PODO.tel}">${TEL_PODO.txt}</a></p>
-          <p>Réflexologie<br /><a href="tel:${TEL_REFLEX.tel}">${TEL_REFLEX.txt}</a></p>
+        <div class="cabinet-top">
+          <figure class="cabinet-photo">
+            <img src="assets/cabinet.webp" alt="Le cabinet de Clémentine Olive à Fosses : espace lumineux et apaisant" width="933" height="700" loading="lazy" />
+            <figcaption>5 place Denis Papin · 95470 Fosses</figcaption>
+          </figure>
+          <div class="pratique-card">
+            <h3>Horaires du cabinet</h3>
+${horairesTable()}
+            <p class="pratique-note">Uniquement sur rendez-vous.</p>
+          </div>
         </div>
-        <div class="info-bloc">
-          <h3>Sur rendez-vous</h3>
-          <p>Les consultations se font uniquement sur rendez-vous, pour vous accueillir dans les meilleures conditions.</p>
-          <a href="contact.html#rendez-vous">Prendre rendez-vous →</a>
-        </div>
+${mapEmbed()}
       </div>
     </section>`;
   return shell({
@@ -486,124 +522,9 @@ ${cards}
   });
 }
 
-function aproposPage() {
-  const body = `    <section class="page-hero">
-      <div class="container"><h1>La praticienne</h1></div>
-    </section>
-    <section class="section">
-      <div class="container apropos">
-        <div class="apropos-photo">Portrait de Clémentine ici</div>
-        <div>
-          <p class="section-eyebrow">À propos</p>
-          <h2>Clémentine Olive</h2>
-          <p><strong>Pédicure-podologue diplômée d'État</strong> et <strong>réflexologue certifiée</strong>,
-             j'ai à cœur de prendre soin de chacun avec écoute et bienveillance. Mon approche se veut avant tout
-             humaine, douce et rassurante.</p>
-          <p>De la santé du pied au moment de détente, je prends le temps de vous accueillir et de m'adapter
-             à vos besoins, au cabinet comme à votre domicile. Je vous reçois uniquement sur rendez-vous,
-             pour vous consacrer toute mon attention.</p>
-          <ul class="qualifications">
-            <li><span class="q-ico" aria-hidden="true">🎓</span> Pédicure-Podologue — Diplôme d'État (D.E)</li>
-            <li><span class="q-ico" aria-hidden="true">🌸</span> Réflexologue certifiée — école E.T.R.E</li>
-            <li><span class="q-ico" aria-hidden="true">🏡</span> Soins possibles à domicile</li>
-            <li><span class="q-ico" aria-hidden="true">👂</span> Écoute, douceur et suivi personnalisé</li>
-          </ul>
-          <div class="bloc-actions"><a href="contact.html#rendez-vous" class="btn btn-primary">Prendre rendez-vous</a></div>
-        </div>
-      </div>
-    </section>`;
-  return shell({
-    title: "La praticienne — Clémentine Olive (Fosses 95)",
-    description: "Clémentine Olive, pédicure-podologue diplômée d'État et réflexologue certifiée à Fosses. Parcours et approche.",
-    active: 'apropos.html', body,
-  });
-}
-
-function contactPage() {
-  const horaireRows = HORAIRES.map(h =>
-    h.creneaux
-      ? `          <tr><td class="jour">${h.jour}</td><td>${h.creneaux}</td></tr>`
-      : `          <tr><td class="jour">${h.jour}</td><td class="ferme">Fermé</td></tr>`
-  ).join('\n');
-
-  const body = `    <section class="page-hero">
-      <div class="container">
-        <h1>Contact, accès &amp; rendez-vous</h1>
-        <p class="lead">Retrouvez ici comment prendre rendez-vous, les horaires et le plan d'accès du cabinet.</p>
-      </div>
-    </section>
-
-    <!-- Réservation -->
-    <section id="rendez-vous" class="section section-creme">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-eyebrow">Rendez-vous</p>
-          <h2>Prendre rendez-vous</h2>
-          <p>Consultations uniquement sur rendez-vous.</p>
-        </div>
-        <div class="booking-grid">
-          <div class="booking-card">
-            <span class="ico" aria-hidden="true">👣</span>
-            <h3>Pédicurie &amp; Podologie</h3>
-            <p>Réservez votre créneau en ligne, en quelques clics, sur Doctolib.</p>
-            <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>
-            <p style="margin-top:14px"><a href="tel:${TEL_PODO.tel}">ou par téléphone : ${TEL_PODO.txt}</a></p>
-          </div>
-          <div class="booking-card accent-rose">
-            <span class="ico" aria-hidden="true">🌸</span>
-            <h3>Réflexologie</h3>
-            <p>Pour une séance de réflexologie, contactez-moi directement par téléphone.</p>
-            <a href="tel:${TEL_REFLEX.tel}" class="btn btn-rose">Appeler le ${TEL_REFLEX.txt}</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Horaires -->
-    <section id="horaires" class="section">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-eyebrow">Horaires</p>
-          <h2>Horaires du cabinet</h2>
-        </div>
-        <div class="horaires-wrap">
-          <table class="horaires">
-            <tbody>
-${horaireRows}
-            </tbody>
-          </table>
-          <p class="horaires-note">Sur rendez-vous · Soins également possibles à domicile.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Accès / carte -->
-    <section id="acces" class="section section-vert">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-eyebrow">Accès</p>
-          <h2>Où me trouver</h2>
-          <p>${ADRESSE.rue} · ${ADRESSE.cp} ${ADRESSE.ville}</p>
-        </div>
-        <div class="map-embed" id="map-embed" data-src="${MAPS_EMBED}">
-          <div class="map-consent">
-            <span class="ico" aria-hidden="true">🗺️</span>
-            <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
-            <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
-            <p><a href="${MAPS_LINK}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  return shell({
-    title: "Contact, accès & rendez-vous — Clémentine Olive (Fosses 95)",
-    description: "Contactez Clémentine Olive à Fosses (95470) : rendez-vous Doctolib (pédicurie, podologie), téléphone (réflexologie), horaires et plan d'accès.",
-    active: 'contact.html', body,
-  });
-}
 
 /* ---------- Pages légales ---------- */
-function legalPage({ slug, title, heading, body }) {
+function legalPage({ heading, body }) {
   const content = `    <section class="page-hero">
       <div class="container"><h1>${heading}</h1></div>
     </section>
@@ -618,21 +539,22 @@ ${body}
 }
 
 function mentionsLegales() {
-  const body = `        <p>Conformément à la loi, voici les mentions légales du site. <span class="todo">(Éléments à compléter avec les informations réelles.)</span></p>
+  const body = `        <p>Conformément à la loi, voici les mentions légales du site.</p>
         <h2>Éditeur du site</h2>
         <p>Clémentine Olive — Pédicure-Podologue D.E, Réflexologue<br />
         ${ADRESSE.rue}, ${ADRESSE.cp} ${ADRESSE.ville}<br />
         Téléphone : ${TEL_PODO.txt}<br />
-        <span class="todo">SIRET : à compléter</span> · <span class="todo">N° ADELI / RPPS : à compléter</span></p>
+        SIRET : 852 373 281 00058<br />
+        N° ADELI : 958000523 · N° RPPS : 10101834504</p>
         <h2>Directrice de la publication</h2>
         <p>Clémentine Olive</p>
         <h2>Hébergement</h2>
-        <p><span class="todo">Nom, adresse et téléphone de l'hébergeur à compléter.</span></p>
+        <p><span class="todo">Nom, adresse et téléphone de l'hébergeur à compléter une fois l'hébergeur choisi.</span></p>
         <h2>Propriété intellectuelle</h2>
         <p>L'ensemble du contenu de ce site (textes, images, logo) est protégé. Toute reproduction sans autorisation est interdite.</p>
         <h2>Données personnelles</h2>
         <p>Les informations transmises via ce site sont traitées conformément à notre <a href="confidentialite.html">politique de confidentialité</a>.</p>`;
-  return legalPage({ slug: 'mentions-legales', title: 'Mentions légales', heading: 'Mentions légales', body });
+  return legalPage({ heading: 'Mentions légales', body });
 }
 
 function confidentialite() {
@@ -649,7 +571,147 @@ function confidentialite() {
         </ul>
         <h2>Vos droits</h2>
         <p>Vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet au ${TEL_PODO.txt}.</p>`;
-  return legalPage({ slug: 'confidentialite', title: 'Politique de confidentialité', heading: 'Politique de confidentialité', body });
+  return legalPage({ heading: 'Politique de confidentialité', body });
+}
+
+/* ---------- Page Tarifs (regroupe les trois activités) ---------- */
+function tarifsPage() {
+  const blocs = ACTIVITIES.map(a => {
+    const rose = a.color === 'rose';
+    const rows = a.tarifs.map(([label, prix, mod]) =>
+      !prix
+        ? `            <li class="tarif-head"><span>${label}</span></li>`
+        : `            <li${mod === 'sub' ? ' class="tarif-indent"' : ''}><span>${label}</span><span class="prix">${prix}</span></li>`).join('\n');
+    return `        <div class="tarif-bloc${rose ? ' accent-rose' : ''}">
+          <h2>${a.label}</h2>
+          <ul class="tarif-liste">
+${rows}
+          </ul>
+          ${a.tarifNote ? `<p class="tarif-note">${a.tarifNote}</p>` : ''}
+        </div>`;
+  }).join('\n');
+  const body = `    <section class="page-hero">
+      <div class="container">
+        <h1>Tarifs</h1>
+        <p class="lead">Les tarifs de la pédicurie, de la podologie et de la réflexologie.</p>
+      </div>
+    </section>
+
+    <section class="section section-creme">
+      <div class="container tarifs-page">
+${blocs}
+        <div class="tarifs-info">
+          <p><strong>Consultation à domicile</strong> — je me déplace avec mon matériel de pédicurie ; prévoyez simplement une serviette de toilette de taille moyenne.</p>
+          <p><strong>Zone d'action :</strong> Fosses, Marly-la-Ville, Survilliers, La Chapelle-en-Serval, Bellefontaine.</p>
+        </div>
+        <div class="bloc-actions" style="justify-content:center">
+          <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>
+          <a href="index.html#cabinet" class="btn btn-ghost">Horaires &amp; accès</a>
+        </div>
+      </div>
+    </section>`;
+  return shell({
+    title: "Tarifs — Clémentine Olive (Fosses 95)",
+    description: "Tarifs de pédicurie, podologie et réflexologie de Clémentine Olive à Fosses (95470). Paiement : carte bancaire, chèque, espèces.",
+    active: 'tarifs.html', body,
+  });
+}
+
+/* ---------- Page FAQ (pédicurie & podologie) ---------- */
+function faqPage() {
+  const sections = [pedicurie, podologie].map(a => {
+    const items = a.faq.map(([q, ans]) =>
+      `          <details>
+            <summary>${q}</summary>
+            <div class="faq-body">${ans}</div>
+          </details>`).join('\n');
+    return `        <h2 class="faq-groupe">${a.label}</h2>
+        <div class="faq">
+${items}
+        </div>`;
+  }).join('\n');
+  const body = `    <section class="page-hero">
+      <div class="container">
+        <h1>Questions fréquentes</h1>
+        <p class="lead">Les réponses aux questions les plus courantes sur la pédicurie et la podologie.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+${sections}
+        <div class="article-cta">
+          <p>Une autre question ou envie de prendre rendez-vous ?</p>
+          <div class="bloc-actions" style="justify-content:center">
+            <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>
+            <a href="index.html#cabinet" class="btn btn-ghost">Horaires &amp; accès</a>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  return shell({
+    title: "Questions fréquentes — Clémentine Olive (Fosses 95)",
+    description: "Questions fréquentes sur la pédicurie et la podologie — Clémentine Olive, pédicure-podologue à Fosses (95470).",
+    active: 'faq.html', body,
+  });
+}
+
+/* ---------- Page Réflexologie (page unique, sections à ancres) ---------- */
+function reflexologiePage() {
+  const a = reflexologie;
+  const pres = a.subpages.find(s => s.slug === 'presentation');
+  const cas = a.subpages.find(s => s.slug === 'dans-quel-cas');
+  const bienfaits = a.subpages.find(s => s.slug === 'bienfaits');
+  const renderBlocks = blocks => blocks.map(([h, content]) => {
+    const head = h ? `        <h3>${h}</h3>\n` : '';
+    return Array.isArray(content)
+      ? `${head}        <ul>${content.map(li => `\n          <li>${li}</li>`).join('')}\n        </ul>`
+      : `${head}        <p>${content}</p>`;
+  }).join('\n');
+
+  const body = `    <section id="presentation" class="page-hero hero-rose">
+      <div class="container">
+        <h1>Qu'est-ce que la réflexologie ?</h1>
+        <p class="lead">7 200 terminaisons nerveuses dans chaque pied.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="article">
+${renderBlocks(pres.blocks)}
+        </div>
+      </div>
+    </section>
+
+    <section id="dans-quel-cas" class="section section-creme">
+      <div class="container">
+        <div class="section-head">
+          <h2>Dans quel cas ?</h2>
+        </div>
+        <div class="article">
+${renderBlocks(cas.blocks)}
+        </div>
+      </div>
+    </section>
+
+    <section id="bienfaits" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Le déroulé et les bienfaits</h2>
+        </div>
+        <div class="article">
+${renderBlocks(bienfaits.blocks)}
+        </div>
+      </div>
+    </section>
+
+${faqBlock(a, 'faq')}`;
+  return shell({
+    title: "Réflexologie — Clémentine Olive à Fosses (95)",
+    description: `Réflexologie plantaire par Clémentine Olive à Fosses (95470). ${a.lead}`,
+    active: 'reflexologie.html', body,
+  });
 }
 
 /* ---------------- Écriture des fichiers ---------------- */
@@ -657,12 +719,14 @@ const out = [];
 const write = (name, html) => { writeFileSync(new URL(`./${name}`, import.meta.url), html); out.push(name); };
 
 write('index.html', homePage());
-write('apropos.html', aproposPage());
-write('contact.html', contactPage());
+write('tarifs.html', tarifsPage());
+write('faq.html', faqPage());
 write('mentions-legales.html', mentionsLegales());
 write('confidentialite.html', confidentialite());
 for (const a of ACTIVITIES) {
-  write(`${a.slug}.html`, activityLanding(a));
+  if (a.slug === 'reflexologie') { write('reflexologie.html', reflexologiePage()); continue; }
+  // Pédicurie & Podologie : plus de page d'atterrissage (les cartes de l'accueil font l'index),
+  // on ne génère que les pages détaillées de chaque soin.
   for (const s of a.subpages) write(`${a.slug}-${s.slug}.html`, subPage(a, s));
 }
 console.log(`✓ ${out.length} pages générées :\n  ` + out.join('\n  '));

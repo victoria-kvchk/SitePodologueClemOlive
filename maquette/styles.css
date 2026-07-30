@@ -87,8 +87,6 @@ a:focus-visible, button:focus-visible {
 }
 .btn-primary { background: var(--vert-fonce); color: #fff; box-shadow: var(--ombre); }
 .btn-primary:hover { background: #275c50; transform: translateY(-2px); }
-.btn-rose { background: var(--rose-fonce); color: #fff; }
-.btn-rose:hover { background: #a05a4f; transform: translateY(-2px); }
 .btn-ghost {
   background: transparent;
   color: var(--vert-fonce);
@@ -97,6 +95,9 @@ a:focus-visible, button:focus-visible {
 .btn-ghost:hover { background: var(--vert-clair); transform: translateY(-2px); }
 
 /* ---------- En-tête / navigation ---------- */
+/* Décalage des ancres pour l'en-tête collant */
+section[id], [id]:target { scroll-margin-top: 92px; }
+
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(251, 246, 238, 0.92);
@@ -128,6 +129,33 @@ a:focus-visible, button:focus-visible {
 .nav .nav-cta:hover { background: #275c50; color: #fff; }
 .nav a.nav-cta.is-active { color: #fff; }
 
+/* ---------- Sous-menu déroulant (Pédicurie & Podologie) ---------- */
+.nav-group { position: relative; display: inline-flex; }
+.nav-group-trigger {
+  font: inherit; cursor: pointer; border: none; background: none;
+  color: var(--texte); font-weight: 600; font-size: 0.98rem;
+  padding: 9px 12px; border-radius: 999px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: background .2s ease, color .2s ease;
+}
+.nav-group-trigger:hover,
+.nav-group.is-active .nav-group-trigger { background: var(--vert-clair); color: var(--vert-fonce); }
+.nav-group .caret { font-size: .7rem; transition: transform .2s ease; }
+.nav-submenu {
+  position: absolute; top: 100%; left: 0; min-width: 230px;
+  display: flex; flex-direction: column; gap: 2px;
+  background: var(--blanc); border-radius: 16px; padding: 12px 8px 8px;
+  box-shadow: var(--ombre); z-index: 200;
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.nav-group:hover .nav-submenu,
+.nav-group:focus-within .nav-submenu,
+.nav-group.open .nav-submenu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-group:hover .caret,
+.nav-group.open .caret { transform: rotate(180deg); }
+.nav-submenu a { white-space: nowrap; }
+
 .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
 .nav-toggle span {
   display: block; width: 26px; height: 3px; margin: 5px 0;
@@ -156,168 +184,84 @@ a:focus-visible, button:focus-visible {
   padding: 90px 0 80px;
   text-align: center;
 }
-.hero-eyebrow {
-  color: var(--vert-fonce); font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; font-size: .9rem; margin-bottom: 14px;
-}
 .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 22px; }
-.hero-lead {
-  max-width: 640px; margin: 0 auto 32px; font-size: 1.22rem;
-  color: var(--texte);
-}
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
 /* ---------- Sections génériques ---------- */
 .section { padding: 84px 0; }
 .section-creme { background: var(--creme-fonce); }
-.section-vert { background: var(--vert-clair); }
 .section-rose { background: var(--rose-clair); }
-
-.section-eyebrow {
-  color: var(--vert-fonce); font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; font-size: .85rem; margin-bottom: 10px;
-}
-.section-rose .section-eyebrow { color: var(--rose-fonce); }
 .section-head { max-width: 720px; margin: 0 auto 48px; text-align: center; }
 .section-head p { color: var(--texte-doux); font-size: 1.1rem; margin-top: 12px; }
 
-/* ---------- Motifs de consultation (grille) ---------- */
-.motifs-grid {
-  display: grid; gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-.motif {
-  background: var(--blanc); border-radius: var(--radius); padding: 28px 26px;
-  box-shadow: var(--ombre-douce);
-  border: 1px solid rgba(46,110,96,0.06);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.motif:hover { transform: translateY(-4px); box-shadow: var(--ombre); }
-.motif .ico { font-size: 2rem; display: block; margin-bottom: 12px; }
-.motif h3 { font-size: 1.3rem; margin-bottom: 6px; }
-.motif p { color: var(--texte-doux); font-size: 1rem; margin: 0; }
-
-/* ---------- Sections détail (texte + visuel) ---------- */
-.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-.split-inverse .split-text { order: 2; }
-.split-inverse .split-media { order: 1; }
-.split-text h2 { margin-bottom: 18px; }
-.split-text ul { list-style: none; margin: 20px 0 26px; }
-.split-text li {
-  position: relative; padding-left: 32px; margin-bottom: 12px; font-size: 1.08rem;
-}
-.split-text li::before {
-  content: '✓'; position: absolute; left: 0; top: 0;
-  color: var(--vert-fonce); font-weight: 800;
-}
-.section-rose .split-text li::before { color: var(--rose-fonce); }
-
-.split-media {
-  min-height: 340px; border-radius: 24px; box-shadow: var(--ombre);
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(59,70,66,.5); font-style: italic; text-align: center; padding: 20px;
-}
-.media-vert { background:
-  linear-gradient(135deg, rgba(111,177,162,.35), rgba(216,196,162,.30)); }
-.media-rose { background:
-  linear-gradient(135deg, rgba(231,167,154,.38), rgba(216,196,162,.30)); }
-
-.mention {
-  font-size: .98rem; color: var(--texte-doux); font-style: italic;
-  border-left: 3px solid var(--rose); padding-left: 14px; margin-top: 6px;
-}
 .bloc-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
 
 /* ---------- Tarifs ---------- */
-.tarifs-grid {
-  display: grid; gap: 28px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  max-width: 900px; margin: 0 auto;
-}
-.tarif-carte {
-  background: var(--blanc); border-radius: var(--radius); padding: 34px 32px;
-  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
-  display: flex; flex-direction: column;
-}
-.tarif-carte.tarif-rose { border-top-color: var(--rose); }
-.tarif-carte h3 { font-size: 1.6rem; margin-bottom: 18px; }
-.tarif-carte.tarif-rose h3 { color: var(--rose-fonce); }
 .tarif-liste { list-style: none; margin-bottom: 22px; }
 .tarif-liste li {
   display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
   padding: 12px 0; border-bottom: 1px dashed rgba(59,70,66,.15);
+  font-size: .92rem;
 }
 .tarif-liste li:last-child { border-bottom: none; }
 .tarif-liste .prix { font-weight: 800; color: var(--vert-fonce); white-space: nowrap; }
-.tarif-rose .tarif-liste .prix { color: var(--rose-fonce); }
-.tarif-carte .btn { margin-top: auto; align-self: flex-start; }
-.tarifs-note {
-  text-align: center; margin: 34px auto 0; max-width: 700px;
-  color: var(--texte-doux); font-size: .98rem;
+.tarif-sub { display: block; margin-top: 5px; font-size: .82rem; color: var(--texte-doux); font-weight: 400; line-height: 1.4; }
+.tarifs-info {
+  width: 100%; max-width: 700px; margin: 0 auto;
+  padding: 20px 24px; background: var(--vert-clair); border-radius: var(--radius);
 }
-
-/* ---------- Qualifications (à propos) ---------- */
-.qualifications { list-style: none; margin: 24px 0 8px; }
-.qualifications li {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 0; font-size: 1.06rem; font-weight: 600; color: var(--texte);
+.tarifs-info p { margin: 0 0 8px; font-size: .96rem; line-height: 1.6; }
+.tarifs-info p:last-child { margin: 0; }
+.tarif-liste .tarif-head {
+  display: block; border-bottom: none; padding: 16px 0 2px;
+  font-weight: 800; color: var(--vert-fonce);
 }
-.qualifications .q-ico { font-size: 1.4rem; }
+.tarif-liste .tarif-indent { padding-left: 18px; }
 
 /* ---------- À propos ---------- */
 .apropos { display: grid; grid-template-columns: 320px 1fr; gap: 56px; align-items: center; }
+.dip-titre { color: var(--vert-fonce); margin: 26px 0 10px; }
+.diplomes { list-style: none; margin: 0 0 6px; display: flex; flex-direction: column; gap: 10px; }
+.diplomes li { display: flex; gap: 14px; align-items: baseline; line-height: 1.5; }
+.diplomes .dip-annee {
+  flex: 0 0 auto; min-width: 46px; font-weight: 800; color: var(--vert-fonce);
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+}
 .apropos-photo {
   aspect-ratio: 3/4; border-radius: 24px; box-shadow: var(--ombre);
   background: linear-gradient(135deg, rgba(111,177,162,.30), rgba(231,167,154,.28));
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(59,70,66,.5); font-style: italic; text-align: center; padding: 20px;
+  overflow: hidden;
 }
-
-/* ---------- Prise de rendez-vous ---------- */
-.rdv { text-align: center; }
-.calendly-placeholder {
-  max-width: 780px; margin: 30px auto 0; min-height: 420px;
-  background: var(--blanc); border: 2px dashed var(--vert);
-  border-radius: var(--radius); display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 12px; padding: 40px;
-  color: var(--texte-doux);
+.apropos-photo img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: 45% 20%;
 }
-.calendly-placeholder .big { font-size: 3rem; }
-.rdv-tel { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-
-/* ---------- Infos pratiques ---------- */
-.infos-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
-.info-bloc {
-  background: var(--blanc); border-radius: var(--radius); padding: 30px;
-  box-shadow: var(--ombre-douce);
-}
-.info-bloc h3 { color: var(--vert-fonce); margin-bottom: 12px; }
-.info-bloc a { font-weight: 700; }
-.info-note { color: var(--texte-doux); font-size: .98rem; margin-top: 10px; }
 
 /* ---------- Pied de page ---------- */
 .site-footer { background: var(--vert-fonce); color: #eaf3ef; padding: 54px 0 26px; }
 .site-footer h3, .footer-brand { color: #fff; }
 .footer-inner {
-  display: grid; gap: 30px;
-  grid-template-columns: 1.4fr repeat(3, 1fr);
+  display: grid; gap: 40px;
+  grid-template-columns: 1.4fr 1.2fr 1fr;
 }
 .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 8px; }
 .footer-brand-col a { color: #cfe4dc; }
+.footer-brand-col p { margin-bottom: 10px; line-height: 1.5; }
 .footer-col { display: flex; flex-direction: column; gap: 8px; }
 .footer-col a { color: #cfe4dc; text-decoration: none; font-size: .96rem; }
 .footer-col a:hover { color: #fff; text-decoration: underline; }
-.footer-col .footer-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
-.footer-links { display: flex; flex-direction: column; gap: 8px; }
-.footer-links a { color: #cfe4dc; text-decoration: none; }
-.footer-links a:hover { color: #fff; text-decoration: underline; }
+.footer-col .footer-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.footer-horaires { list-style: none; display: flex; flex-direction: column; gap: 5px; margin: 0 0 6px; }
+.footer-horaires li { display: flex; gap: 12px; font-size: .9rem; color: #cfe4dc; }
+.footer-horaires .fh-jour { min-width: 34px; font-weight: 700; color: #fff; }
+.footer-note { font-size: .85rem; color: #bcd6cd; margin-top: 2px; }
 .footer-copy {
   text-align: center; margin-top: 34px; padding-top: 20px;
   border-top: 1px solid rgba(255,255,255,.15); font-size: .9rem; color: #bcd6cd;
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 860px) {
+@media (max-width: 992px) {
   .nav-toggle { display: block; }
   .nav {
     position: absolute; top: 100%; left: 0; right: 0;
@@ -329,10 +273,20 @@ a:focus-visible, button:focus-visible {
   .nav.open { display: flex; }
   .nav a { padding: 14px 10px; font-size: 1.1rem; border-radius: 12px; }
   .nav .nav-cta { margin: 8px 0 0; text-align: center; }
-  .split, .apropos { grid-template-columns: 1fr; gap: 34px; }
-  .split-inverse .split-text { order: 1; }
-  .split-inverse .split-media { order: 2; }
-  .apropos { grid-template-columns: 1fr; }
+  /* Sous-menu : empilé et repliable au tap */
+  .nav-group { flex-direction: column; align-items: stretch; }
+  .nav-group-trigger {
+    justify-content: space-between; width: 100%;
+    padding: 14px 10px; font-size: 1.1rem; border-radius: 12px;
+  }
+  .nav-submenu {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    box-shadow: none; background: transparent; z-index: auto;
+    min-width: 0; padding: 0 0 6px 16px; display: none;
+  }
+  .nav-group.open .nav-submenu { display: flex; }
+  .nav-submenu a { font-size: 1.02rem; }
+  .apropos { grid-template-columns: 1fr; gap: 34px; }
   .apropos-photo { max-width: 320px; margin: 0 auto; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
@@ -362,40 +316,39 @@ a:focus-visible, button:focus-visible {
 .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 12px; }
 .page-hero .lead { max-width: 640px; margin: 0 auto; color: var(--texte); font-size: 1.15rem; }
 
-/* ---------- Fil d'Ariane ---------- */
-.breadcrumb {
-  font-size: .95rem; color: var(--texte-doux); margin-bottom: 14px;
-}
-.breadcrumb a { color: var(--vert-fonce); text-decoration: none; font-weight: 600; }
-.breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb .sep { margin: 0 8px; color: var(--sable); }
-
-/* ---------- Cartes cliquables (accueil : activités / landing : sous-pages) ---------- */
+/* ---------- Cartes (accueil) ---------- */
 .card-grid {
   display: grid; gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
 }
-.card-link {
-  display: flex; flex-direction: column; text-decoration: none;
-  background: var(--blanc); border-radius: var(--radius); padding: 30px 28px;
-  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
-  border-top: 5px solid var(--vert); color: var(--texte);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.card-link.accent-rose { border-top-color: var(--rose); }
-.card-link:hover { transform: translateY(-5px); box-shadow: var(--ombre); }
-.card-link .ico { font-size: 2.1rem; margin-bottom: 12px; }
-.card-link h3 { font-size: 1.4rem; margin-bottom: 8px; }
-.card-link.accent-rose h3 { color: var(--rose-fonce); }
-.card-link p { color: var(--texte-doux); font-size: 1rem; margin: 0 0 16px; }
-.card-link .go {
-  margin-top: auto; font-weight: 700; color: var(--vert-fonce);
-}
-.card-link.accent-rose .go { color: var(--rose-fonce); }
-
 /* ---------- Grande carte activité (accueil) ---------- */
-.activity-card { padding: 36px 32px; }
-.activity-card h3 { font-size: 1.7rem; }
+.activity-card {
+  display: flex; flex-direction: column;
+  background: var(--blanc); border-radius: var(--radius); padding: 34px 30px;
+  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
+}
+.activity-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--vert-fonce); }
+.card-intro { color: var(--texte-doux); font-size: 1rem; margin: 0 0 16px; }
+.card-list { list-style: none; margin: 0 0 6px; display: flex; flex-direction: column; gap: 9px; }
+.card-list li {
+  position: relative; padding-left: 20px; color: var(--texte); font-size: .98rem;
+}
+.card-list li::before {
+  content: '›'; position: absolute; left: 2px; top: -1px;
+  color: var(--vert-fonce); font-weight: 800;
+}
+.card-list a { color: var(--texte); text-decoration: none; font-weight: 600; }
+.card-list a:hover { color: var(--vert-fonce); text-decoration: underline; }
+
+/* ---------- Page Tarifs regroupée ---------- */
+.tarifs-page { display: flex; flex-direction: column; gap: 30px; align-items: center; }
+
+/* ---------- Titres de groupe sur la page FAQ ---------- */
+.faq-groupe {
+  max-width: 820px; margin: 0 auto 16px; text-align: center;
+  color: var(--vert-fonce);
+}
+.faq-groupe + .faq { margin-bottom: 40px; }
 
 /* ---------- FAQ (accordéon accessible, sans JS) ---------- */
 .faq { max-width: 820px; margin: 0 auto; }
@@ -418,11 +371,10 @@ a:focus-visible, button:focus-visible {
 
 /* ---------- Bloc tarif en bas d'activité ---------- */
 .tarif-bloc {
-  max-width: 780px; margin: 0 auto;
+  width: 100%; max-width: 700px; margin: 0;
   background: var(--blanc); border-radius: var(--radius); padding: 36px 34px;
-  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
+  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
 }
-.tarif-bloc.accent-rose { border-top-color: var(--rose); }
 .tarif-bloc h2 { text-align: center; margin-bottom: 22px; }
 .tarif-bloc.accent-rose h2 { color: var(--rose-fonce); }
 .tarif-note {
@@ -433,6 +385,9 @@ a:focus-visible, button:focus-visible {
 .article { max-width: 760px; margin: 0 auto; }
 .article h2 { font-size: 1.7rem; margin: 34px 0 12px; }
 .article h2:first-child { margin-top: 0; }
+.article h3 { font-size: 1.25rem; margin: 24px 0 8px; color: var(--vert-fonce); }
+.article h3:first-child { margin-top: 0; }
+.section-rose .article h3 { color: var(--rose-fonce); }
 .article p { font-size: 1.1rem; }
 .article ul { margin: 0 0 18px 0; padding-left: 0; list-style: none; }
 .article ul li {
@@ -457,25 +412,7 @@ a:focus-visible, button:focus-visible {
 }
 .skip-link:focus { left: 0; }
 
-/* ---------- Page Contact : réservation ---------- */
-.booking-grid {
-  display: grid; gap: 24px; max-width: 900px; margin: 0 auto;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-.booking-card {
-  background: var(--blanc); border-radius: var(--radius); padding: 32px 30px;
-  box-shadow: var(--ombre-douce); border-top: 6px solid var(--vert);
-  display: flex; flex-direction: column; text-align: center;
-}
-.booking-card.accent-rose { border-top-color: var(--rose); }
-.booking-card .ico { font-size: 2.2rem; margin-bottom: 10px; }
-.booking-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-.booking-card.accent-rose h3 { color: var(--rose-fonce); }
-.booking-card p { color: var(--texte-doux); }
-.booking-card .btn { margin-top: auto; align-self: center; }
-
 /* ---------- Horaires ---------- */
-.horaires-wrap { max-width: 620px; margin: 0 auto; }
 .horaires {
   width: 100%; background: var(--blanc); border-radius: var(--radius);
   box-shadow: var(--ombre-douce); overflow: hidden; border-collapse: collapse;
@@ -485,7 +422,49 @@ a:focus-visible, button:focus-visible {
 .horaires tr:last-child { border-bottom: none; }
 .horaires .jour { font-weight: 700; color: var(--vert-fonce); }
 .horaires .ferme { color: var(--texte-doux); font-style: italic; }
-.horaires-note { text-align: center; margin-top: 16px; color: var(--texte-doux); }
+.horaires .hor-note { display: block; font-size: .9rem; color: var(--texte-doux); font-style: italic; }
+
+/* ---------- Encart d'information (ex. « plus besoin d'ordonnance ») ---------- */
+.info-callout {
+  max-width: 820px; margin: 0 auto 34px; padding: 18px 26px;
+  background: var(--vert-clair); border-radius: var(--radius);
+  text-align: center; color: var(--texte); font-size: 1.02rem; line-height: 1.6;
+}
+
+/* ---------- Photo du cabinet ---------- */
+.cabinet-photo {
+  max-width: 900px; margin: 0 auto 30px; border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--ombre-douce); background: var(--blanc);
+}
+.cabinet-photo img { display: block; width: 100%; height: auto; }
+.cabinet-photo figcaption {
+  text-align: center; padding: 14px 20px; color: var(--texte-doux);
+  font-style: italic; font-size: .98rem;
+}
+
+/* ---------- Section « Le cabinet » (accueil) ---------- */
+.cabinet-top {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 30px; align-items: stretch; margin-bottom: 30px;
+}
+.cabinet-top .cabinet-photo {
+  margin: 0; max-width: none; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+}
+.cabinet-top .cabinet-photo img { flex: 1 1 auto; height: 100%; object-fit: cover; }
+.pratique-card {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8px 4px;
+}
+.pratique-card h3 { color: var(--vert-fonce); margin-bottom: 14px; }
+.pratique-card .horaires { width: 100%; }
+.pratique-note { color: var(--texte-doux); font-size: .92rem; margin: 12px 0 0; }
+/* La carte Google Maps repasse en pleine largeur sous la photo/horaires */
+#cabinet .map-embed { max-width: none; }
+@media (max-width: 860px) {
+  .cabinet-top { grid-template-columns: 1fr; }
+  .cabinet-top .cabinet-photo img { height: auto; object-fit: cover; }
+}
 
 /* ---------- Carte (click-to-load, RGPD) ---------- */
 .map-embed {

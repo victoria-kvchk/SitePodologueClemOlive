@@ -115,12 +115,26 @@
       </button>
       <nav id="menu" class="nav" aria-label="Navigation principale">
         <a href="index.html">Accueil</a>
-        <a href="pedicurie.html">Pédicurie</a>
-        <a href="podologie.html">Podologie</a>
-        <a href="reflexologie.html">Réflexologie</a>
-        <a href="apropos.html">À propos</a>
-        <a href="contact.html">Contact</a>
-        <a href="contact.html#rendez-vous" class="nav-cta">Rendez-vous</a>
+        <a href="index.html#apropos">À propos</a>
+        <div class="nav-group">
+          <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">Pédicurie & Podologie<span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-submenu">
+            <a href="index.html#pedicurie">Soins de pédicurie</a>
+            <a href="index.html#podologie">La Podologie</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">Réflexologie<span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-submenu">
+            <a href="reflexologie.html#presentation">Qu'est-ce que c'est ?</a>
+            <a href="reflexologie.html#dans-quel-cas">Dans quel cas ?</a>
+            <a href="reflexologie.html#bienfaits">Le déroulé et les bienfaits</a>
+            <a href="reflexologie.html#faq">FAQ</a>
+          </div>
+        </div>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener" class="nav-cta">Prendre rendez-vous</a>
       </nav>
     </div>
   </header>
@@ -154,26 +168,27 @@
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
         <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p>5 place Denis Papin, 95470 Fosses</p>
-        <p><a href="tel:+33652860996">06 52 86 09 96</a> · <a href="tel:+33688419379">06 88 41 93 79</a></p>
+        <p>5 place Denis Papin<br />95470 Fosses</p>
+        <p>Consultations sur rendez-vous, en ligne sur <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Doctolib</a>.</p>
       </div>
       <div class="footer-col">
-        <a class="footer-title" href="pedicurie.html">Pédicurie</a>
-        <a href="pedicurie-cors-durillons.html">Cors & durillons</a>
-        <a href="pedicurie-mycoses.html">Mycoses des pieds et des ongles</a>
-        <a href="pedicurie-ongle-incarne.html">Ongle incarné</a>
-        <a href="pedicurie-verrue-plantaire.html">Verrue plantaire</a>
-        <a href="pedicurie-coupe-ongles.html">Bien couper ses ongles</a>
+        <p class="footer-title">Horaires</p>
+        <ul class="footer-horaires">
+          <li><span class="fh-jour">Lun</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
+          <li><span class="fh-jour">Mar</span><span>09h30 – 12h30 · 13h00 – 17h00</span></li>
+          <li><span class="fh-jour">Mer</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
+          <li><span class="fh-jour">Jeu</span><span>09h00 – 12h30 · 13h00 – 19h00</span></li>
+          <li><span class="fh-jour">Ven</span><span>09h00 – 12h30 · 13h00 – 18h00</span></li>
+          <li><span class="fh-jour">Sam</span><span>09h00 – 16h00 · un samedi par mois</span></li>
+          <li><span class="fh-jour">Dim</span><span>Fermé</span></li>
+        </ul>
+        <p class="footer-note">Sur rendez-vous · soins possibles à domicile</p>
       </div>
       <div class="footer-col">
-        <a class="footer-title" href="podologie.html">Podologie</a>
-        <a href="podologie-bilan-podologique.html">Bilan podologique</a>
-        <a href="podologie-semelles.html">Semelles orthopédiques</a>
-      </div>
-      <div class="footer-col">
-        <a class="footer-title" href="reflexologie.html">Réflexologie</a>
-        <a href="reflexologie-presentation.html">Qu'est-ce que la réflexologie ?</a>
-        <a href="reflexologie-types-seances.html">Les types de séances</a>
+        <p class="footer-title">Accès &amp; rendez-vous</p>
+        <a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Voir sur Google Maps →</a>
+        <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Rendez-vous sur Doctolib →</a>
+        <a href="index.html#cabinet">Horaires &amp; plan d'accès →</a>
       </div>
     </div>
     <p class="footer-copy">
@@ -182,7 +197,6 @@
     <nav class="footer-legal" aria-label="Liens légaux">
       <a href="mentions-legales.html">Mentions légales</a>
       <a href="confidentialite.html">Politique de confidentialité</a>
-      <a href="contact.html">Contact</a>
     </nav>
   </footer>
   <script src="menu.js"></script>
