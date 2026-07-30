@@ -741,9 +741,34 @@ function sitemapXml(pages) {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
+/* ---------- Vérification des liens internes (garde-fou anti-lien-mort) ---------- */
+function checkLinks(pages) {
+  const names = new Set(Object.keys(pages));
+  const staticFiles = new Set(['favicon.svg', 'styles.css', 'menu.js', 'robots.txt', 'sitemap.xml']);
+  const idsByPage = {};
+  for (const [name, html] of Object.entries(pages))
+    idsByPage[name] = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
+  const problems = [];
+  for (const [name, html] of Object.entries(pages)) {
+    for (const m of html.matchAll(/href="([^"]+)"/g)) {
+      const href = m[1];
+      if (/^(https?:|tel:|mailto:)/.test(href) || href === '/' || href === '') continue;
+      const [file, anchor] = href.split('#');
+      if (file === '') { // ancre sur la même page
+        if (anchor && !idsByPage[name].has(anchor)) problems.push(`${name} → #${anchor} (ancre absente)`);
+        continue;
+      }
+      if (!names.has(file) && !staticFiles.has(file)) { problems.push(`${name} → ${file} (page inexistante)`); continue; }
+      if (anchor && names.has(file) && !idsByPage[file].has(anchor)) problems.push(`${name} → ${href} (ancre #${anchor} absente de ${file})`);
+    }
+  }
+  return problems;
+}
+
 /* ---------------- Écriture des fichiers ---------------- */
 const out = [];
-const write = (name, html) => { writeFileSync(new URL(`./${name}`, import.meta.url), html); out.push(name); };
+const pages = {};
+const write = (name, html) => { writeFileSync(new URL(`./${name}`, import.meta.url), html); out.push(name); pages[name] = html; };
 
 write('index.html', homePage());
 write('tarifs.html', tarifsPage());
@@ -760,4 +785,9 @@ write('404.html', notFoundPage());
 // robots.txt & sitemap.xml (dérivés de la liste des pages)
 writeFileSync(new URL('./robots.txt', import.meta.url), robotsTxt());
 writeFileSync(new URL('./sitemap.xml', import.meta.url), sitemapXml(out));
-console.log(`✓ ${out.length} pages générées + robots.txt + sitemap.xml :\n  ` + out.join('\n  '));
+const problems = checkLinks(pages);
+if (problems.length) {
+  console.error(`\n✗ ${problems.length} lien(s) interne(s) cassé(s) :\n  ` + problems.join('\n  '));
+  process.exit(1);
+}
+console.log(`✓ ${out.length} pages générées + robots.txt + sitemap.xml · liens internes OK`);

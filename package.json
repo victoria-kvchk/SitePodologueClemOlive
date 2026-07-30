@@ -1,0 +1,11 @@
+{
+  "name": "oliveclem-site",
+  "version": "1.0.0",
+  "description": "Site vitrine de Clémentine Olive (oliveclem.fr) — générateur statique, sans dépendance.",
+  "private": true,
+  "scripts": {
+    "build": "node oliveclem.fr/build.mjs",
+    "preview": "python3 -m http.server 8765 --directory oliveclem.fr",
+    "dev": "node oliveclem.fr/build.mjs && python3 -m http.server 8765 --directory oliveclem.fr"
+  }
+}
