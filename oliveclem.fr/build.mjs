@@ -42,17 +42,11 @@ const pedicurie = {
         ['Comment ça fonctionne', "Le Freezpen utilise l'oxyde nitreux, un gaz cryogénique qui agit à -85 °C. Cette basse température produit un choc thermique très rapide qui congèle les cellules de la verrue en toute sécurité. Grâce à trois embouts de diamètres différents, le geste est précis et protège les tissus sains autour de la lésion."],
         ['Prise en charge', "Le soin est pris en charge par la Sécurité sociale : jusqu'à 5 séances, à hauteur de 20 € par consultation."],
       ] },
-    { slug: 'coupe-ongles', title: 'Bien couper ses ongles', ico: '✂️',
-      teaser: "Quelques gestes simples pour éviter ongles incarnés et petites blessures.",
-      blocks: [
-        ['Pourquoi c\'est important', "Une coupe adaptée prévient les ongles incarnés, les blessures et les infections — surtout si votre vue ou votre souplesse rendent l'exercice difficile."],
-        ['Mes conseils', ['Couper l\'ongle droit, sans creuser les coins', 'Ne pas couper trop court', 'Utiliser une lime plutôt que d\'arracher les petites peaux', 'Bien sécher entre les orteils après la toilette']],
-        ['Un accompagnement si besoin', "Si la coupe est compliquée pour vous ou un proche, je propose un soin régulier, au cabinet ou à domicile, en toute sécurité."],
-      ] },
   ],
   faq: [
     ['Le soin est-il douloureux ?', "Non. Les soins de pédicurie sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
     ['À quelle fréquence consulter ?', "Cela dépend de vos besoins. À titre indicatif, un soin tous les 1 à 3 mois convient à beaucoup de personnes. Je vous conseille selon votre situation."],
+    ['Comment bien couper ses ongles ?', "Coupez l'ongle droit, sans creuser les coins et pas trop court : cela évite les ongles incarnés et les petites blessures. Préférez une lime pour adoucir les bords plutôt que d'arracher les petites peaux, et séchez bien entre les orteils après la toilette. Si la coupe est difficile pour vous ou pour un proche — vue, souplesse, diabète —, je peux m'en occuper en toute sécurité, au cabinet ou à domicile."],
     ['Puis-je être soigné(e) à domicile ?', "Oui, je me déplace à domicile, en particulier si vous avez des difficultés à vous déplacer. Contactez-moi pour organiser le rendez-vous."],
     ['Faut-il une ordonnance ?', "Pour les soins diabétiques, les semelles orthopédiques et les verrues plantaires, vous pouvez consulter directement, sans ordonnance : je peux la rédiger moi-même si nécessaire."],
   ],
@@ -210,32 +204,48 @@ function header(active) {
 }
 
 function footer() {
+  const icoCal = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>';
+  const icoPin = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.7 7-12A7 7 0 0 0 5 9.5c0 5.3 7 12 7 12z"/><circle cx="12" cy="9.3" r="2.6"/></svg>';
   return `  <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="container footer-grid">
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
-        <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p class="footer-addr">5 place Denis Papin<br />95470 Fosses</p>
+        <p class="footer-brand-sub">Pédicure-Podologue D.E · Réflexologue</p>
+        <p class="footer-tagline">Prendre soin de vos pieds,<br />c'est prendre soin de vous.</p>
       </div>
-      <div class="footer-col">
-        <p class="footer-title">Horaires</p>
-        <ul class="footer-horaires">
-          <li><span class="fh-jour">Lun – Ven</span><span>9h – 19h</span></li>
-          <li><span class="fh-jour">Samedi</span><span>1 fois par mois</span></li>
+      <nav class="footer-nav" aria-label="Plan du site">
+        <p class="footer-col-title">Navigation</p>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html#apropos">À propos</a></li>
+          <li><a href="index.html#activites">Soins &amp; prestations</a></li>
+          <li><a href="reflexologie.html">Réflexologie plantaire</a></li>
+          <li><a href="tarifs.html">Tarifs</a></li>
         </ul>
-        <p class="footer-note">Sur rendez-vous · <a href="index.html#cabinet">plan d'accès</a></p>
-      </div>
-      <div class="footer-col footer-cta-col">
-        <a class="footer-cta" href="${DOCTOLIB}" target="_blank" rel="noopener">Rendez-vous sur Doctolib</a>
+      </nav>
+      <div class="footer-infos">
+        <p class="footer-col-title">Infos pratiques</p>
+        <ul class="footer-infos-list">
+          <li>
+            <span class="frdv-ico">${icoCal}</span>
+            <span>Lundi au vendredi : 9h – 19h<br />Samedi : une fois par mois</span>
+          </li>
+          <li>
+            <span class="frdv-ico">${icoPin}</span>
+            <span>5 place Denis Papin<br />95470 Fosses · <a href="index.html#cabinet">plan d'accès</a></span>
+          </li>
+        </ul>
+        <a class="btn btn-primary footer-doctolib" href="${DOCTOLIB}" target="_blank" rel="noopener">Prendre rendez-vous</a>
       </div>
     </div>
-    <p class="footer-copy">
-      © 2026 Clémentine Olive · La réflexologie est une pratique de bien-être qui ne se substitue pas à un suivi médical.
-    </p>
-    <nav class="footer-legal" aria-label="Liens légaux">
-      <a href="mentions-legales.html">Mentions légales</a>
-      <a href="confidentialite.html">Politique de confidentialité</a>
-    </nav>
+    <p class="footer-disclaimer">La réflexologie est une pratique de bien-être qui ne se substitue pas à un suivi médical.</p>
+    <div class="container footer-legal-bar">
+      <p>© 2026 Clémentine Olive · Tous droits réservés</p>
+      <nav class="footer-legal" aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+      </nav>
+    </div>
   </footer>`;
 }
 
@@ -371,42 +381,53 @@ ${blocks}
 }
 
 function homeBody() {
+  const ICONS = {
+    diabete:   '<path d="M20 7c4 6 9 12 9 18a9 9 0 1 1-18 0c0-6 5-12 9-18z"/><path d="M20 15c2 4 5 8 5 11"/>',
+    bilan:     '<path d="M11 8h18v25H11z"/><path d="M16 8V5h8v3M15 15l2 2 4-5M15 23l2 2 4-5"/>',
+    question:  '<path d="M13 14a8 8 0 0 1 15 3c0 7-8 7-8 13"/><circle cx="20" cy="34" r="1"/>',
+    cas:       '<path d="M31 8c-12 2-21 9-22 22 13 1 21-7 22-22z"/><path d="M11 30c5-7 10-11 17-15"/>',
+    bienfaits: '<path d="M20 31c-8-3-12-8-11-15 6 1 10 4 11 10 1-6 5-9 11-10 1 7-3 12-11 15z"/><path d="M20 31V14"/>',
+  };
   const HOME_CARDS = {
     pedicurie: {
       intro: "Prendre soin de vos pieds au quotidien, au cabinet comme à domicile.",
       items: [
-        { label: "Affections de l'ongle et de la peau", href: 'pedicurie-affections-ongle-peau.html' },
-        { label: 'Suivi des patients diabétiques', href: 'pedicurie-patients-diabetiques.html' },
-        { label: 'Verrues plantaires par cryothérapie', href: 'pedicurie-verrue-plantaire.html' },
-        { label: 'Conseils pour bien couper ses ongles', href: 'pedicurie-coupe-ongles.html' },
+        { label: "Affections de l'ongle et de la peau", href: 'pedicurie-affections-ongle-peau.html', img: 'ico-ongle.webp' },
+        { label: 'Suivi des patients diabétiques', href: 'pedicurie-patients-diabetiques.html', ico: 'diabete' },
+        { label: 'Verrues plantaires par cryothérapie', href: 'pedicurie-verrue-plantaire.html', img: 'ico-verrue.webp' },
       ],
     },
     podologie: {
       intro: "Analyser votre posture et votre marche pour soulager et prévenir durablement.",
       items: [
-        { label: 'Bilan podologique', href: 'podologie-bilan-podologique.html' },
-        { label: 'Semelles orthopédiques sur mesure', href: 'podologie-semelles.html' },
+        { label: 'Bilan podologique', href: 'podologie-bilan-podologique.html', ico: 'bilan' },
+        { label: 'Semelles orthopédiques sur mesure', href: 'podologie-semelles.html', img: 'ico-semelle.webp' },
       ],
     },
     reflexologie: {
       intro: "Un vrai moment de détente et de bien-être, par les pieds.",
       items: [
-        { label: "Qu'est-ce que c'est ?", href: 'reflexologie.html#presentation' },
-        { label: 'Dans quel cas ?', href: 'reflexologie.html#dans-quel-cas' },
-        { label: 'Le déroulé et les bienfaits', href: 'reflexologie.html#bienfaits' },
+        { label: "Qu'est-ce que c'est ?", href: 'reflexologie.html#presentation', ico: 'question' },
+        { label: 'Dans quel cas ?', href: 'reflexologie.html#dans-quel-cas', ico: 'cas' },
+        { label: 'Le déroulé et les bienfaits', href: 'reflexologie.html#bienfaits', ico: 'bienfaits' },
       ],
     },
   };
   const cards = ACTIVITIES.map(a => {
     const c = HOME_CARDS[a.slug];
-    const items = c.items.map(i =>
-      i.href
-        ? `              <li><a href="${i.href}">${i.label}</a></li>`
-        : `              <li>${i.label}</li>`
-    ).join('\n');
+    const items = c.items.map(i => {
+      const art = i.img
+        ? `<img class="item-art" src="assets/${i.img}" alt="" width="30" height="30" loading="lazy" />`
+        : `<svg viewBox="0 0 40 40">${ICONS[i.ico]}</svg>`;
+      const inner = `<span class="item-icon" aria-hidden="true">${art}</span><span>${i.label}</span>`;
+      return i.href
+        ? `              <li><a href="${i.href}">${inner}</a></li>`
+        : `              <li><span class="item-row">${inner}</span></li>`;
+    }).join('\n');
     return `          <div class="activity-card" id="${a.slug}">
+            <img class="card-hero" src="assets/${a.slug}.webp" alt="" width="132" height="132" loading="lazy" />
             <h3>${a.label}</h3>
-            <p class="card-intro">${c.intro}</p>
+            <span class="gold-line" aria-hidden="true"></span>
             <ul class="card-list">
 ${items}
             </ul>
@@ -423,7 +444,7 @@ ${items}
       </div>
     </section>
 
-    <section id="activites" class="section section-creme">
+    <section id="activites" class="section section-blanc">
       <div class="container">
         <div class="section-head">
           <h2>Trois manières de prendre soin de vous</h2>
