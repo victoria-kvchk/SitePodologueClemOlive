@@ -456,10 +456,10 @@ ${cards}
       </div>
     </section>
 
-    <section id="apropos" class="section">
+    <section id="apropos" class="section section-apropos">
       <div class="container apropos">
         <div class="apropos-photo">
-          <img src="assets/portrait-clementine.jpg" alt="Clémentine Olive, pédicure-podologue et réflexologue à Fosses" width="732" height="1280" loading="lazy" />
+          <img src="assets/portrait-clementine.jpg" alt="Clémentine Olive, pédicure-podologue et réflexologue à Fosses" width="1009" height="1280" loading="lazy" />
         </div>
         <div>
           <h2>À propos de Clémentine Olive</h2>
@@ -479,7 +479,7 @@ ${cards}
       </div>
     </section>
 
-    <section id="cabinet" class="section section-creme">
+    <section id="cabinet" class="section section-blanc">
       <div class="container">
         <div class="section-head">
           <h2>Infos pratiques &amp; accès</h2>
