@@ -14,17 +14,6 @@ const GEO = { lat: '49.0994058', lng: '2.5233593' };
 const MAPS_EMBED = 'https://www.google.fr/maps/embed?pb=!1m18!1m12!1m3!1d1132.3976116027156!2d2.5233593!3d49.0994058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e639a7517a79b9%3A0x2a8a210e8c90f8fb!2sOLIVE%20Cl%C3%A9mentine%20Cabinet%20de%20p%C3%A9dicurie-podologie!5e0!3m2!1sfr!2sfr!4v1694123456789!5m2!1sfr!2sfr';
 const MAPS_LINK = 'https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z';
 
-// Horaires du cabinet (consultations sur rendez-vous)
-const HORAIRES = [
-  { jour: 'Lundi',    creneaux: '09h00 – 12h30  ·  13h00 – 18h30', spec: ['Mo 09:00-12:30', 'Mo 13:00-18:30'] },
-  { jour: 'Mardi',    creneaux: '09h30 – 12h30  ·  13h00 – 17h00', spec: ['Tu 09:30-12:30', 'Tu 13:00-17:00'] },
-  { jour: 'Mercredi', creneaux: '09h00 – 12h30  ·  13h00 – 18h30', spec: ['We 09:00-12:30', 'We 13:00-18:30'] },
-  { jour: 'Jeudi',    creneaux: '09h00 – 12h30  ·  13h00 – 19h00', spec: ['Th 09:00-12:30', 'Th 13:00-19:00'] },
-  { jour: 'Vendredi', creneaux: '09h00 – 12h30  ·  13h00 – 18h00', spec: ['Fr 09:00-12:30', 'Fr 13:00-18:00'] },
-  { jour: 'Samedi',   creneaux: '09h00 – 16h00  ·  <span class="hor-note">un samedi par mois</span>' },
-  { jour: 'Dimanche', creneaux: null },
-];
-
 /* ---------------- Données des activités ---------------- */
 const pedicurie = {
   slug: 'pedicurie', label: 'Pédicurie', color: 'vert',
@@ -217,20 +206,7 @@ function header(active) {
         <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="nav-cta">Prendre rendez-vous</a>
       </nav>
     </div>
-  </header>
-  <div class="aquarelle" aria-hidden="true"></div>`;
-}
-
-// Horaires compacts pour le pied de page
-function horairesFooter() {
-  const rows = HORAIRES.map(h => {
-    const abbr = h.jour.slice(0, 3);
-    const val = h.creneaux
-      ? h.creneaux.replace(/<[^>]+>/g, '').replace(/\s{2,}/g, ' ').trim()
-      : 'Fermé';
-    return `          <li><span class="fh-jour">${abbr}</span><span>${val}</span></li>`;
-  }).join('\n');
-  return `        <ul class="footer-horaires">\n${rows}\n        </ul>`;
+  </header>`;
 }
 
 function footer() {
@@ -239,19 +215,18 @@ function footer() {
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
         <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p>5 place Denis Papin<br />95470 Fosses</p>
-        <p>Consultations sur rendez-vous, en ligne sur <a href="${DOCTOLIB}" target="_blank" rel="noopener">Doctolib</a>.</p>
+        <p class="footer-addr">5 place Denis Papin<br />95470 Fosses</p>
       </div>
       <div class="footer-col">
         <p class="footer-title">Horaires</p>
-${horairesFooter()}
-        <p class="footer-note">Sur rendez-vous · soins possibles à domicile</p>
+        <ul class="footer-horaires">
+          <li><span class="fh-jour">Lun – Ven</span><span>9h – 19h</span></li>
+          <li><span class="fh-jour">Samedi</span><span>1 fois par mois</span></li>
+        </ul>
+        <p class="footer-note">Sur rendez-vous · <a href="index.html#cabinet">plan d'accès</a></p>
       </div>
-      <div class="footer-col">
-        <p class="footer-title">Accès &amp; rendez-vous</p>
-        <a href="${MAPS_LINK}" target="_blank" rel="noopener">Voir sur Google Maps →</a>
-        <a href="${DOCTOLIB}" target="_blank" rel="noopener">Rendez-vous sur Doctolib →</a>
-        <a href="index.html#cabinet">Horaires &amp; plan d'accès →</a>
+      <div class="footer-col footer-cta-col">
+        <a class="footer-cta" href="${DOCTOLIB}" target="_blank" rel="noopener">Rendez-vous sur Doctolib</a>
       </div>
     </div>
     <p class="footer-copy">
@@ -305,7 +280,7 @@ function shell({ title, description, active, body, bodyClass = '' }) {
   <meta property="og:locale" content="fr_FR" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 ${jsonLd()}
@@ -318,6 +293,7 @@ ${body}
   </main>
 ${footer()}
   <script src="menu.js"></script>
+  <script src="footprints.js"></script>
 </body>
 </html>
 `;
@@ -346,21 +322,7 @@ ${items}
     </section>`;
 }
 
-// Table des horaires (réutilisée : accueil + contact)
-function horairesTable() {
-  const rows = HORAIRES.map(h =>
-    h.creneaux
-      ? `            <tr><td class="jour">${h.jour}</td><td>${h.creneaux}</td></tr>`
-      : `            <tr><td class="jour">${h.jour}</td><td class="ferme">Fermé</td></tr>`
-  ).join('\n');
-  return `          <table class="horaires">
-            <tbody>
-${rows}
-            </tbody>
-          </table>`;
-}
-
-// Carte Google Maps en chargement au clic (RGPD) — réutilisée : accueil + contact
+// Carte Google Maps en chargement au clic (RGPD)
 function mapEmbed() {
   return `        <div class="map-embed" id="map-embed" data-src="${MAPS_EMBED}">
           <div class="map-consent">
@@ -408,7 +370,7 @@ ${blocks}
   });
 }
 
-function homePage() {
+function homeBody() {
   const HOME_CARDS = {
     pedicurie: {
       intro: "Prendre soin de vos pieds au quotidien, au cabinet comme à domicile.",
@@ -450,7 +412,8 @@ ${items}
             </ul>
           </div>`;
   }).join('\n');
-  const body = `    <section id="accueil" class="hero">
+  return `    <section id="accueil" class="hero">
+      <div class="foots" aria-hidden="true"></div>
       <div class="container">
         <h1>Prenez soin de vous,<br />en commençant par vos pieds</h1>
         <div class="hero-actions">
@@ -499,25 +462,24 @@ ${cards}
       <div class="container">
         <div class="section-head">
           <h2>Infos pratiques &amp; accès</h2>
+          <p>Consultations uniquement sur rendez-vous.</p>
         </div>
         <div class="cabinet-top">
           <figure class="cabinet-photo">
             <img src="assets/cabinet.webp" alt="Le cabinet de Clémentine Olive à Fosses : espace lumineux et apaisant" width="933" height="700" loading="lazy" />
             <figcaption>5 place Denis Papin · 95470 Fosses</figcaption>
           </figure>
-          <div class="pratique-card">
-            <h3>Horaires du cabinet</h3>
-${horairesTable()}
-            <p class="pratique-note">Uniquement sur rendez-vous.</p>
-          </div>
-        </div>
 ${mapEmbed()}
+        </div>
       </div>
     </section>`;
+}
+
+function homePage() {
   return shell({
     title: "Clémentine Olive — Pédicure-Podologue & Réflexologue à Fosses (95)",
     description: "Clémentine Olive, pédicure-podologue diplômée d'État et réflexologue certifiée à Fosses (95470). Soins de pédicurie, podologie, semelles et réflexologie, au cabinet et à domicile.",
-    active: 'index.html', body,
+    active: 'index.html', body: homeBody(),
   });
 }
 
@@ -605,10 +567,6 @@ ${blocs}
           <p><strong>Consultation à domicile</strong> — je me déplace avec mon matériel de pédicurie ; prévoyez simplement une serviette de toilette de taille moyenne.</p>
           <p><strong>Zone d'action :</strong> Fosses, Marly-la-Ville, Survilliers, La Chapelle-en-Serval, Bellefontaine.</p>
         </div>
-        <div class="bloc-actions" style="justify-content:center">
-          <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>
-          <a href="index.html#cabinet" class="btn btn-ghost">Horaires &amp; accès</a>
-        </div>
       </div>
     </section>`;
   return shell({
@@ -641,13 +599,6 @@ ${items}
     <section class="section">
       <div class="container">
 ${sections}
-        <div class="article-cta">
-          <p>Une autre question ou envie de prendre rendez-vous ?</p>
-          <div class="bloc-actions" style="justify-content:center">
-            <a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>
-            <a href="index.html#cabinet" class="btn btn-ghost">Horaires &amp; accès</a>
-          </div>
-        </div>
       </div>
     </section>`;
   return shell({
@@ -707,7 +658,19 @@ ${renderBlocks(bienfaits.blocks)}
       </div>
     </section>
 
-${faqBlock(a, 'faq')}`;
+${faqBlock(a, 'faq')}
+
+    <section class="section section-creme">
+      <div class="container">
+        <div class="article">
+          <div class="article-cta accent-rose">
+            <div class="bloc-actions" style="justify-content:center">
+              ${bookActions()}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
   return shell({
     title: "Réflexologie — Clémentine Olive à Fosses (95)",
     description: `Réflexologie plantaire par Clémentine Olive à Fosses (95470). ${a.lead}`,

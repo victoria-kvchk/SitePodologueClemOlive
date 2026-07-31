@@ -11,7 +11,7 @@
   <meta property="og:locale" content="fr_FR" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
@@ -139,9 +139,9 @@
       </nav>
     </div>
   </header>
-  <div class="aquarelle" aria-hidden="true"></div>
   <main id="contenu">
     <section id="accueil" class="hero">
+      <div class="foots" aria-hidden="true"></div>
       <div class="container">
         <h1>Prenez soin de vous,<br />en commençant par vos pieds</h1>
         <div class="hero-actions">
@@ -216,28 +216,13 @@
       <div class="container">
         <div class="section-head">
           <h2>Infos pratiques &amp; accès</h2>
+          <p>Consultations uniquement sur rendez-vous.</p>
         </div>
         <div class="cabinet-top">
           <figure class="cabinet-photo">
             <img src="assets/cabinet.webp" alt="Le cabinet de Clémentine Olive à Fosses : espace lumineux et apaisant" width="933" height="700" loading="lazy" />
             <figcaption>5 place Denis Papin · 95470 Fosses</figcaption>
           </figure>
-          <div class="pratique-card">
-            <h3>Horaires du cabinet</h3>
-          <table class="horaires">
-            <tbody>
-            <tr><td class="jour">Lundi</td><td>09h00 – 12h30  ·  13h00 – 18h30</td></tr>
-            <tr><td class="jour">Mardi</td><td>09h30 – 12h30  ·  13h00 – 17h00</td></tr>
-            <tr><td class="jour">Mercredi</td><td>09h00 – 12h30  ·  13h00 – 18h30</td></tr>
-            <tr><td class="jour">Jeudi</td><td>09h00 – 12h30  ·  13h00 – 19h00</td></tr>
-            <tr><td class="jour">Vendredi</td><td>09h00 – 12h30  ·  13h00 – 18h00</td></tr>
-            <tr><td class="jour">Samedi</td><td>09h00 – 16h00  ·  <span class="hor-note">un samedi par mois</span></td></tr>
-            <tr><td class="jour">Dimanche</td><td class="ferme">Fermé</td></tr>
-            </tbody>
-          </table>
-            <p class="pratique-note">Uniquement sur rendez-vous.</p>
-          </div>
-        </div>
         <div class="map-embed" id="map-embed" data-src="https://www.google.fr/maps/embed?pb=!1m18!1m12!1m3!1d1132.3976116027156!2d2.5233593!3d49.0994058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e639a7517a79b9%3A0x2a8a210e8c90f8fb!2sOLIVE%20Cl%C3%A9mentine%20Cabinet%20de%20p%C3%A9dicurie-podologie!5e0!3m2!1sfr!2sfr!4v1694123456789!5m2!1sfr!2sfr">
           <div class="map-consent">
             <span class="ico" aria-hidden="true">🗺️</span>
@@ -245,6 +230,7 @@
             <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
             <p><a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -254,27 +240,18 @@
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
         <p>Pédicure-Podologue D.E · Réflexologue certifiée</p>
-        <p>5 place Denis Papin<br />95470 Fosses</p>
-        <p>Consultations sur rendez-vous, en ligne sur <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Doctolib</a>.</p>
+        <p class="footer-addr">5 place Denis Papin<br />95470 Fosses</p>
       </div>
       <div class="footer-col">
         <p class="footer-title">Horaires</p>
         <ul class="footer-horaires">
-          <li><span class="fh-jour">Lun</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
-          <li><span class="fh-jour">Mar</span><span>09h30 – 12h30 · 13h00 – 17h00</span></li>
-          <li><span class="fh-jour">Mer</span><span>09h00 – 12h30 · 13h00 – 18h30</span></li>
-          <li><span class="fh-jour">Jeu</span><span>09h00 – 12h30 · 13h00 – 19h00</span></li>
-          <li><span class="fh-jour">Ven</span><span>09h00 – 12h30 · 13h00 – 18h00</span></li>
-          <li><span class="fh-jour">Sam</span><span>09h00 – 16h00 · un samedi par mois</span></li>
-          <li><span class="fh-jour">Dim</span><span>Fermé</span></li>
+          <li><span class="fh-jour">Lun – Ven</span><span>9h – 19h</span></li>
+          <li><span class="fh-jour">Samedi</span><span>1 fois par mois</span></li>
         </ul>
-        <p class="footer-note">Sur rendez-vous · soins possibles à domicile</p>
+        <p class="footer-note">Sur rendez-vous · <a href="index.html#cabinet">plan d'accès</a></p>
       </div>
-      <div class="footer-col">
-        <p class="footer-title">Accès &amp; rendez-vous</p>
-        <a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Voir sur Google Maps →</a>
-        <a href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Rendez-vous sur Doctolib →</a>
-        <a href="index.html#cabinet">Horaires &amp; plan d'accès →</a>
+      <div class="footer-col footer-cta-col">
+        <a class="footer-cta" href="https://www.doctolib.fr/pedicure-podologue/fosses/clementine-olive" target="_blank" rel="noopener">Rendez-vous sur Doctolib</a>
       </div>
     </div>
     <p class="footer-copy">
@@ -286,5 +263,6 @@
     </nav>
   </footer>
   <script src="menu.js"></script>
+  <script src="footprints.js"></script>
 </body>
 </html>

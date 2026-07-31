@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Clémentine Olive">
-  <rect width="64" height="64" rx="14" fill="#2E6E60"/>
-  <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle"
-        font-family="Georgia, 'Cormorant Garamond', serif" font-size="30" font-weight="700" fill="#FBF6EE">co</text>
+  <rect width="64" height="64" fill="#2E6E60"/>
+  <rect x="4" y="4" width="56" height="56" fill="none" stroke="#B79246" stroke-width="1.4"/>
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Cormorant Garamond', Georgia, serif" font-size="38" font-weight="600" fill="#FBF9F3">C</text>
 </svg>

@@ -9,26 +9,29 @@
 
 /* ---------- Palette (tirée des cartes de visite, resaturée) ---------- */
 :root {
-  --creme:        #FBF6EE;   /* fond chaud principal */
-  --creme-fonce:  #F3EADD;   /* alternance de section */
+  --creme:        #FBF9F3;   /* fond crème clair (luxe minimal) */
+  --creme-fonce:  #F2EEE2;   /* alternance de section */
   --blanc:        #FFFFFF;
 
   --vert:         #6FB1A2;   /* sauge / turquoise (podologie) */
   --vert-fonce:   #2E6E60;   /* vert profond, titres & texte accent */
   --vert-clair:   #E7F1ED;   /* lavis vert */
 
-  --rose:         #E7A79A;   /* rose poudré / pêche (réflexologie) */
-  --rose-fonce:   #A85D51;   /* rose profond lisible (contraste AA) */
-  --rose-clair:   #FBEBE6;   /* lavis rosé */
+  --rose:         #B79246;   /* or / laiton (accent réflexologie) */
+  --rose-fonce:   #8A6A1E;   /* or profond lisible */
+  --rose-clair:   #F3EBD8;   /* lavis doré */
 
-  --sable:        #D8C4A2;   /* beige doré (touches) */
+  --sable:        #CDBB92;   /* beige doré (touches) */
 
   --texte:        #3B4642;   /* texte courant (chaud, très lisible) */
   --texte-doux:   #59645D;   /* texte secondaire (contraste AA sur crème) */
 
   --ombre:        0 12px 30px rgba(46, 110, 96, 0.10);
   --ombre-douce:  0 6px 18px rgba(59, 70, 66, 0.08);
-  --radius:       18px;
+  --radius:       0px;       /* angles nets (luxe minimal) */
+
+  --font-head:    'Cormorant Garamond', Georgia, serif;   /* titres */
+  --font-body:    'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 /* ---------- Reset ---------- */
@@ -37,8 +40,8 @@
 html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 
 body {
-  font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 19px;            /* base généreuse pour la lisibilité */
+  font-family: var(--font-body);
+  font-size: 18px;            /* base généreuse pour la lisibilité */
   line-height: 1.7;
   color: var(--texte);
   background: var(--creme);
@@ -46,7 +49,7 @@ body {
 }
 
 h1, h2, h3, .brand-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-head);
   font-weight: 600;
   line-height: 1.15;
   color: var(--vert-fonce);
@@ -75,13 +78,15 @@ a:focus-visible, button:focus-visible {
   justify-content: center;
   gap: 10px;
   min-height: 54px;            /* cible tactile large */
-  padding: 0 30px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  font-family: 'Nunito Sans', sans-serif;
+  padding: 0 32px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
   text-decoration: none;
   border: none;
-  border-radius: 999px;
+  border-radius: 0;
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
@@ -90,9 +95,9 @@ a:focus-visible, button:focus-visible {
 .btn-ghost {
   background: transparent;
   color: var(--vert-fonce);
-  border: 2px solid var(--vert);
+  border: 1px solid var(--rose);
 }
-.btn-ghost:hover { background: var(--vert-clair); transform: translateY(-2px); }
+.btn-ghost:hover { background: var(--rose-clair); transform: translateY(-2px); }
 
 /* ---------- En-tête / navigation ---------- */
 /* Décalage des ancres pour l'en-tête collant */
@@ -116,8 +121,9 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 }
 .nav { display: flex; align-items: center; gap: 2px; flex-wrap: nowrap; }
 .nav a {
-  text-decoration: none; color: var(--texte); font-weight: 600;
-  padding: 9px 12px; border-radius: 999px; font-size: 0.98rem;
+  text-decoration: none; color: var(--texte); font-weight: 400;
+  padding: 9px 12px; border-radius: 0; font-size: 0.74rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
   white-space: nowrap;
   transition: background .2s ease, color .2s ease;
 }
@@ -132,9 +138,10 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 /* ---------- Sous-menu déroulant (Pédicurie & Podologie) ---------- */
 .nav-group { position: relative; display: inline-flex; }
 .nav-group-trigger {
-  font: inherit; cursor: pointer; border: none; background: none;
-  color: var(--texte); font-weight: 600; font-size: 0.98rem;
-  padding: 9px 12px; border-radius: 999px; white-space: nowrap;
+  font-family: var(--font-body); cursor: pointer; border: none; background: none;
+  color: var(--texte); font-weight: 400; font-size: 0.74rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 9px 12px; border-radius: 0; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 5px;
   transition: background .2s ease, color .2s ease;
 }
@@ -162,30 +169,43 @@ section[id], [id]:target { scroll-margin-top: 92px; }
   background: var(--vert-fonce); border-radius: 3px; transition: .3s;
 }
 
-/* ---------- Bande aquarelle (rappel des cartes) ---------- */
-.aquarelle {
-  height: 14px;
-  background:
-    linear-gradient(115deg,
-      var(--vert) 0%, var(--vert-clair) 18%,
-      var(--sable) 34%, var(--rose-clair) 55%,
-      var(--rose) 72%, var(--vert) 100%);
-  opacity: .55;
-}
+/* ---------- Bande aquarelle : retirée en luxe minimal ---------- */
+.aquarelle { display: none; }
 
-/* ---------- Hero / Accueil ---------- */
+/* ---------- Hero / Accueil (aquarelle en cadre + traces de pas) ---------- */
 .hero {
   position: relative; overflow: hidden;
-  background:
-    radial-gradient(ellipse 55% 60% at 8% 0%, rgba(111,177,162,0.28), transparent 60%),
-    radial-gradient(ellipse 50% 55% at 96% 100%, rgba(231,167,154,0.28), transparent 62%),
-    radial-gradient(ellipse 40% 40% at 88% 6%, rgba(216,196,162,0.22), transparent 60%),
-    var(--creme);
-  padding: 90px 0 80px;
-  text-align: center;
+  min-height: 62vh; display: flex; align-items: center;
+  background: var(--creme); text-align: center;
+  padding: 70px 0;
 }
-.hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 22px; }
+/* L'aquarelle est utilisée 2× (une par côté, ~1:1 = nette), fondue vers le centre */
+.hero::before, .hero::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 50%; z-index: 0;
+  pointer-events: none;
+  background: url(assets/aquarelle.jpg) center / cover no-repeat;
+}
+.hero::before { left: 0;
+  -webkit-mask: linear-gradient(90deg,#000 0,#000 34%,transparent 82%);
+          mask: linear-gradient(90deg,#000 0,#000 34%,transparent 82%);
+}
+.hero::after { right: 0; transform: scaleX(-1);
+  -webkit-mask: linear-gradient(90deg,#000 0,#000 34%,transparent 82%);
+          mask: linear-gradient(90deg,#000 0,#000 34%,transparent 82%);
+}
+.hero .container { position: relative; z-index: 2; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); margin-bottom: 22px; letter-spacing: .01em; }
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* Traces de pas animées le long d'une courbe (générées par footprints.js) */
+.foots { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.foot {
+  position: absolute; width: clamp(20px, 2.4vw, 36px); opacity: 0;
+  will-change: opacity;
+  animation-name: stepIn; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
+}
+.foot svg { display: block; width: 100%; height: auto; }
+@keyframes stepIn { 0%{opacity:0} 3%{opacity:1} 55%{opacity:1} 76%{opacity:0} 100%{opacity:0} }
 
 /* ---------- Sections génériques ---------- */
 .section { padding: 84px 0; }
@@ -225,7 +245,7 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 .diplomes li { display: flex; gap: 14px; align-items: baseline; line-height: 1.5; }
 .diplomes .dip-annee {
   flex: 0 0 auto; min-width: 46px; font-weight: 800; color: var(--vert-fonce);
-  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-family: var(--font-head); font-size: 1.2rem;
 }
 .apropos-photo {
   aspect-ratio: 3/4; border-radius: 24px; box-shadow: var(--ombre);
@@ -237,27 +257,49 @@ section[id], [id]:target { scroll-margin-top: 92px; }
   object-fit: cover; object-position: 45% 20%;
 }
 
-/* ---------- Pied de page ---------- */
-.site-footer { background: var(--vert-fonce); color: #eaf3ef; padding: 54px 0 26px; }
-.site-footer h3, .footer-brand { color: #fff; }
-.footer-inner {
-  display: grid; gap: 40px;
-  grid-template-columns: 1.4fr 1.2fr 1fr;
+/* ---------- Pied de page (fond aquarelle clair) ---------- */
+.site-footer {
+  position: relative;
+  background:
+    linear-gradient(rgba(251,249,243,.88), rgba(251,249,243,.88)),
+    url(assets/aquarelle.jpg) center / cover;
+  color: var(--texte); padding: 58px 0 26px;
 }
-.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 8px; }
-.footer-brand-col a { color: #cfe4dc; }
-.footer-brand-col p { margin-bottom: 10px; line-height: 1.5; }
+.site-footer h3, .footer-brand { color: var(--vert-fonce); }
+.footer-inner {
+  display: grid; gap: 48px; align-items: start;
+  grid-template-columns: 1.2fr 0.9fr 1fr;
+  max-width: 1040px; margin: 0 auto;
+}
+.footer-brand { font-family: var(--font-head); font-size: 1.7rem; margin-bottom: 8px; }
+.footer-brand-col a { color: var(--vert-fonce); text-decoration: none; }
+.footer-brand-col a:hover { text-decoration: underline; }
+.footer-brand-col p { margin-bottom: 10px; line-height: 1.5; color: var(--texte); }
+.footer-addr { font-style: normal; }
 .footer-col { display: flex; flex-direction: column; gap: 8px; }
-.footer-col a { color: #cfe4dc; text-decoration: none; font-size: .96rem; }
-.footer-col a:hover { color: #fff; text-decoration: underline; }
-.footer-col .footer-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
-.footer-horaires { list-style: none; display: flex; flex-direction: column; gap: 5px; margin: 0 0 6px; }
-.footer-horaires li { display: flex; gap: 12px; font-size: .9rem; color: #cfe4dc; }
-.footer-horaires .fh-jour { min-width: 34px; font-weight: 700; color: #fff; }
-.footer-note { font-size: .85rem; color: #bcd6cd; margin-top: 2px; }
+.footer-col a { color: var(--texte); text-decoration: none; font-size: .96rem; }
+.footer-col a:hover { color: var(--vert-fonce); text-decoration: underline; }
+.footer-col .footer-title {
+  color: var(--vert-fonce); font-weight: 600; font-size: .74rem; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.footer-horaires { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0 0 8px; }
+.footer-horaires li { display: flex; gap: 14px; font-size: .95rem; color: var(--texte); }
+.footer-horaires .fh-jour { min-width: 78px; font-weight: 700; color: var(--vert-fonce); }
+.footer-note { font-size: .85rem; color: var(--texte-doux); margin-top: 2px; }
+.footer-note a { color: var(--vert-fonce); }
+.footer-cta-col { align-self: center; }
+a.footer-cta {
+  align-self: flex-start; margin-top: 2px;
+  background: var(--vert-fonce); color: var(--creme);
+  font-weight: 500; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: 15px 26px; border-radius: 0;
+  text-decoration: none; transition: transform .2s ease, background .2s ease;
+}
+a.footer-cta:hover { background: #275c50; color: var(--creme); text-decoration: none; transform: translateY(-2px); }
 .footer-copy {
   text-align: center; margin-top: 34px; padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,.15); font-size: .9rem; color: #bcd6cd;
+  border-top: 1px solid rgba(46,110,96,.2); font-size: .9rem; color: var(--texte-doux);
 }
 
 /* ---------- Responsive ---------- */
@@ -324,10 +366,10 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 /* ---------- Grande carte activité (accueil) ---------- */
 .activity-card {
   display: flex; flex-direction: column;
-  background: var(--blanc); border-radius: var(--radius); padding: 34px 30px;
-  box-shadow: var(--ombre-douce); border: 1px solid rgba(46,110,96,0.07);
+  background: transparent; border-radius: 0; padding: 34px 30px;
+  box-shadow: none; border: 1px solid #e3ddca;
 }
-.activity-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--vert-fonce); }
+.activity-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--vert-fonce); font-weight: 600; }
 .card-intro { color: var(--texte-doux); font-size: 1rem; margin: 0 0 16px; }
 .card-list { list-style: none; margin: 0 0 6px; display: flex; flex-direction: column; gap: 9px; }
 .card-list li {
@@ -412,17 +454,6 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 }
 .skip-link:focus { left: 0; }
 
-/* ---------- Horaires ---------- */
-.horaires {
-  width: 100%; background: var(--blanc); border-radius: var(--radius);
-  box-shadow: var(--ombre-douce); overflow: hidden; border-collapse: collapse;
-}
-.horaires th, .horaires td { padding: 15px 22px; text-align: left; font-size: 1.06rem; }
-.horaires tr { border-bottom: 1px solid rgba(46,110,96,.08); }
-.horaires tr:last-child { border-bottom: none; }
-.horaires .jour { font-weight: 700; color: var(--vert-fonce); }
-.horaires .ferme { color: var(--texte-doux); font-style: italic; }
-.horaires .hor-note { display: block; font-size: .9rem; color: var(--texte-doux); font-style: italic; }
 
 /* ---------- Encart d'information (ex. « plus besoin d'ordonnance ») ---------- */
 .info-callout {
@@ -444,26 +475,21 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 
 /* ---------- Section « Le cabinet » (accueil) ---------- */
 .cabinet-top {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 30px; align-items: stretch; margin-bottom: 30px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
 }
-.cabinet-top .cabinet-photo {
-  margin: 0; max-width: none; width: 100%; height: 100%;
-  display: flex; flex-direction: column;
+.cabinet-top .cabinet-photo { position: relative; margin: 0; max-width: none; }
+.cabinet-top .cabinet-photo img { display: block; width: 100%; height: 340px; object-fit: cover; }
+.cabinet-top .cabinet-photo figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; margin: 0;
+  padding: 30px 16px 12px; text-align: center;
+  color: #fff; font-style: italic; font-size: .95rem;
+  background: linear-gradient(to top, rgba(20,40,34,.62), transparent);
 }
-.cabinet-top .cabinet-photo img { flex: 1 1 auto; height: 100%; object-fit: cover; }
-.pratique-card {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 8px 4px;
-}
-.pratique-card h3 { color: var(--vert-fonce); margin-bottom: 14px; }
-.pratique-card .horaires { width: 100%; }
-.pratique-note { color: var(--texte-doux); font-size: .92rem; margin: 12px 0 0; }
-/* La carte Google Maps repasse en pleine largeur sous la photo/horaires */
-#cabinet .map-embed { max-width: none; }
+.cabinet-top .map-embed { margin: 0; max-width: none; }
+.cabinet-top .map-consent { min-height: 340px; }
+.cabinet-top .map-embed iframe { display: block; width: 100%; height: 340px; }
 @media (max-width: 860px) {
   .cabinet-top { grid-template-columns: 1fr; }
-  .cabinet-top .cabinet-photo img { height: auto; object-fit: cover; }
 }
 
 /* ---------- Carte (click-to-load, RGPD) ---------- */
@@ -495,11 +521,12 @@ section[id], [id]:target { scroll-margin-top: 92px; }
   text-align: center; margin-top: 10px; display: flex; gap: 18px;
   justify-content: center; flex-wrap: wrap;
 }
-.footer-legal a { color: #bcd6cd; text-decoration: none; font-size: .9rem; }
-.footer-legal a:hover { color: #fff; text-decoration: underline; }
+.footer-legal a { color: var(--texte-doux); text-decoration: none; font-size: .9rem; }
+.footer-legal a:hover { color: var(--vert-fonce); text-decoration: underline; }
 
 /* Respect des préférences de mouvement réduit */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+  .foot { animation: none !important; opacity: .42; }
 }
