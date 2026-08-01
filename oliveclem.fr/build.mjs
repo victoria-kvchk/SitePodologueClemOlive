@@ -19,14 +19,14 @@ const pedicurie = {
   slug: 'pedicurie', label: 'Pédicurie', color: 'vert',
   lead: "Diplômée d'État, je prends soin de vos pieds avec douceur et précision, au cabinet comme à votre domicile.",
   subpages: [
-    { slug: 'affections-ongle-peau', title: "Affections de l'ongle et de la peau", ico: '🦶',
+    { slug: 'affections-ongle-peau', title: "Affections de l'ongle et de la peau",
       teaser: "Ongle incarné, mycoses, cors, durillons, affections de la peau : je prends soin de tout cela.",
       blocks: [
         ['En quelques mots', "C'est un acte paramédical qui permet de traiter et de soulager, en douceur, les principales affections de l'ongle et de la peau du pied — avec des conseils personnalisés pour éviter qu'elles ne reviennent."],
         ['Ce que je prends en charge', ["Prise en charge et conseils de l'ongle incarné", "Prise en charge et conseils des ongles épais et/ou mycosés", "Prise en charge et conseils des ongles traumatisés et décollés", "Prise en charge et conseils des cors et durillons", "Prise en charge et conseils des affections de la peau (mycose, hypersudation, …)"]],
         ['En toute douceur', "Les soins sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
       ] },
-    { slug: 'patients-diabetiques', title: 'Patients diabétiques', ico: '🩺',
+    { slug: 'patients-diabetiques', title: 'Patients diabétiques',
       teaser: "Un suivi régulier pour prévenir les complications du pied diabétique.",
       blocks: [
         ['En quelques mots', "Une consultation régulière chez un pédicure-podologue permet de prévenir les risques de complication des pieds diabétiques liés à une neuropathie."],
@@ -35,7 +35,7 @@ const pedicurie = {
         ['Les grades de prise en charge', ["<strong>Grade 0</strong> — absence de neuropathie sensitive (1 séance/an).", "<strong>Grade 1</strong> — neuropathie sensitive isolée, légère perte de sensibilité (1 séance/an).", "<strong>Grade 2</strong> — neuropathie sensitive associée à une artériopathie des membres inférieurs et/ou une déformation des pieds (5 séances/an).", "<strong>Grade 3</strong> — antécédent d'ulcération ou d'amputation, ou plaie ne cicatrisant pas depuis plus de 3 mois (8 séances/an)."]],
         ['Syndrome main-pied', "Une prise en charge du syndrome main-pied est également possible pour les patients sous traitement anti-cancéreux : 2 séances remboursées par la Sécurité sociale, sur prescription de votre oncologue."],
       ] },
-    { slug: 'verrue-plantaire', title: 'Soin des verrues plantaires par cryothérapie', ico: '❄️',
+    { slug: 'verrue-plantaire', title: 'Soin des verrues plantaires par cryothérapie',
       teaser: "Un traitement par le froid, sans douleur, sans saignement et sans anesthésie.",
       blocks: [
         ['En quelques mots', "Le traitement des verrues plantaires utilise le Freezpen, un instrument de cryochirurgie précis. On vient « geler » la verrue : c'est sans douleur, sans saignement et sans anesthésie."],
@@ -55,7 +55,7 @@ const pedicurie = {
     ['Soin à domicile (selon la localisation)', '45 – 47 €'],
     ['Soin à domicile pour deux personnes', '83 €'],
     ['Verrue plantaire par cryothérapie (la séance)', '20 – 38 €'],
-    ['Soins pour patients diabétiques', '<a href="pedicurie-patients-diabetiques.html">voir le détail</a>'],
+    ['Soins pour patients diabétiques', '<a href="pedicurie.html#patients-diabetiques">voir le détail</a>'],
   ],
   tarifNote: "Paiement : carte bancaire, chèque, espèces.",
 };
@@ -64,14 +64,14 @@ const podologie = {
   slug: 'podologie', label: 'Podologie', color: 'vert',
   lead: "J'analyse votre posture et votre marche pour soulager les douleurs et prévenir les troubles du pied et du corps.",
   subpages: [
-    { slug: 'bilan-podologique', title: 'Bilan podologique', ico: '🩺',
+    { slug: 'bilan-podologique', title: 'Bilan podologique',
       teaser: "Une évaluation détaillée de la posture et de la marche, à tout âge.",
       blocks: [
         ['En quelques mots', "Le bilan podologique est une évaluation détaillée de la posture et de la marche, à tout âge et pour tout le monde. Il permet de comprendre l'origine de vos douleurs ou de votre gêne : j'observe la posture, la marche, les appuis et l'état de vos pieds, et je vous conseille sur le chaussant."],
         ['Dans quels cas ?', ['Douleurs aux pieds, aux genoux, aux hanches ou au dos', 'Gêne à la marche ou déséquilibre', 'Suivi de croissance chez l\'enfant', 'Contrôle chez le sportif']],
         ['Comment ça se passe', "Le bilan est indolore. À l'issue, je vous explique clairement mes constats et, si nécessaire, je vous propose des semelles sur mesure ou des conseils adaptés."],
       ] },
-    { slug: 'semelles', title: 'Semelles orthopédiques', ico: '👣',
+    { slug: 'semelles', title: 'Semelles orthopédiques',
       teaser: "Des semelles sur mesure pour corriger l'appui et soulager durablement.",
       blocks: [
         ['En quelques mots', "Les semelles orthopédiques (orthèses plantaires) sont conçues sur mesure à partir de votre bilan. Elles corrigent l'appui, soulagent les douleurs et améliorent le confort au quotidien."],
@@ -97,21 +97,21 @@ const reflexologie = {
   slug: 'reflexologie', label: 'Réflexologie', color: 'rose',
   lead: "Certifiée par l'école E.T.R.E, je vous propose un vrai moment de détente et d'apaisement.",
   subpages: [
-    { slug: 'presentation', title: "Qu'est-ce que la réflexologie ?", ico: '🌸',
+    { slug: 'presentation', title: "Qu'est-ce que la réflexologie ?",
       teaser: "Une pratique de bien-être douce, par des pressions sur des zones du pied.",
       blocks: [
         ['En quelques mots', "La réflexologie plantaire est une technique manuelle qui consiste à exercer des pressions rythmées sur des zones réflexes de vos pieds. Ces zones sont reliées, par l'intermédiaire de terminaisons nerveuses, à différents organes, glandes ou parties du corps."],
         ["L'objectif", "Aider le corps à retrouver son équilibre naturel par auto-régulation, soulager les tensions et favoriser le bien-être global."],
         ['Bon à savoir', "La réflexologie plantaire est une pratique de bien-être complémentaire à la pédicurie-podologie. Elle ne se substitue en aucun cas à un suivi médical. Le bilan n'est pas un diagnostic, mais il sert au praticien à établir un protocole de massage adapté. Le réflexologue ne soigne pas, ne guérit pas."],
       ] },
-    { slug: 'dans-quel-cas', title: 'Dans quel cas ?', ico: '🕊️',
+    { slug: 'dans-quel-cas', title: 'Dans quel cas ?',
       teaser: "Les indications et les contre-indications d'une séance.",
       blocks: [
         ['Indications', ["En cas de stress : chronique, à l'approche d'un examen, à la suite d'un événement marquant…", "En cas de déséquilibre ou de troubles d'un système : respiratoire, digestif, sommeil…", "En cas de douleurs musculaires et/ou articulaires : arthrose, troubles inflammatoires, tendinite", "Au début du printemps, avant l'arrivée des pollens, en cas d'allergie", "En cas de problèmes cutanés : psoriasis, eczéma…", "Si vous ressentez une sensation de jambes lourdes"]],
         ['Contre-indications', "Il n'est pas recommandé de faire une séance si :"],
         ['', ["Vous êtes malade ou avez de la fièvre", "Vous êtes enceinte de moins de 3 mois", "Vous avez une phlébite", "Vous avez eu une entorse à une cheville il y a moins de 3 mois"]],
       ] },
-    { slug: 'bienfaits', title: 'Le déroulé et les bienfaits', ico: '🌿',
+    { slug: 'bienfaits', title: 'Le déroulé et les bienfaits',
       teaser: "Comment se passe une séance et ce qu'elle peut apporter.",
       blocks: [
         ["Déroulé d'une séance", "La séance débute par un échange, afin d'évoquer les raisons de votre venue et d'estimer le degré d'inconfort ressenti au quotidien. Cela me permet d'établir un protocole adapté à vos besoins."],
@@ -159,7 +159,7 @@ const NAV = [
   { href: 'index.html', label: 'Accueil' },
   { href: 'index.html#apropos', label: 'À propos' },
   { label: 'Pédicurie & Podologie', children: [
-    { href: 'index.html#pedicurie', label: 'Soins de pédicurie' },
+    { href: 'pedicurie.html', label: 'Soins de pédicurie' },
     { href: 'index.html#podologie', label: 'La Podologie' },
     { href: 'faq.html', label: 'FAQ' },
   ] },
@@ -336,7 +336,7 @@ ${items}
 function mapEmbed() {
   return `        <div class="map-embed" id="map-embed" data-src="${MAPS_EMBED}">
           <div class="map-consent">
-            <span class="ico" aria-hidden="true">🗺️</span>
+            <svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.7 7-12A7 7 0 0 0 5 9c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
             <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
             <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
             <p><a href="${MAPS_LINK}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
@@ -392,9 +392,9 @@ function homeBody() {
     pedicurie: {
       intro: "Prendre soin de vos pieds au quotidien, au cabinet comme à domicile.",
       items: [
-        { label: "Affections de l'ongle et de la peau", href: 'pedicurie-affections-ongle-peau.html', img: 'ico-ongle.webp' },
-        { label: 'Suivi des patients diabétiques', href: 'pedicurie-patients-diabetiques.html', ico: 'diabete' },
-        { label: 'Verrues plantaires par cryothérapie', href: 'pedicurie-verrue-plantaire.html', img: 'ico-verrue.webp' },
+        { label: "Affections de l'ongle et de la peau", href: 'pedicurie.html#affections-ongle-peau', img: 'ico-ongle.webp' },
+        { label: 'Suivi des patients diabétiques', href: 'pedicurie.html#patients-diabetiques', ico: 'diabete' },
+        { label: 'Verrues plantaires par cryothérapie', href: 'pedicurie.html#verrue-plantaire', img: 'ico-verrue.webp' },
       ],
     },
     podologie: {
@@ -699,6 +699,105 @@ ${faqBlock(a, 'faq')}
   });
 }
 
+/* ---------- Page Pédicurie (3 soins en sections ancrées) ---------- */
+function pedicuriePage() {
+  const a = pedicurie;
+  const s1 = a.subpages.find(s => s.slug === 'affections-ongle-peau');
+  const s2 = a.subpages.find(s => s.slug === 'patients-diabetiques');
+  const s3 = a.subpages.find(s => s.slug === 'verrue-plantaire');
+  const B = (blocks, h) => (blocks.find(b => b[0] === h) || [null, ''])[1];
+  const ico = {
+    ongle:  '<img src="assets/ico-ongle.webp" alt="" width="120" height="120" loading="lazy" />',
+    drop:   '<svg viewBox="0 0 40 40"><path d="M20 7c4 6 9 12 9 18a9 9 0 1 1-18 0c0-6 5-12 9-18z"/><path d="M20 15c2 4 5 8 5 11"/></svg>',
+    snow:   '<svg viewBox="0 0 40 40"><path d="M20 5v30M5 20h30M9 9l22 22M31 9L9 31"/></svg>',
+    check:  '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+    heart:  '<svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-6.5-9A3.4 3.4 0 0 1 12 8a3.4 3.4 0 0 1 6.5 3c0 4.8-6.5 9-6.5 9z"/></svg>',
+    ribbon: '<svg viewBox="0 0 24 24"><path d="M9 13l-3 8 6-4 6 4-3-8"/><path d="M12 3c-2.4 2-2.4 6 0 9 2.4-3 2.4-7 0-9z"/></svg>',
+    shield: '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9.5C8.5 19 5 16 5 11V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  };
+  const sprig = '<svg class="pedi-sprig" aria-hidden="true" viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 54C30 50 72 40 116 6"/><path d="M96 10c-11 2-17 8-18 19 11-1 17-8 18-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M72 20c-10 3-15 9-15 19 10-2 15-9 15-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M50 31c-9 3-13 9-13 18 9-2 13-9 13-18z" fill="currentColor" fill-opacity=".22" stroke="none"/></svg>';
+  const pLg = i => `<span class="pastille pastille-lg" aria-hidden="true">${i}</span>`;
+  const pSm = i => `<span class="pastille pastille-sm" aria-hidden="true">${i}</span>`;
+  const iconList = (icon, items) => `<ul class="icon-list">\n${items.map(t => `                ${'<li>' + pSm(icon) + '<span>' + t + '</span></li>'}`).join('\n')}\n              </ul>`;
+  const gradeList = items => `<ul class="grade-list">\n${items.map((t, i) => `                <li><span class="grade-num">${i}</span><span>${t}</span></li>`).join('\n')}\n              </ul>`;
+  const mint = (icon, title, text) => `              <div class="mint-callout">${pSm(icon)}<div><h4>${title}</h4><p>${text}</p></div></div>`;
+  const box = (title, inner) => `                <div class="info-box"><h4>${title}</h4>${inner}</div>`;
+  const card = ({ id, icon, title, main, side, full = '', cls = '' }) => `    <section id="${id}" class="soin-sec">
+      <div class="container">
+        <article class="soin-card${cls ? ' ' + cls : ''}">
+          <div class="soin-grid">
+            <div class="soin-main">
+              <header class="soin-head">${pLg(icon)}<div><h2>${title}</h2><span class="gold-line" aria-hidden="true"></span></div></header>
+${main}
+            </div>
+            <div class="soin-side">
+${side}
+            </div>
+          </div>${full ? `\n          <div class="soin-full">\n${full}\n          </div>` : ''}
+        </article>
+      </div>
+    </section>`;
+
+  const card1 = card({
+    id: 'affections-ongle-peau', icon: ico.ongle, title: "Affections de l'ongle et de la peau",
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>${B(s1.blocks, 'En quelques mots')}</p>
+${mint(ico.heart, 'En toute douceur', B(s1.blocks, 'En toute douceur'))}`,
+    side: `              <h3 class="soin-sub">Ce que je prends en charge</h3>
+              ${iconList(ico.check, B(s1.blocks, 'Ce que je prends en charge'))}`,
+  });
+
+  const card2 = card({
+    id: 'patients-diabetiques', icon: ico.drop, title: 'Suivi des patients diabétiques',
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>${B(s2.blocks, 'En quelques mots')}</p>`,
+    side: `              <h3 class="soin-sub">Une prise en charge par la Sécurité sociale</h3>
+              <p>${B(s2.blocks, 'Une prise en charge par la Sécurité sociale')}</p>`,
+    full: `            <div class="box-duo">
+${box('Tarifs &amp; prise en charge', `<p>${B(s2.blocks, 'Tarifs & prise en charge')}</p>`)}
+${box('Les grades de prise en charge', gradeList(B(s2.blocks, 'Les grades de prise en charge')))}
+            </div>`,
+  });
+
+  const cardSyndrome = card({
+    id: 'syndrome-main-pied', icon: ico.ribbon, title: 'Syndrome main-pied', cls: 'soin-card--center',
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>Le syndrome main-pied (ou érythrodysesthésie palmo-plantaire) est un effet secondaire de certaines chimiothérapies. Il se manifeste par des rougeurs, un gonflement, des picotements ou une sensibilité au niveau de la paume des mains et de la plante des pieds, parfois jusqu'à une desquamation de la peau.</p>`,
+    side: `${mint(ico.shield, 'Prise en charge', 'Dans le cadre de votre traitement, deux séances peuvent être prises en charge par la Sécurité sociale, sur prescription de votre oncologue.')}`,
+  });
+
+  const card3 = card({
+    id: 'verrue-plantaire', icon: ico.snow, title: 'Verrues plantaires par cryothérapie',
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>${B(s3.blocks, 'En quelques mots')}</p>`,
+    side: `              <h3 class="soin-sub">Comment ça fonctionne</h3>
+              <p>${B(s3.blocks, 'Comment ça fonctionne')}</p>`,
+    full: `${mint(ico.shield, 'Prise en charge', B(s3.blocks, 'Prise en charge'))}`,
+  });
+
+  const body = `    <section class="pedi-hero">
+      <div class="container">
+        <div class="pedi-hero-text">
+          <h1>Soin de pédicurie ${sprig}</h1>
+        </div>
+        <div class="pedi-hero-media"><img src="assets/pedicurie-soin.jpg" alt="Soin de pédicurie : soin des pieds au cabinet" width="303" height="178" loading="lazy" /></div>
+      </div>
+    </section>
+
+${card1}
+
+${card2}
+
+${cardSyndrome}
+
+${card3}`;
+  return shell({
+    title: "Soins de pédicurie — Clémentine Olive à Fosses (95)",
+    description: `Soins de pédicurie par Clémentine Olive à Fosses (95470). ${a.lead}`,
+    active: 'pedicurie.html', body,
+  });
+}
+
 /* ---------- Page 404 (servie automatiquement par GitHub Pages) ---------- */
 function notFoundPage() {
   const body = `    <section class="page-hero">
@@ -761,8 +860,9 @@ write('mentions-legales.html', mentionsLegales());
 write('confidentialite.html', confidentialite());
 for (const a of ACTIVITIES) {
   if (a.slug === 'reflexologie') { write('reflexologie.html', reflexologiePage()); continue; }
-  // Pédicurie & Podologie : plus de page d'atterrissage (les cartes de l'accueil font l'index),
-  // on ne génère que les pages détaillées de chaque soin.
+  // Pédicurie : une page unique, les 3 soins en sections ancrées.
+  if (a.slug === 'pedicurie') { write('pedicurie.html', pedicuriePage()); continue; }
+  // Podologie : une page détaillée par soin.
   for (const s of a.subpages) write(`${a.slug}-${s.slug}.html`, subPage(a, s));
 }
 write('404.html', notFoundPage());
