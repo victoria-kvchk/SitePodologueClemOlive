@@ -780,7 +780,7 @@ ${box('Les grades de prise en charge', gradeList(B(s2.blocks, 'Les grades de pri
         <div class="pedi-hero-text">
           <h1>Soin de pédicurie ${sprig}</h1>
         </div>
-        <div class="pedi-hero-media"><img src="assets/pedicurie-soin.jpg" alt="Soin de pédicurie : soin des pieds au cabinet" width="303" height="178" loading="lazy" /></div>
+        <div class="pedi-hero-media"><img src="assets/pedicurie-soin.jpg" alt="Soin de pédicurie : soin des pieds au cabinet" width="1536" height="1024" loading="lazy" /></div>
       </div>
     </section>
 
