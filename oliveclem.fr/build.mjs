@@ -542,7 +542,7 @@ function mentionsLegales() {
 }
 
 function confidentialite() {
-  const body = `        <p>Cette page décrit comment vos données sont traitées lors de votre visite. <span class="todo">(À faire valider juridiquement avant mise en ligne.)</span></p>
+  const body = `        <p>Cette page décrit comment vos données sont traitées lors de votre visite.</p>
         <h2>Responsable du traitement</h2>
         <p>Clémentine Olive, ${ADRESSE.rue}, ${ADRESSE.cp} ${ADRESSE.ville}.</p>
         <h2>Données collectées</h2>
@@ -551,7 +551,7 @@ function confidentialite() {
         <ul>
           <li><strong>Google Maps</strong> : la carte n'est chargée qu'après votre clic explicite (« Afficher la carte »). Aucun cookie Google n'est déposé tant que vous ne l'affichez pas.</li>
           <li><strong>Doctolib</strong> : la réservation vous redirige vers le site de Doctolib.</li>
-          <li><strong>Google Fonts</strong> : les polices sont chargées depuis les serveurs de Google. <span class="todo">(Option : auto-héberger les polices pour éviter cet appel externe.)</span></li>
+          <li><strong>Google Fonts</strong> : les polices sont chargées depuis les serveurs de Google.</li>
         </ul>
         <h2>Vos droits</h2>
         <p>Vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet au ${TEL_PODO.txt}.</p>`;
