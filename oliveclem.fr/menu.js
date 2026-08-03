@@ -1,3 +1,39 @@
+// Ancres : décalage exact sous l'en-tête collant
+// 1) mesure la hauteur réelle de l'en-tête -> variable CSS --header-h
+// 2) recale la position après le chargement des polices (évite le décalage
+//    quand on arrive sur une page avec une ancre, ex. index.html#apropos)
+(function () {
+  var header = document.querySelector('.site-header');
+  if (!header) return;
+  var GAP = 12; // respiration entre l'en-tête et le titre de section
+
+  function mesurer() {
+    var h = Math.round(header.getBoundingClientRect().height);
+    if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
+    return h;
+  }
+  mesurer();
+  window.addEventListener('resize', mesurer);
+  if (window.ResizeObserver) new ResizeObserver(mesurer).observe(header);
+
+  // Le visiteur a repris la main : on ne le repositionne plus.
+  var libre = false;
+  ['wheel', 'touchstart', 'keydown'].forEach(function (evt) {
+    window.addEventListener(evt, function () { libre = true; }, { passive: true, once: true });
+  });
+
+  function recaler() {
+    if (libre || !location.hash) return;
+    var cible;
+    try { cible = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { return; }
+    if (!cible) return;
+    var y = cible.getBoundingClientRect().top + window.pageYOffset - (mesurer() + GAP);
+    window.scrollTo({ top: Math.max(y, 0), behavior: 'auto' });
+  }
+  window.addEventListener('load', recaler);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(recaler);
+})();
+
 // Menu mobile (ouverture / fermeture)
 (function () {
   const toggle = document.querySelector('.nav-toggle');

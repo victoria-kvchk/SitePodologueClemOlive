@@ -49,6 +49,9 @@
   --texte:        #3B4642;   /* texte courant (chaud, très lisible) */
   --texte-doux:   #59645D;   /* texte secondaire (contraste AA sur crème) */
 
+  /* Hauteur de l'en-tête collant (repli ; menu.js la mesure réellement) */
+  --header-h: 78px;
+
   --ombre:        0 12px 30px rgba(46, 110, 96, 0.10);
   --ombre-douce:  0 6px 18px rgba(59, 70, 66, 0.08);
   --radius:       0px;       /* angles nets (luxe minimal) */
@@ -60,7 +63,7 @@
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
@@ -125,8 +128,12 @@ a:focus-visible, button:focus-visible {
 .btn-ghost:hover { background: var(--or-clair); transform: translateY(-2px); }
 
 /* ---------- En-tête / navigation ---------- */
-/* Décalage des ancres pour l'en-tête collant */
-section[id], [id]:target { scroll-margin-top: 92px; }
+/* Décalage des ancres pour l'en-tête collant.
+   Un SEUL mécanisme (scroll-margin-top) : scroll-padding-top sur <html>
+   s'ajouterait à celui-ci et doublerait le décalage.
+   --header-h est recalculée au pixel près par menu.js ; les valeurs
+   ci-dessous servent de repli si JS est indisponible. */
+[id] { scroll-margin-top: calc(var(--header-h, 78px) + 12px); }
 
 .site-header {
   position: sticky; top: 0; z-index: 100;
@@ -350,6 +357,7 @@ section[id], [id]:target { scroll-margin-top: 92px; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1200px) {
+  :root { --header-h: 88px; }   /* repli : en-tête un peu plus haut avec le bouton menu */
   .nav-toggle { display: block; }
   .nav {
     position: absolute; top: 100%; left: 0; right: 0;

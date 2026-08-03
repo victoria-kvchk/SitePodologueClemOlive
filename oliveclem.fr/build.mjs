@@ -156,11 +156,13 @@ const ACTIVITIES = [pedicurie, podologie, reflexologie];
 
 /* ---------------- Chrome partagé (en-tête / pied) ---------------- */
 const NAV = [
-  { href: 'index.html', label: 'Accueil' },
+  // sansSurlignage : pas de pastille verte « page courante » sur l'accueil
+  // (l'attribut aria-current reste posé pour les lecteurs d'écran)
+  { href: 'index.html', label: 'Accueil', sansSurlignage: true },
   { href: 'index.html#apropos', label: 'À propos' },
   { label: 'Pédicurie & Podologie', children: [
     { href: 'pedicurie.html', label: 'Soins de pédicurie' },
-    { href: 'index.html#podologie', label: 'La Podologie' },
+    { href: 'podologie.html', label: 'La Podologie' },
     { href: 'faq.html', label: 'FAQ' },
   ] },
   { label: 'Réflexologie', children: [
@@ -173,11 +175,18 @@ const NAV = [
 ];
 
 function header(active) {
-  const navLink = (href, label) =>
-    `<a href="${href}"${href === active ? ' aria-current="page" class="is-active"' : ''}>${label}</a>`;
+  const navLink = (href, label, sansSurlignage) =>
+    `<a href="${href}"${href === active ? ` aria-current="page"${sansSurlignage ? '' : ' class="is-active"'}` : ''}>${label}</a>`;
+  // Page seule, sans l'ancre : « reflexologie.html#bienfaits » -> « reflexologie.html »
+  const page = href => href.split('#')[0];
+  // Si la page courante est déjà une entrée de premier niveau (Accueil, Tarifs…),
+  // aucun groupe ne doit s'allumer — même si un sous-lien pointe vers une ancre
+  // de cette page (ex. « La Podologie » = index.html#podologie sur l'accueil).
+  const dejaTopNiveau = NAV.some(i => i.href && i.href === active);
   const items = NAV.map(item => {
-    if (!item.children) return navLink(item.href, item.label);
-    const childActive = item.children.some(c => c.href === active || c.href.startsWith(active + '#'));
+    if (!item.children) return navLink(item.href, item.label, item.sansSurlignage);
+    const childActive = !dejaTopNiveau && active !== '' &&
+      item.children.some(c => page(c.href) === page(active));
     const sub = item.children.map(c => navLink(c.href, c.label)).join('\n            ');
     return `<div class="nav-group${childActive ? ' is-active' : ''}">
           <button type="button" class="nav-group-trigger" aria-expanded="false" aria-haspopup="true">${item.label}<span class="caret" aria-hidden="true">▾</span></button>
@@ -345,41 +354,6 @@ function mapEmbed() {
 }
 
 /* ---------------- Pages ---------------- */
-function subPage(a, s) {
-  const rose = a.color === 'rose';
-  const blocks = s.blocks.map(([h, content]) => {
-    if (Array.isArray(content)) {
-      return `        <h2>${h}</h2>\n        <ul>${content.map(li => `\n          <li>${li}</li>`).join('')}\n        </ul>`;
-    }
-    return `        <h2>${h}</h2>\n        <p>${content}</p>`;
-  }).join('\n');
-  const body = `    <section class="page-hero${rose ? ' hero-rose' : ''}">
-      <div class="container">
-        <h1>${s.title}</h1>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="article">
-${blocks}
-          <div class="article-cta${rose ? ' accent-rose' : ''}">
-            <p>Une question ou envie de prendre rendez-vous ?</p>
-            <div class="bloc-actions" style="justify-content:center">
-              ${bookActions()}
-            </div>
-          </div>
-          <a class="back-link" href="index.html#${a.slug}">← Retour à ${a.label}</a>
-        </div>
-      </div>
-    </section>`;
-  return shell({
-    title: `${s.title} — ${a.label} — Clémentine Olive (Fosses 95)`,
-    description: `${s.title} : ${s.teaser} Clémentine Olive, ${a.label.toLowerCase()} à Fosses (95470).`,
-    active: `${a.slug}.html`, body,
-  });
-}
-
 function homeBody() {
   const ICONS = {
     diabete:   '<path d="M20 7c4 6 9 12 9 18a9 9 0 1 1-18 0c0-6 5-12 9-18z"/><path d="M20 15c2 4 5 8 5 11"/>',
@@ -400,8 +374,8 @@ function homeBody() {
     podologie: {
       intro: "Analyser votre posture et votre marche pour soulager et prévenir durablement.",
       items: [
-        { label: 'Bilan podologique', href: 'podologie-bilan-podologique.html', ico: 'bilan' },
-        { label: 'Semelles orthopédiques sur mesure', href: 'podologie-semelles.html', img: 'ico-semelle.webp' },
+        { label: 'Bilan podologique', href: 'podologie.html#bilan-podologique', ico: 'bilan' },
+        { label: 'Semelles orthopédiques sur mesure', href: 'podologie.html#semelles', img: 'ico-semelle.webp' },
       ],
     },
     reflexologie: {
@@ -699,30 +673,33 @@ ${faqBlock(a, 'faq')}
   });
 }
 
-/* ---------- Page Pédicurie (3 soins en sections ancrées) ---------- */
-function pedicuriePage() {
-  const a = pedicurie;
-  const s1 = a.subpages.find(s => s.slug === 'affections-ongle-peau');
-  const s2 = a.subpages.find(s => s.slug === 'patients-diabetiques');
-  const s3 = a.subpages.find(s => s.slug === 'verrue-plantaire');
-  const B = (blocks, h) => (blocks.find(b => b[0] === h) || [null, ''])[1];
-  const ico = {
-    ongle:  '<img src="assets/ico-ongle.webp" alt="" width="120" height="120" loading="lazy" />',
-    drop:   '<svg viewBox="0 0 40 40"><path d="M20 7c4 6 9 12 9 18a9 9 0 1 1-18 0c0-6 5-12 9-18z"/><path d="M20 15c2 4 5 8 5 11"/></svg>',
-    snow:   '<svg viewBox="0 0 40 40"><path d="M20 5v30M5 20h30M9 9l22 22M31 9L9 31"/></svg>',
-    check:  '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
-    heart:  '<svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-6.5-9A3.4 3.4 0 0 1 12 8a3.4 3.4 0 0 1 6.5 3c0 4.8-6.5 9-6.5 9z"/></svg>',
-    ribbon: '<svg viewBox="0 0 24 24"><path d="M9 13l-3 8 6-4 6 4-3-8"/><path d="M12 3c-2.4 2-2.4 6 0 9 2.4-3 2.4-7 0-9z"/></svg>',
-    shield: '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9.5C8.5 19 5 16 5 11V6z"/><path d="M9 12l2 2 4-4"/></svg>',
-  };
-  const sprig = '<svg class="pedi-sprig" aria-hidden="true" viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 54C30 50 72 40 116 6"/><path d="M96 10c-11 2-17 8-18 19 11-1 17-8 18-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M72 20c-10 3-15 9-15 19 10-2 15-9 15-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M50 31c-9 3-13 9-13 18 9-2 13-9 13-18z" fill="currentColor" fill-opacity=".22" stroke="none"/></svg>';
-  const pLg = i => `<span class="pastille pastille-lg" aria-hidden="true">${i}</span>`;
-  const pSm = i => `<span class="pastille pastille-sm" aria-hidden="true">${i}</span>`;
-  const iconList = (icon, items) => `<ul class="icon-list">\n${items.map(t => `                ${'<li>' + pSm(icon) + '<span>' + t + '</span></li>'}`).join('\n')}\n              </ul>`;
-  const gradeList = items => `<ul class="grade-list">\n${items.map((t, i) => `                <li><span class="grade-num">${i}</span><span>${t}</span></li>`).join('\n')}\n              </ul>`;
-  const mint = (icon, title, text) => `              <div class="mint-callout">${pSm(icon)}<div><h4>${title}</h4><p>${text}</p></div></div>`;
-  const box = (title, inner) => `                <div class="info-box"><h4>${title}</h4>${inner}</div>`;
-  const card = ({ id, icon, title, main, side, full = '', cls = '' }) => `    <section id="${id}" class="soin-sec">
+/* ---------- Briques partagées des pages de soins ----------
+   Une carte .soin-card par soin : pastille, colonne principale, colonne
+   latérale, plus un bloc pleine largeur optionnel. Communes à Pédicurie et
+   Podologie pour que les deux pages aient rigoureusement la même allure. */
+
+// Récupère le contenu d'un bloc de données par son intitulé.
+const B = (blocks, h) => (blocks.find(b => b[0] === h) || [null, ''])[1];
+
+const ico = {
+  ongle:   '<img src="assets/ico-ongle.webp" alt="" width="120" height="120" loading="lazy" />',
+  semelle: '<img src="assets/ico-semelle.webp" alt="" width="120" height="120" loading="lazy" />',
+  bilan:   '<svg viewBox="0 0 40 40"><path d="M11 8h18v25H11z"/><path d="M16 8V5h8v3M15 15l2 2 4-5M15 23l2 2 4-5"/></svg>',
+  drop:    '<svg viewBox="0 0 40 40"><path d="M20 7c4 6 9 12 9 18a9 9 0 1 1-18 0c0-6 5-12 9-18z"/><path d="M20 15c2 4 5 8 5 11"/></svg>',
+  snow:    '<svg viewBox="0 0 40 40"><path d="M20 5v30M5 20h30M9 9l22 22M31 9L9 31"/></svg>',
+  check:   '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+  heart:   '<svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-6.5-9A3.4 3.4 0 0 1 12 8a3.4 3.4 0 0 1 6.5 3c0 4.8-6.5 9-6.5 9z"/></svg>',
+  ribbon:  '<svg viewBox="0 0 24 24"><path d="M9 13l-3 8 6-4 6 4-3-8"/><path d="M12 3c-2.4 2-2.4 6 0 9 2.4-3 2.4-7 0-9z"/></svg>',
+  shield:  '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9.5C8.5 19 5 16 5 11V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+};
+
+const pLg = i => `<span class="pastille pastille-lg" aria-hidden="true">${i}</span>`;
+const pSm = i => `<span class="pastille pastille-sm" aria-hidden="true">${i}</span>`;
+const iconList = (icon, items) => `<ul class="icon-list">\n${items.map(t => `                ${'<li>' + pSm(icon) + '<span>' + t + '</span></li>'}`).join('\n')}\n              </ul>`;
+const gradeList = items => `<ul class="grade-list">\n${items.map((t, i) => `                <li><span class="grade-num">${i}</span><span>${t}</span></li>`).join('\n')}\n              </ul>`;
+const mint = (icon, title, text) => `              <div class="mint-callout">${pSm(icon)}<div><h4>${title}</h4><p>${text}</p></div></div>`;
+const box = (title, inner) => `                <div class="info-box"><h4>${title}</h4>${inner}</div>`;
+const card = ({ id, icon, title, main, side, full = '', cls = '' }) => `    <section id="${id}" class="soin-sec">
       <div class="container">
         <article class="soin-card${cls ? ' ' + cls : ''}">
           <div class="soin-grid">
@@ -737,6 +714,14 @@ ${side}
         </article>
       </div>
     </section>`;
+
+/* ---------- Page Pédicurie (3 soins en sections ancrées) ---------- */
+function pedicuriePage() {
+  const a = pedicurie;
+  const s1 = a.subpages.find(s => s.slug === 'affections-ongle-peau');
+  const s2 = a.subpages.find(s => s.slug === 'patients-diabetiques');
+  const s3 = a.subpages.find(s => s.slug === 'verrue-plantaire');
+  const sprig = '<svg class="pedi-sprig" aria-hidden="true" viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 54C30 50 72 40 116 6"/><path d="M96 10c-11 2-17 8-18 19 11-1 17-8 18-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M72 20c-10 3-15 9-15 19 10-2 15-9 15-19z" fill="currentColor" fill-opacity=".22" stroke="none"/><path d="M50 31c-9 3-13 9-13 18 9-2 13-9 13-18z" fill="currentColor" fill-opacity=".22" stroke="none"/></svg>';
 
   const card1 = card({
     id: 'affections-ongle-peau', icon: ico.ongle, title: "Affections de l'ongle et de la peau",
@@ -798,6 +783,74 @@ ${card3}`;
   });
 }
 
+/* ---------- Page Podologie (bilan + semelles en sections ancrées) ----------
+   Même gabarit que la page Pédicurie. Le hero est en texte seul faute de
+   photographie de podologie : le jour où il y en a une, reprendre le bloc
+   .pedi-hero de pedicuriePage(). */
+function podologiePage() {
+  const a = podologie;
+  const s1 = a.subpages.find(s => s.slug === 'bilan-podologique');
+  const s2 = a.subpages.find(s => s.slug === 'semelles');
+
+  const card1 = card({
+    id: 'bilan-podologique', icon: ico.bilan, title: 'Bilan podologique',
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>${B(s1.blocks, 'En quelques mots')}</p>`,
+    side: `              <h3 class="soin-sub">Dans quels cas ?</h3>
+              ${iconList(ico.check, B(s1.blocks, 'Dans quels cas ?'))}`,
+    // En pleine largeur sous les deux colonnes : la liste de droite est courte,
+    // l'encart paraissait à l'étroit dans la colonne de gauche.
+    full: `${mint(ico.heart, 'Comment ça se passe', B(s1.blocks, 'Comment ça se passe'))}`,
+  });
+
+  const card2 = card({
+    id: 'semelles', icon: ico.semelle, title: 'Semelles orthopédiques sur mesure',
+    main: `              <h3 class="soin-sub">En quelques mots</h3>
+              <p>${B(s2.blocks, 'En quelques mots')}</p>`,
+    side: `              <h3 class="soin-sub">Les bénéfices</h3>
+              ${iconList(ico.check, B(s2.blocks, 'Les bénéfices'))}`,
+    full: `${mint(ico.heart, "De la prise d'empreinte au suivi", B(s2.blocks, "De la prise d'empreinte au suivi"))}`,
+  });
+
+  const body = `    <section class="page-hero">
+      <div class="container">
+        <h1>La Podologie</h1>
+        <p class="lead">${a.lead}</p>
+      </div>
+    </section>
+
+${card1}
+
+${card2}`;
+  return shell({
+    title: "Podologie : bilan et semelles orthopédiques — Clémentine Olive à Fosses (95)",
+    description: `Bilan podologique et semelles orthopédiques sur mesure par Clémentine Olive à Fosses (95470). ${a.lead}`,
+    active: 'podologie.html', body,
+  });
+}
+
+/* ---------- Redirection des anciennes URL ----------
+   Les deux anciennes pages podologie-*.html étaient indexées : on les conserve
+   sous forme de page de renvoi vers la nouvelle section correspondante, pour ne
+   casser ni les liens partagés ni les résultats de recherche. */
+function redirectPage(vers, titre) {
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${titre} — Clémentine Olive</title>
+  <link rel="canonical" href="${SITE}/${vers}" />
+  <meta http-equiv="refresh" content="0; url=${vers}" />
+</head>
+<body>
+  <p>Cette page a été regroupée avec les autres soins de podologie.
+     <a href="${vers}">Voir « ${titre} »</a>.</p>
+</body>
+</html>
+`;
+}
+
 /* ---------- Page 404 (servie automatiquement par GitHub Pages) ---------- */
 function notFoundPage() {
   const body = `    <section class="page-hero">
@@ -852,19 +905,26 @@ function checkLinks(pages) {
 const out = [];
 const pages = {};
 const write = (name, html) => { writeFileSync(new URL(`./${name}`, import.meta.url), html); out.push(name); pages[name] = html; };
+// Une redirection est écrite sur le disque et vérifiée comme les autres pages,
+// mais elle reste hors du sitemap : ce n'est pas une page de contenu.
+const writeRedirect = (name, vers, titre) => {
+  const html = redirectPage(vers, titre);
+  writeFileSync(new URL(`./${name}`, import.meta.url), html);
+  pages[name] = html;
+};
 
 write('index.html', homePage());
 write('tarifs.html', tarifsPage());
 write('faq.html', faqPage());
 write('mentions-legales.html', mentionsLegales());
 write('confidentialite.html', confidentialite());
-for (const a of ACTIVITIES) {
-  if (a.slug === 'reflexologie') { write('reflexologie.html', reflexologiePage()); continue; }
-  // Pédicurie : une page unique, les 3 soins en sections ancrées.
-  if (a.slug === 'pedicurie') { write('pedicurie.html', pedicuriePage()); continue; }
-  // Podologie : une page détaillée par soin.
-  for (const s of a.subpages) write(`${a.slug}-${s.slug}.html`, subPage(a, s));
-}
+// Les trois activités ont chacune une page unique, soins en sections ancrées.
+write('pedicurie.html', pedicuriePage());
+write('podologie.html', podologiePage());
+write('reflexologie.html', reflexologiePage());
+// Anciennes URL de podologie, conservées en redirection (voir redirectPage).
+writeRedirect('podologie-bilan-podologique.html', 'podologie.html#bilan-podologique', 'Bilan podologique');
+writeRedirect('podologie-semelles.html', 'podologie.html#semelles', 'Semelles orthopédiques sur mesure');
 write('404.html', notFoundPage());
 // robots.txt & sitemap.xml (dérivés de la liste des pages)
 writeFileSync(new URL('./robots.txt', import.meta.url), robotsTxt());
