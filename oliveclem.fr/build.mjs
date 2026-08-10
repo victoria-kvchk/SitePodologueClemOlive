@@ -3,7 +3,24 @@
    Source unique -> pages HTML statiques (en-tête/pied partagés)
    Lancer : node build.mjs  (régénère toutes les pages + sitemap/robots)
    ========================================================= */
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+
+/* ---------------- Anti-cache des fichiers statiques ----------------
+   styles.css et menu.js sont servis par GitHub Pages avec une durée de cache
+   longue : sans repère de version, un visiteur déjà venu garde les anciens
+   fichiers après une mise en production. On suffixe donc leur URL par une
+   empreinte de leur contenu. Elle ne change que si le fichier change, donc le
+   cache n'est invalidé qu'au moment utile — contrairement à une date de build,
+   qui le viderait à chaque déploiement même sans modification. */
+const empreintes = new Map();
+function v(nom) {
+  if (!empreintes.has(nom)) {
+    const contenu = readFileSync(new URL(`./${nom}`, import.meta.url));
+    empreintes.set(nom, createHash('sha256').update(contenu).digest('hex').slice(0, 8));
+  }
+  return `${nom}?v=${empreintes.get(nom)}`;
+}
 
 const TEL_PODO = { txt: '06 52 86 09 96', tel: '+33652860996' };
 
@@ -300,8 +317,8 @@ function shell({ title, description, active, body, bodyClass = '' }) {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="${v('styles.css')}" />
+  <link rel="icon" href="${v('favicon.svg')}" type="image/svg+xml" />
 ${jsonLd()}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
@@ -311,8 +328,8 @@ ${header(active)}
 ${body}
   </main>
 ${footer()}
-  <script src="menu.js"></script>
-  <script src="footprints.js"></script>
+  <script src="${v('menu.js')}"></script>
+  <script src="${v('footprints.js')}"></script>
 </body>
 </html>
 `;
@@ -880,7 +897,7 @@ function sitemapXml(pages) {
 /* ---------- Vérification des liens internes (garde-fou anti-lien-mort) ---------- */
 function checkLinks(pages) {
   const names = new Set(Object.keys(pages));
-  const staticFiles = new Set(['favicon.svg', 'styles.css', 'menu.js', 'robots.txt', 'sitemap.xml']);
+  const staticFiles = new Set(['favicon.svg', 'styles.css', 'menu.js', 'footprints.js', 'robots.txt', 'sitemap.xml']);
   const idsByPage = {};
   for (const [name, html] of Object.entries(pages))
     idsByPage[name] = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
@@ -889,7 +906,8 @@ function checkLinks(pages) {
     for (const m of html.matchAll(/href="([^"]+)"/g)) {
       const href = m[1];
       if (/^(https?:|tel:|mailto:)/.test(href) || href === '/' || href === '') continue;
-      const [file, anchor] = href.split('#');
+      const [chemin, anchor] = href.split('#');
+      const file = chemin.split('?')[0];   // ignore le suffixe anti-cache ?v=…
       if (file === '') { // ancre sur la même page
         if (anchor && !idsByPage[name].has(anchor)) problems.push(`${name} → #${anchor} (ancre absente)`);
         continue;
