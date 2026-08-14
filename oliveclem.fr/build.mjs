@@ -216,7 +216,7 @@ function header(active) {
     <div class="container header-inner">
       <a href="index.html" class="brand">
         <span class="brand-name">Clémentine Olive</span>
-        <span class="brand-sub">Pédicure-Podologue · Réflexologue</span>
+        <span class="brand-sub">Pédicure-Podologue<br />Réflexologue</span>
       </a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
@@ -236,7 +236,7 @@ function footer() {
     <div class="container footer-grid">
       <div class="footer-brand-col">
         <p class="footer-brand">Clémentine Olive</p>
-        <p class="footer-brand-sub">Pédicure-Podologue D.E · Réflexologue</p>
+        <p class="footer-brand-sub">Pédicure-Podologue D.E<br />Réflexologue</p>
         <p class="footer-tagline">Prendre soin de vos pieds,<br />c'est prendre soin de vous.</p>
       </div>
       <nav class="footer-nav" aria-label="Plan du site">
@@ -453,7 +453,7 @@ ${cards}
           <img src="assets/portrait-clementine.jpg" alt="Clémentine Olive, pédicure-podologue et réflexologue à Fosses" width="720" height="960" loading="lazy" />
         </div>
         <div>
-          <h2>À propos de Clémentine Olive</h2>
+          <h2>À propos de moi</h2>
           <p>Diplômée de pédicurie-podologie depuis juillet 2019, j'ai d'abord effectué des remplacements
              dans plusieurs cabinets et des collaborations, avant de m'installer à mon compte en avril 2023.</p>
           <p>Au cabinet, je pratique la <strong>pédicurie</strong> (coupe d'ongles, soin des mycoses,
@@ -686,7 +686,9 @@ ${faqBlock(a, 'faq')}
   return shell({
     title: "Réflexologie — Clémentine Olive à Fosses (95)",
     description: `Réflexologie plantaire par Clémentine Olive à Fosses (95470). ${a.lead}`,
-    active: 'reflexologie.html', body,
+    // bodyClass : cale les titres de section sur ceux des pages Pédicurie et
+    // Podologie, pour que les trois pages de soins soient typographiées pareil.
+    active: 'reflexologie.html', bodyClass: 'page-reflexologie', body,
   });
 }
 
