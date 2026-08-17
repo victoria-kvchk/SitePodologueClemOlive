@@ -405,10 +405,13 @@ ${faqColonnes(a.faq)}
 function mapEmbed() {
   return `        <div class="map-embed" id="map-embed" data-src="${MAPS_EMBED}">
           <div class="map-consent">
-            <svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.7 7-12A7 7 0 0 0 5 9c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
-            <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
-            <p><a href="${MAPS_LINK}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
+            <div class="map-consent-carte">
+              <span class="pastille pastille-sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.7 7-12A7 7 0 0 0 5 9c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+              <h3>Afficher la carte</h3>
+              <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
+              <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
+              <p class="map-consent-lien"><a href="${MAPS_LINK}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
+            </div>
           </div>
         </div>`;
 }
@@ -483,7 +486,6 @@ ${items}
         <div class="section-head">
           <h2>Trois manières de prendre soin de vous</h2>
         </div>
-        <p class="info-callout">Consulter un pédicure-podologue ne nécessite plus d'ordonnance de la part de votre médecin traitant dans le cadre des soins diabétiques, des semelles orthopédiques et des verrues plantaires. Votre praticien peut lui-même la rédiger.</p>
         <div class="card-grid">
 ${cards}
         </div>
@@ -503,12 +505,14 @@ ${cards}
              ongles incarnés…), la <strong>podologie</strong> (bilan podologique, confection de semelles
              orthopédiques) et la <strong>réflexologie plantaire</strong>.</p>
           <p>Je porte un intérêt particulier au bien-être de l'autre, et cela se retranscrit dans mes soins.</p>
-          <h3 class="dip-titre">Diplômes</h3>
-          <ul class="diplomes">
+          <div class="diplomes-bloc">
+            <h3 class="dip-titre">Diplômes</h3>
+            <ul class="diplomes">
             <li><span class="dip-annee">2019</span> <span>Diplôme d'État de pédicure-podologue — École Supérieure de Masseurs-Kinésithérapeutes et Pédicures (ESMKP), Paris</span></li>
             <li><span class="dip-annee">2024</span> <span>Bilan diagnostique en podo-pédiatrie — connaissance et évolution</span></li>
             <li><span class="dip-annee">2026</span> <span>Certificat de Réflexologue — école E.T.R.E, Paris</span></li>
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -617,8 +621,14 @@ ${rows}
           <p><strong>Consultation à domicile</strong> — je me déplace avec mon matériel de pédicurie ; prévoyez simplement une serviette de toilette de taille moyenne.</p>
           <p><strong>Zone d'action :</strong> Fosses, Marly-la-Ville, Survilliers, La Chapelle-en-Serval, Bellefontaine.</p>
         </div>`;
+  // L'ordonnance concerne trois soins répartis sur les deux disciplines ; la
+  // page Tarifs est le seul endroit où elles se croisent, et où la question se
+  // pose en même temps que celle du remboursement.
+  const encartOrdonnance = `        <div class="tarifs-info">
+          <p><strong>Pas d'ordonnance nécessaire</strong> — consulter un pédicure-podologue ne nécessite plus d'ordonnance de la part de votre médecin traitant dans le cadre des soins diabétiques, des semelles orthopédiques et des verrues plantaires. Votre praticien peut lui-même la rédiger.</p>
+        </div>`;
   const iPedicurie = ACTIVITIES.findIndex(a => a.slug === 'pedicurie');
-  blocs.splice(iPedicurie + 1, 0, encartDomicile);
+  blocs.splice(iPedicurie + 1, 0, encartDomicile, encartOrdonnance);
   const body = `    <section class="page-hero">
       <div class="container">
         <h1>Tarifs</h1>

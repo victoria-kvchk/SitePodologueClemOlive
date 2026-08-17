@@ -236,7 +236,9 @@ a:focus-visible, button:focus-visible {
 .hero::before { left: 0; }
 .hero::after { right: 0; transform: scaleX(-1); }
 .hero .container { position: relative; z-index: 2; }
-.hero h1 { font-size: clamp(1.7rem, 6.2vw, 4.4rem); margin-bottom: 22px; letter-spacing: .01em; }
+/* Aligné sur le h1 de Pédicurie : à 4.4rem il faisait 2,84 fois la marque de
+   l en-tête, contre 2,06 à 2,32 sur les autres pages. */
+.hero h1 { font-size: clamp(1.7rem, 5vw, 3.6rem); margin-bottom: 22px; letter-spacing: .01em; }
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
 /* Traces de pas animées le long d'une courbe (générées par footprints.js) */
@@ -283,12 +285,28 @@ a:focus-visible, button:focus-visible {
 
 /* ---------- À propos ---------- */
 .apropos { display: grid; grid-template-columns: 320px 1fr; gap: 56px; align-items: center; }
-.dip-titre { color: var(--vert-fonce); margin: 26px 0 10px; }
-.diplomes { list-style: none; margin: 0 0 6px; display: flex; flex-direction: column; gap: 10px; }
-.diplomes li { display: flex; gap: 14px; align-items: baseline; line-height: 1.5; }
+/* Diplômes en frise : un filet vertical relie les trois dates, chacune marquée
+   d'un point. La liste devient un parcours au lieu de trois lignes empilées.
+   Le filet horizontal au-dessus sépare la biographie des diplômes. */
+.dip-titre { color: var(--vert-fonce); margin: 0 0 18px; }
+.diplomes-bloc { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--ligne); }
+.diplomes { list-style: none; margin: 0; padding-left: 26px; position: relative; }
+/* Le filet s'arrête au dernier point plutôt que de déborder sous lui. */
+.diplomes::before {
+  content: ""; position: absolute; left: 5px; top: 10px; bottom: 14px;
+  border-left: 1px solid var(--ligne-menthe);
+}
+.diplomes li { position: relative; display: flex; gap: 18px; align-items: baseline; line-height: 1.5; }
+.diplomes li + li { margin-top: 16px; padding-top: 16px; border-top: 1px dotted var(--ligne-menthe); }
+.diplomes li::before {
+  content: ""; position: absolute; left: -26px; top: 10px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--vert-fonce); box-shadow: 0 0 0 3px var(--gris-perle);
+}
+.diplomes li + li::before { top: 26px; }
 .diplomes .dip-annee {
-  flex: 0 0 auto; min-width: 46px; font-weight: 800; color: var(--vert-fonce);
-  font-family: var(--font-head); font-size: var(--fs-xl);
+  flex: 0 0 auto; min-width: 52px; font-weight: 700; color: var(--vert-fonce);
+  font-family: var(--font-body); font-size: var(--fs-lg); letter-spacing: .02em;
 }
 .apropos-photo {
   aspect-ratio: 3/4; border-radius: 0;
@@ -553,6 +571,25 @@ a:focus-visible, button:focus-visible {
   display: block; width: 46px; height: 3px; border-radius: 0;
   background: var(--or); margin: 14px 0 0;
 }
+/* Les titres de section reçoivent le même trait que les titres de carte, en
+   pseudo-élément : ils sont centrés, le trait l'est aussi. Sans quoi
+   « Questions fréquentes » restait le seul titre nu au milieu de titres de
+   carte qui, eux, portent le trait. */
+.section-head h2::after,
+.faq-groupe::after {
+  content: ""; display: block; width: 46px; height: 3px;
+  background: var(--or); margin: 14px auto 0;
+}
+/* « À propos de moi » : même trait, mais aligné à gauche — ce titre n'est pas
+   centré, il ouvre la colonne de texte à côté du portrait. Seul le h2 est visé,
+   « Diplômes » est un sous-titre et n'en porte pas. */
+.apropos h2::after {
+  content: ""; display: block; width: 46px; height: 3px;
+  /* Marge basse indispensable : ce titre est suivi directement du paragraphe,
+     alors que les titres centrés respirent grâce au margin-bottom de
+     .section-head. Sans elle, le trait colle au texte qui suit. */
+  background: var(--or); margin: 14px 0 24px;
+}
 .card-list { list-style: none; margin: 22px 0 0; padding: 0; width: 100%; display: flex; flex-direction: column; }
 .card-list li { border-bottom: 1px dotted var(--ligne-menthe); }
 .card-list li:last-child { border-bottom: 0; }
@@ -677,11 +714,6 @@ a:focus-visible, button:focus-visible {
 
 
 /* ---------- Encart d'information (ex. « plus besoin d'ordonnance ») ---------- */
-.info-callout {
-  max-width: 820px; margin: 0 auto 34px; padding: 18px 26px;
-  background: var(--vert-clair); border-radius: var(--radius);
-  text-align: center; color: var(--texte); font-size: var(--fs-md); line-height: 1.6;
-}
 
 /* ---------- Photo du cabinet ---------- */
 .cabinet-photo {
@@ -698,8 +730,11 @@ a:focus-visible, button:focus-visible {
 .cabinet-top {
   display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
 }
-.cabinet-top .cabinet-photo { position: relative; margin: 0; max-width: none; }
-.cabinet-top .cabinet-photo img { display: block; width: 100%; height: 340px; object-fit: cover; }
+.cabinet-top .cabinet-photo { position: relative; margin: 0; max-width: none; display: flex; }
+/* height: 100% et non 340px : les deux colonnes de la grille s'étirent à la
+   hauteur de la plus haute, et l'image doit suivre. Figée, elle laissait du
+   blanc sous la photo et la légende tombait dedans au lieu de s'y superposer. */
+.cabinet-top .cabinet-photo img { display: block; width: 100%; height: 100%; min-height: 340px; object-fit: cover; }
 .cabinet-top .cabinet-photo figcaption {
   position: absolute; left: 0; right: 0; bottom: 0; margin: 0;
   padding: 30px 16px 12px; text-align: center;
@@ -718,17 +753,22 @@ a:focus-visible, button:focus-visible {
   max-width: 900px; margin: 0 auto; border-radius: var(--radius);
   overflow: hidden; border: 1px solid var(--ligne);
 }
+/* Écran de consentement : plan à l'aquarelle en fond, carte blanche par-dessus.
+   Le plan n'est qu'un décor — la vraie carte n'est chargée qu'au clic (RGPD). */
 .map-consent {
-  min-height: 360px; display: flex; flex-direction: column; gap: 14px;
-  align-items: center; justify-content: center; text-align: center; padding: 40px;
-  background:
-    radial-gradient(ellipse 60% 60% at 30% 20%, var(--voile-vert), transparent 60%),
-    radial-gradient(ellipse 55% 55% at 80% 90%, var(--voile-sable), transparent 60%),
-    var(--creme-fonce);
+  min-height: 460px; display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  background: url(assets/plan-aquarelle.jpg) center / cover no-repeat;
 }
-.map-consent .ico { display: inline-block; width: 40px; height: 40px; color: var(--vert-fonce); }
-.map-consent .ico svg { width: 100%; height: 100%; display: block; }
-.map-consent p { color: var(--texte-doux); max-width: 440px; margin: 0; }
+.map-consent-carte {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  text-align: center; max-width: 420px; padding: 34px 36px 30px;
+  background: var(--blanc); border: 1px solid var(--ligne); border-radius: var(--radius);
+}
+.map-consent-carte h3 { margin: 0; font-size: var(--fs-2xl); }
+.map-consent p { color: var(--texte-doux); font-size: var(--fs-sm); margin: 0; }
+.map-consent-lien { margin-top: 4px; }
+.map-consent-lien a { color: var(--vert-fonce); }
 .map-embed iframe { display: block; width: 100%; height: 380px; border: 0; }
 
 /* ---------- Pages légales (texte long) ---------- */

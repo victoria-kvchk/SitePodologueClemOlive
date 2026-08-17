@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3ecde2d1" />
+  <link rel="stylesheet" href="styles.css?v=fac15718" />
   <link rel="icon" href="favicon.svg?v=debc3181" type="image/svg+xml" />
   <script type="application/ld+json">
 {
@@ -156,7 +156,6 @@
         <div class="section-head">
           <h2>Trois manières de prendre soin de vous</h2>
         </div>
-        <p class="info-callout">Consulter un pédicure-podologue ne nécessite plus d'ordonnance de la part de votre médecin traitant dans le cadre des soins diabétiques, des semelles orthopédiques et des verrues plantaires. Votre praticien peut lui-même la rédiger.</p>
         <div class="card-grid">
           <div class="activity-card" id="pedicurie">
             <img class="card-hero" src="assets/pedicurie.webp" alt="" width="132" height="132" loading="lazy" />
@@ -204,12 +203,14 @@
              ongles incarnés…), la <strong>podologie</strong> (bilan podologique, confection de semelles
              orthopédiques) et la <strong>réflexologie plantaire</strong>.</p>
           <p>Je porte un intérêt particulier au bien-être de l'autre, et cela se retranscrit dans mes soins.</p>
-          <h3 class="dip-titre">Diplômes</h3>
-          <ul class="diplomes">
+          <div class="diplomes-bloc">
+            <h3 class="dip-titre">Diplômes</h3>
+            <ul class="diplomes">
             <li><span class="dip-annee">2019</span> <span>Diplôme d'État de pédicure-podologue — École Supérieure de Masseurs-Kinésithérapeutes et Pédicures (ESMKP), Paris</span></li>
             <li><span class="dip-annee">2024</span> <span>Bilan diagnostique en podo-pédiatrie — connaissance et évolution</span></li>
             <li><span class="dip-annee">2026</span> <span>Certificat de Réflexologue — école E.T.R.E, Paris</span></li>
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -227,10 +228,13 @@
           </figure>
         <div class="map-embed" id="map-embed" data-src="https://www.google.fr/maps/embed?pb=!1m18!1m12!1m3!1d1132.3976116027156!2d2.5233593!3d49.0994058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e639a7517a79b9%3A0x2a8a210e8c90f8fb!2sOLIVE%20Cl%C3%A9mentine%20Cabinet%20de%20p%C3%A9dicurie-podologie!5e0!3m2!1sfr!2sfr!4v1694123456789!5m2!1sfr!2sfr">
           <div class="map-consent">
-            <svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.7 7-12A7 7 0 0 0 5 9c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
-            <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
-            <p><a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
+            <div class="map-consent-carte">
+              <span class="pastille pastille-sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.7 7-12A7 7 0 0 0 5 9c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+              <h3>Afficher la carte</h3>
+              <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez le dépôt de cookies par Google.</p>
+              <button type="button" id="map-load" class="btn btn-primary">Afficher la carte</button>
+              <p class="map-consent-lien"><a href="https://www.google.fr/maps/place/OLIVE+Cl%C3%A9mentine+Cabinet+de+p%C3%A9dicurie-podologie/@49.0994058,2.5233593,17z" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p>
+            </div>
           </div>
         </div>
         </div>
