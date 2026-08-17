@@ -257,7 +257,6 @@ a:focus-visible, button:focus-visible {
 .section-head { max-width: 720px; margin: 0 auto 48px; text-align: center; }
 .section-head p { color: var(--texte-doux); font-size: var(--fs-lg); margin-top: 12px; }
 
-.bloc-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
 
 /* ---------- Tarifs ---------- */
 .tarif-liste { list-style: none; margin-bottom: 22px; }
@@ -526,9 +525,6 @@ a:focus-visible, button:focus-visible {
 .info-box h4 { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-sous-titre); margin: 0 0 14px; }
 .info-box p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; color: var(--texte); }
 
-.pedi-cta { text-align: center; background: var(--vert-clair); border-radius: var(--radius); padding: 36px 28px; }
-.pedi-cta p { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-xl); margin: 0 0 18px; }
-.pedi-cta .bloc-actions { justify-content: center; }
 
 @media (max-width: 900px) {
   .pedi-hero .container { grid-template-columns: 1fr; gap: 28px; }
@@ -670,12 +666,6 @@ a:focus-visible, button:focus-visible {
 .article ul li::before {
   content: '✓'; position: absolute; left: 0; color: var(--vert-fonce); font-weight: 800;
 }
-.article-cta {
-  margin-top: 34px; padding: 28px 30px; border-radius: var(--radius);
-  background: var(--blanc); border: 1px solid var(--ligne); text-align: center;
-}
-.article-cta p { margin-bottom: 16px; font-size: var(--fs-lg); }
-.back-link { display: inline-block; margin-top: 30px; font-weight: 700; text-decoration: none; }
 
 /* ---------- Lien d'évitement (accessibilité clavier) ---------- */
 .skip-link {

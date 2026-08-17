@@ -370,9 +370,6 @@ ${footer()}
 
 /* ---------------- Composants réutilisables ---------------- */
 // Bouton de réservation : toutes les activités passent par Doctolib.
-const bookActions = () =>
-  `<a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>`;
-
 /* Questions réparties en deux colonnes réellement indépendantes, et non en
    grille : dans une grille, une ligne prend la hauteur de sa plus haute carte,
    et une question courte face à une question sur deux lignes creuse un vide
@@ -762,17 +759,7 @@ ${dansQuelCas}
 ${deroule}
 
 ${faqBlock(a, 'faq')}
-
-    <section class="section">
-      <div class="container">
-        <div class="article-cta">
-          <p>Une question ou envie de prendre rendez-vous ?</p>
-          <div class="bloc-actions" style="justify-content:center">
-            ${bookActions()}
-          </div>
-        </div>
-      </div>
-    </section>`;
+`;
   return shell({
     title: "Réflexologie — Clémentine Olive à Fosses (95)",
     description: `Réflexologie plantaire par Clémentine Olive à Fosses (95470). ${a.lead}`,
