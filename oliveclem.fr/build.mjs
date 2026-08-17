@@ -3,7 +3,7 @@
    Source unique -> pages HTML statiques (en-tête/pied partagés)
    Lancer : node build.mjs  (régénère toutes les pages + sitemap/robots)
    ========================================================= */
-import { writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
 /* ---------------- Anti-cache des fichiers statiques ----------------
@@ -61,11 +61,13 @@ const pedicurie = {
       ] },
   ],
   faq: [
-    ['Le soin est-il douloureux ?', "Non. Les soins de pédicurie sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
-    ['À quelle fréquence consulter ?', "Cela dépend de vos besoins. À titre indicatif, un soin tous les 1 à 3 mois convient à beaucoup de personnes. Je vous conseille selon votre situation."],
-    ['Comment bien couper ses ongles ?', "Coupez l'ongle droit, sans creuser les coins et pas trop court : cela évite les ongles incarnés et les petites blessures. Préférez une lime pour adoucir les bords plutôt que d'arracher les petites peaux, et séchez bien entre les orteils après la toilette. Si la coupe est difficile pour vous ou pour un proche — vue, souplesse, diabète —, je peux m'en occuper en toute sécurité, au cabinet ou à domicile."],
-    ['Puis-je être soigné(e) à domicile ?', "Oui, je me déplace à domicile, en particulier si vous avez des difficultés à vous déplacer. Contactez-moi pour organiser le rendez-vous."],
-    ['Faut-il une ordonnance ?', "Pour les soins diabétiques, les semelles orthopédiques et les verrues plantaires, vous pouvez consulter directement, sans ordonnance : je peux la rédiger moi-même si nécessaire."],
+    ['Comment soignez-vous un ongle incarné ?', "Le soin consiste à retirer délicatement la partie responsable de la douleur, désinfecter la zone et donner des conseils afin d'éviter les récidives."],
+    ['Les soins sont-ils douloureux ?', "Non. Les soins de pédicurie sont réalisés avec des instruments adaptés et se font sans douleur. Le plus souvent, on ressent un vrai soulagement dès la fin de la séance."],
+    ['Comment enlever un cor au pied ?', "Le cor est retiré normalement sans douleur à l'aide d'instruments spécifiques."],
+    ['Traitez-vous les verrues plantaires ?', "Oui. Une prise en charge est proposée avec des conseils adaptés afin de favoriser leur disparition et limiter leur propagation."],
+    ['À quelle fréquence faut-il faire un soin de pédicurie ?', "Pour la majorité des patients, un entretien tous les 2 à 4 mois est suffisant. Pour les personnes diabétiques, un suivi régulier permet de prévenir les plaies et d'éviter les complications."],
+    ['Les soins pour les patients diabétiques sont-ils pris en charge ?', "Dans certaines situations, notamment pour les patients présentant un risque podologique identifié, des séances peuvent être prises en charge selon les critères en vigueur."],
+    ['Comment bien couper ses ongles ?', "Coupez l'ongle le plus droit possible, sans toucher aux coins. Il faut éviter de couper les ongles trop courts : cela évite les ongles incarnés, les petites blessures et peut causer un épaississement des ongles par la suite. Préférez une lime pour arrondir les bords plutôt que d'arracher les petites peaux. Pensez également à bien sécher entre les orteils après la toilette pour limiter les risques de macération et de mycose.<br /><br />Si la coupe est difficile pour vous ou pour un proche — vue, souplesse, diabète —, je peux m'en occuper en toute sécurité, au cabinet ou à domicile."],
   ],
   tarifs: [
     ['Soin de pédicurie', '38 €'],
@@ -97,9 +99,20 @@ const podologie = {
       ] },
   ],
   faq: [
-    ['Qu\'est-ce qu\'un bilan podologique ?', "C'est un examen complet et indolore de vos pieds, de votre posture et de votre marche, qui permet de trouver l'origine d'une douleur et de proposer la solution adaptée."],
-    ['Les semelles sont-elles remboursées ?', "Une prise en charge partielle est parfois possible selon votre situation et votre mutuelle. Je vous informe au cas par cas ; le détail est à confirmer avec votre organisme."],
-    ['Combien de temps durent des semelles ?', "En général un à deux ans, selon l'usage. Un contrôle régulier permet de les ajuster ou de les renouveler au bon moment."],
+    ['Faut-il une ordonnance pour consulter ?', "Non. Vous pouvez consulter directement un pédicure-podologue sans prescription médicale."],
+    ['Combien dure une consultation ?', "Selon le motif de consultation, comptez entre 30 et 45 minutes."],
+    ['Comment se déroule un bilan podologique ?', "Le bilan comprend un entretien, l'étude de vos antécédents, l'examen de vos pieds, de votre posture et de votre marche afin de déterminer l'origine de vos douleurs et d'évaluer l'intérêt de semelles orthopédiques."],
+    ['Quand faut-il porter des semelles orthopédiques ?', "Les semelles sont indiquées lorsque les douleurs proviennent d'un mauvais appui ou d'un déséquilibre biomécanique. Elles peuvent soulager les douleurs du pied, du talon, du genou, de la hanche ou du dos."],
+    ['Les semelles sont-elles fabriquées sur mesure ?', "Oui. Chaque paire est entièrement réalisée selon votre morphologie, vos activités et les résultats du bilan podologique."],
+    ['Combien de temps faut-il pour s\'habituer aux semelles ?', "Une période d'adaptation de quelques jours à trois semaines est généralement nécessaire. Les semelles sont introduites progressivement afin de permettre au corps de s'adapter."],
+    ['Combien de temps durent des semelles orthopédiques ?', "En moyenne entre 12 et 24 mois, selon leur utilisation, votre activité physique et l'évolution de votre posture."],
+    ['Les semelles sont-elles remboursées ?', "Une partie peut être prise en charge par l'Assurance Maladie sur prescription médicale. De nombreuses mutuelles complètent ce remboursement, n'hésitez pas à vous renseigner."],
+    ['Peut-on mettre les semelles dans toutes les chaussures ?', "Elles sont conçues pour s'adapter au type de chaussures que vous portez le plus souvent. Si nécessaire, des ajustements peuvent être réalisés."],
+    ['Mon enfant a les pieds plats, faut-il consulter ?', "Chez le jeune enfant, les pieds plats sont souvent physiologiques. En revanche, si cela s'accompagne de douleurs, de chutes fréquentes ou d'une gêne à la marche, un bilan est recommandé."],
+    ['À partir de quel âge un enfant peut-il porter des semelles ?', "Il n'existe pas d'âge fixe. La décision dépend uniquement du bilan clinique et des besoins de l'enfant (généralement vers 5 – 6 ans)."],
+    ['Comment choisir de bonnes chaussures ?', "Des chaussures adaptées doivent respecter la largeur du pied, offrir un bon maintien du talon et présenter une semelle suffisamment souple. Vos orteils doivent pouvoir s'étaler les uns à coté des autres."],
+    ['Les douleurs de dos peuvent-elles venir des pieds ?', "Oui. Un mauvais appui peut modifier la posture et entraîner des douleurs au niveau des genoux, des hanches ou du dos."],
+    ['Que dois-je apporter lors de mon premier rendez-vous ?', "Pensez à apporter vos anciennes semelles si vous en possédez, vos chaussures les plus utilisées (ville ou sport), vos examens médicaux récents si vous en avez et éventuellement votre ordonnance si vous en avez une."],
   ],
   tarifs: [
     ['Bilan podologique', '50 €'],
@@ -140,21 +153,28 @@ const reflexologie = {
       ] },
   ],
   faq: [
-    ['La réflexologie aide-t-elle à gérer le stress et l\'anxiété ?', "La réflexologie est avant tout une pratique de détente. En favorisant un relâchement profond, elle peut aider à apaiser les tensions liées au stress et à retrouver un sentiment de calme. C'est un accompagnement du bien-être, qui ne remplace pas un suivi médical ou psychologique si celui-ci est nécessaire."],
+    ['Dois-je prévoir un temps de repos après la séance ?', "Ce n'est pas indispensable, mais si votre emploi du temps le permet, prendre quelques minutes pour prolonger l'état de détente est souvent apprécié."],
+    ['Puis-je conduire après une séance ?', "Oui. La réflexologie n'empêche pas de conduire. Si vous vous sentez particulièrement détendu(e), prenez simplement quelques minutes avant de reprendre la route."],
+    ['Puis-je venir si je suis très stressé(e) ou anxieux(se) ?', "Oui. De nombreuses personnes consultent justement pendant une période de stress professionnel, familial ou émotionnel afin de s'accorder un moment de détente."],
+    ['Y a-t-il des effets secondaires possibles ?', "La réflexologie est bien tolérée. Après une séance, on peut parfois ressentir une grande détente, une fatigue passagère. Cela est souvent lié au lâcher-prise. On peut également avoir une envie d'uriner plus fréquente. D'autres, au contraire, se sentent plus dynamiques. Chaque organisme réagit différemment. Ce sont des réactions bénignes et temporaires. Pensez à bien vous hydrater."],
+    ['La réflexologie est-elle adaptée aux sportifs ?', "Oui. Les sportifs apprécient la réflexologie pour favoriser la récupération, relâcher les tensions et s'offrir un moment de récupération entre deux entraînements."],
+    ['Peut-on offrir une séance de réflexologie ?', "Oui. Une séance constitue un cadeau apprécié pour un anniversaire, la fête des Mères, Noël ou simplement pour offrir un moment de détente."],
+    ['Faut-il prendre rendez-vous à l\'avance ?', "Oui, les séances se font uniquement sur rendez-vous, en ligne sur Doctolib. Cela me permet de vous accueillir dans les meilleures conditions et de vous consacrer tout le temps nécessaire."],
+    ['Dois-je retirer mes bijoux ou ma montre ?', "Ce n'est généralement pas nécessaire, sauf s'ils gênent votre confort pendant la séance."],
+    ['Puis-je venir si j\'ai des chatouilles aux pieds ?', "Oui. Les mouvements utilisés en réflexologie sont des pressions précises, très différentes d'un simple effleurement. Les personnes sensibles aux chatouilles sont souvent surprises de constater que cette sensation disparaît rapidement."],
+    ['Combien de temps durent les effets d\'une séance ?', "Les ressentis varient d'une personne à l'autre. Certaines personnes se sentent détendues pendant plusieurs jours, d'autres apprécient surtout le moment de relaxation vécu pendant la séance."],
+    ['La réflexologie est-elle adaptée pendant les périodes de changements de vie ?', "Oui. Beaucoup de personnes choisissent la réflexologie lors d'un changement professionnel, d'un examen, d'un déménagement ou d'une période de fatigue afin de prendre un temps pour elles."],
+    ['Puis-je venir simplement pour prendre soin de moi ?', "Absolument. Il n'est pas nécessaire d'attendre d'être fatigué(e) ou stressé(e). Beaucoup de personnes intègrent la réflexologie dans leur routine bien-être."],
+    ['Faut-il réserver plusieurs séances dès le départ ?', "Non. La première séance permet d'échanger sur vos attentes. Vous décidez ensuite librement si vous souhaitez poursuivre l'accompagnement."],
     ['Combien de séances sont nécessaires pour ressentir des effets ?', "Cela varie d'une personne à l'autre. Beaucoup ressentent une détente dès la première séance. Pour un réel bénéfice dans la durée, 3 à 5 séances sont généralement recommandées. Nous en parlons ensemble selon votre ressenti."],
+    ['La réflexologie aide-t-elle à gérer le stress et l\'anxiété ?', "La réflexologie est avant tout une pratique de détente. En favorisant un relâchement profond, elle peut aider à apaiser les tensions liées au stress et à retrouver un sentiment de calme. C'est un accompagnement du bien-être, qui ne remplace pas un suivi médical ou psychologique si celui-ci est nécessaire."],
     ['La réflexologie peut-elle agir sur les douleurs chroniques ?', "La réflexologie n'est pas un traitement de la douleur et ne se substitue pas à une prise en charge médicale. En procurant un moment de détente et en aidant à relâcher les tensions, elle peut toutefois être un complément agréable au bien-être. En cas de douleur, parlez-en d'abord à votre médecin."],
     ['Comment se préparer avant une séance ?', "Aucune préparation particulière n'est nécessaire. Prévoyez simplement une tenue confortable, évitez un repas trop lourd juste avant, et venez avec des pieds propres. Pour le reste, vous n'avez qu'à vous détendre."],
     ['Est-ce que c\'est douloureux ?', "Non. Les pressions sont douces et adaptées à votre sensibilité. La séance doit rester un moment agréable : n'hésitez jamais à me signaler une gêne, j'ajuste aussitôt."],
-    ['La réflexologie est-elle sans danger ?', "Pratiquée dans le respect de quelques précautions, la réflexologie est douce et non invasive. Elle reste une pratique de bien-être : en cas de problème de santé, elle vient en complément d'un suivi médical, jamais à sa place."],
-    ['Y a-t-il des contre-indications ?', "Quelques situations demandent des précautions (phlébite récente, plaies ou infections du pied, certaines pathologies…). Signalez-moi votre situation avant la séance et, en cas de doute, demandez l'avis de votre médecin. J'adapte ou je préfère reporter si nécessaire."],
+    ['La réflexologie est-elle sans danger ?', "Pratiquée dans le respect de quelques précautions, la réflexologie est douce et non invasive. Elle reste une pratique de bien-être : en cas de problème de santé, elle vient en complément d'un suivi médical, jamais à sa place. Si vous êtes suivi par un médecin spécialiste, n'hésitez pas à lui demander son avis."],
     ['Peut-on pratiquer la réflexologie sur les femmes enceintes ?', "La réflexologie peut être envisagée pendant la grossesse, avec précautions et généralement pas durant le premier trimestre. Prévenez-moi si vous êtes enceinte : j'adapte la séance, et l'accord de votre médecin ou de votre sage-femme est recommandé."],
     ['Est-ce adapté aux enfants et aux personnes âgées ?', "Oui. La douceur de la pratique convient aussi bien aux enfants qu'aux personnes âgées. La séance est simplement adaptée (durée, intensité des pressions) à chacun."],
-    ['Y a-t-il des effets secondaires possibles ?', "La réflexologie est bien tolérée. Après une séance, on peut parfois ressentir une grande détente, une fatigue passagère ou une envie d'uriner plus fréquente : ce sont des réactions bénignes et temporaires. Pensez à bien vous hydrater."],
-    ['Faut-il prendre rendez-vous à l\'avance ?', "Oui, les séances se font uniquement sur rendez-vous, en ligne sur Doctolib. Cela me permet de vous accueillir dans les meilleures conditions et de vous consacrer tout le temps nécessaire."],
-    ['Quel est le tarif d\'une séance ?', "Les tarifs vont de 30 € (séance découverte) à 70 € (séance à domicile), selon le type et la durée de la séance. Le détail complet figure dans la rubrique Tarifs."],
-    ['Comment puis-je régler ma séance ?', "Le règlement se fait en fin de séance, par carte bancaire ou espèces."],
     ['La réflexologie est-elle remboursée par la sécurité sociale ou les mutuelles ?', "La réflexologie est une pratique de bien-être : elle n'est pas remboursée par l'Assurance Maladie. Certaines mutuelles proposent toutefois une prise en charge partielle des médecines douces — renseignez-vous auprès de la vôtre."],
-    ['Peut-on offrir une séance en bon cadeau ?', "Oui, avec plaisir : une séance de réflexologie peut être offerte sous forme de bon cadeau. Parlez-m'en lors de votre venue au cabinet et je vous l'établis."],
   ],
   tarifs: [
     ["Séance découverte ou relaxation<span class='tarif-sub'>De 20 à 30 min · pour découvrir la réflexologie ou simplement se détendre.</span>", '30 €'],
@@ -588,19 +608,30 @@ ${blocs}
   });
 }
 
+/* Questions communes aux deux disciplines, affichées en tête de faq.html. */
+const FAQ_GENERALE = [
+  ['Quand consulter un pédicure-podologue ?', "Il est conseillé de consulter dès l'apparition d'une douleur au pied, d'un inconfort à la marche ou à la course, d'un ongle incarné, de cors, de callosités ou de verrues plantaires. Une consultation peut également être indiquée en cas de douleurs aux genoux, aux hanches ou au dos lorsqu'elles sont liées à un trouble de l'appui ou de la posture. Un bilan permet d'identifier la cause du problème et de proposer une prise en charge adaptée."],
+  ['Quelle est la différence entre un pédicure et un podologue ?', "Le pédicure-podologue est un professionnel de santé diplômé d'État. Il prend en charge les soins des pieds (ongles incarnés, cors, callosités, crevasses…) mais réalise également des bilans biomécaniques, des analyses de la marche et confectionne des semelles orthopédiques sur mesure pour corriger certains troubles fonctionnels."],
+  ['Comment prendre rendez-vous ?', "Vous pouvez prendre rendez-vous directement via le bouton de réservation présent sur le site ou contacter le cabinet par téléphone."],
+];
+
 /* ---------- Page FAQ (pédicurie & podologie) ---------- */
 function faqPage() {
-  const sections = [pedicurie, podologie].map(a => {
-    const items = a.faq.map(([q, ans]) =>
+  const groupe = (titre, qr) => {
+    const items = qr.map(([q, ans]) =>
       `          <details>
             <summary>${q}</summary>
             <div class="faq-body">${ans}</div>
           </details>`).join('\n');
-    return `        <h2 class="faq-groupe">${a.label}</h2>
+    return `        <h2 class="faq-groupe">${titre}</h2>
         <div class="faq">
 ${items}
         </div>`;
-  }).join('\n');
+  };
+  const sections = [
+    groupe('Questions générales', FAQ_GENERALE),
+    ...[pedicurie, podologie].map(a => groupe(a.label, a.faq)),
+  ].join('\n');
   const body = `    <section class="page-hero">
       <div class="container">
         <h1>Questions fréquentes</h1>
@@ -644,6 +675,12 @@ function reflexologiePage() {
       <div class="container">
         <div class="article">
 ${renderBlocks(pres.blocks)}
+          <figure class="illustration">
+            <a href="assets/reflexologie-cartographie.jpg" target="_blank" rel="noopener">
+              <img src="assets/reflexologie-cartographie.jpg" alt="Cartographie de réflexologie plantaire : zones réflexes des pieds correspondant aux organes et systèmes du corps" width="1600" height="2264" loading="lazy" />
+            </a>
+            <figcaption>Cartographie de réflexologie plantaire — © École Être, <a href="https://www.reflexos.fr" target="_blank" rel="noopener">reflexos.fr</a>. Reproduite avec leur autorisation.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -721,9 +758,9 @@ const box = (title, inner) => `                <div class="info-box"><h4>${title
 const card = ({ id, icon, title, main, side, full = '', cls = '' }) => `    <section id="${id}" class="soin-sec">
       <div class="container">
         <article class="soin-card${cls ? ' ' + cls : ''}">
+          <header class="soin-head">${pLg(icon)}<div><h2>${title}</h2><span class="gold-line" aria-hidden="true"></span></div></header>
           <div class="soin-grid">
             <div class="soin-main">
-              <header class="soin-head">${pLg(icon)}<div><h2>${title}</h2><span class="gold-line" aria-hidden="true"></span></div></header>
 ${main}
             </div>
             <div class="soin-side">
@@ -772,11 +809,13 @@ ${box('Les grades de prise en charge', gradeList(B(s2.blocks, 'Les grades de pri
 
   const card3 = card({
     id: 'verrue-plantaire', icon: ico.snow, title: 'Verrues plantaires par cryothérapie',
+    // L'encart est dans la colonne de gauche, et non en pleine largeur dessous :
+    // il comble le creux sous le paragraphe, comme sur la carte « Affections ».
     main: `              <h3 class="soin-sub">En quelques mots</h3>
-              <p>${B(s3.blocks, 'En quelques mots')}</p>`,
+              <p>${B(s3.blocks, 'En quelques mots')}</p>
+${mint(ico.shield, 'Prise en charge', B(s3.blocks, 'Prise en charge'))}`,
     side: `              <h3 class="soin-sub">Comment ça fonctionne</h3>
               <p>${B(s3.blocks, 'Comment ça fonctionne')}</p>`,
-    full: `${mint(ico.shield, 'Prise en charge', B(s3.blocks, 'Prise en charge'))}`,
   });
 
   const body = `    <section class="pedi-hero">
@@ -817,18 +856,21 @@ function podologiePage() {
               <p>${B(s1.blocks, 'En quelques mots')}</p>`,
     side: `              <h3 class="soin-sub">Dans quels cas ?</h3>
               ${iconList(ico.check, B(s1.blocks, 'Dans quels cas ?'))}`,
-    // En pleine largeur sous les deux colonnes : la liste de droite est courte,
-    // l'encart paraissait à l'étroit dans la colonne de gauche.
+    // Encart en pleine largeur : ici la colonne de droite est longue, les deux
+    // colonnes sont déjà proches (−32 px). Le déplacer à gauche porterait
+    // l'écart à +136 px — mesuré.
     full: `${mint(ico.heart, 'Comment ça se passe', B(s1.blocks, 'Comment ça se passe'))}`,
   });
 
   const card2 = card({
     id: 'semelles', icon: ico.semelle, title: 'Semelles orthopédiques sur mesure',
+    // Encart dans la colonne de gauche : il comble le creux de 83 px laissé
+    // sous ce paragraphe court, comme sur la carte « Affections de l'ongle ».
     main: `              <h3 class="soin-sub">En quelques mots</h3>
-              <p>${B(s2.blocks, 'En quelques mots')}</p>`,
+              <p>${B(s2.blocks, 'En quelques mots')}</p>
+${mint(ico.heart, "De la prise d'empreinte au suivi", B(s2.blocks, "De la prise d'empreinte au suivi"))}`,
     side: `              <h3 class="soin-sub">Les bénéfices</h3>
               ${iconList(ico.check, B(s2.blocks, 'Les bénéfices'))}`,
-    full: `${mint(ico.heart, "De la prise d'empreinte au suivi", B(s2.blocks, "De la prise d'empreinte au suivi"))}`,
   });
 
   const body = `    <section class="page-hero">
@@ -910,6 +952,13 @@ function checkLinks(pages) {
       if (/^(https?:|tel:|mailto:)/.test(href) || href === '/' || href === '') continue;
       const [chemin, anchor] = href.split('#');
       const file = chemin.split('?')[0];   // ignore le suffixe anti-cache ?v=…
+      // Fichier d'assets : on vérifie sa présence réelle sur le disque, ce qui
+      // rattrape aussi les chemins d'images mal orthographiés.
+      if (file.startsWith('assets/')) {
+        if (!existsSync(new URL(`./${file}`, import.meta.url)))
+          problems.push(`${name} → ${file} (fichier absent de assets/)`);
+        continue;
+      }
       if (file === '') { // ancre sur la même page
         if (anchor && !idsByPage[name].has(anchor)) problems.push(`${name} → #${anchor} (ancre absente)`);
         continue;
