@@ -373,19 +373,32 @@ ${footer()}
 const bookActions = () =>
   `<a href="${DOCTOLIB}" target="_blank" rel="noopener" class="btn btn-primary">Rendez-vous sur Doctolib</a>`;
 
+/* Questions réparties en deux colonnes réellement indépendantes, et non en
+   grille : dans une grille, une ligne prend la hauteur de sa plus haute carte,
+   et une question courte face à une question sur deux lignes creuse un vide
+   sous elle. Deux colonnes séparées gardent un espacement régulier. */
+function faqColonnes(qr) {
+  const item = ([q, ans]) =>
+    `            <details>
+              <summary>${q}</summary>
+              <div class="faq-body">${ans}</div>
+            </details>`;
+  const moitie = Math.ceil(qr.length / 2);
+  const colonne = liste => `          <div class="faq-colonne">
+${liste.map(item).join('\n')}
+          </div>`;
+  return `${colonne(qr.slice(0, moitie))}
+${colonne(qr.slice(moitie))}`;
+}
+
 function faqBlock(a, id = '') {
-  const items = a.faq.map(([q, ans]) =>
-    `        <details>
-          <summary>${q}</summary>
-          <div class="faq-body">${ans}</div>
-        </details>`).join('\n');
-  return `    <section${id ? ` id="${id}"` : ''} class="section ${a.color === 'rose' ? 'section-rose' : ''}">
+  return `    <section${id ? ` id="${id}"` : ''} class="section">
       <div class="container">
         <div class="section-head">
           <h2>Questions fréquentes</h2>
         </div>
         <div class="faq">
-${items}
+${faqColonnes(a.faq)}
         </div>
       </div>
     </section>`;
@@ -585,12 +598,13 @@ function confidentialite() {
 /* ---------- Page Tarifs (regroupe les trois activités) ---------- */
 function tarifsPage() {
   const blocs = ACTIVITIES.map(a => {
-    const rose = a.color === 'rose';
     const rows = a.tarifs.map(([label, prix, mod]) =>
       !prix
         ? `            <li class="tarif-head"><span>${label}</span></li>`
         : `            <li${mod === 'sub' ? ' class="tarif-indent"' : ''}><span>${label}</span><span class="prix">${prix}</span></li>`).join('\n');
-    return `        <div class="tarif-bloc${rose ? ' accent-rose' : ''}">
+    // Les trois blocs sont traités à l'identique : même titre vert, sans accent
+    // propre à l'activité.
+    return `        <div class="tarif-bloc">
           <img class="card-hero" src="assets/${a.slug}.webp" alt="" width="132" height="132" loading="lazy" />
           <h2>${a.label}</h2>
           <span class="gold-line" aria-hidden="true"></span>
@@ -636,17 +650,10 @@ const FAQ_GENERALE = [
 
 /* ---------- Page FAQ (pédicurie & podologie) ---------- */
 function faqPage() {
-  const groupe = (titre, qr) => {
-    const items = qr.map(([q, ans]) =>
-      `          <details>
-            <summary>${q}</summary>
-            <div class="faq-body">${ans}</div>
-          </details>`).join('\n');
-    return `        <h2 class="faq-groupe">${titre}</h2>
+  const groupe = (titre, qr) => `        <h2 class="faq-groupe">${titre}</h2>
         <div class="faq">
-${items}
+${faqColonnes(qr)}
         </div>`;
-  };
   const sections = [
     groupe('Questions générales', FAQ_GENERALE),
     ...[pedicurie, podologie].map(a => groupe(a.label, a.faq)),
@@ -670,18 +677,74 @@ ${sections}
   });
 }
 
-/* ---------- Page Réflexologie (page unique, sections à ancres) ---------- */
+/* ---------- Page Réflexologie (page unique, sections à ancres) ----------
+   Même système de cartes que Pédicurie et Podologie : une .soin-card par
+   section, en-tête centré, et deux colonnes là où le contenu s'y prête. */
 function reflexologiePage() {
   const a = reflexologie;
   const pres = a.subpages.find(s => s.slug === 'presentation');
   const cas = a.subpages.find(s => s.slug === 'dans-quel-cas');
   const bienfaits = a.subpages.find(s => s.slug === 'bienfaits');
-  const renderBlocks = blocks => blocks.map(([h, content]) => {
-    const head = h ? `        <h3>${h}</h3>\n` : '';
-    return Array.isArray(content)
-      ? `${head}        <ul>${content.map(li => `\n          <li>${li}</li>`).join('')}\n        </ul>`
-      : `${head}        <p>${content}</p>`;
-  }).join('\n');
+  const bloc = (blocks, titre) => (blocks.find(x => x[0] === titre) || [null, ''])[1];
+  // Paragraphes qui suivent un intitulé, jusqu'au prochain intitulé.
+  const suite = (blocks, titre) => {
+    const i = blocks.findIndex(x => x[0] === titre);
+    const out = [];
+    for (let k = i + 1; k < blocks.length && blocks[k][0] === ''; k++) out.push(blocks[k][1]);
+    return out;
+  };
+  const paras = t => t.map(p => `              <p>${p}</p>`).join('\n');
+  const carte = (id, entete, contenu, cls = '') => `    <section${id ? ` id="${id}"` : ''} class="soin-sec">
+      <div class="container">
+        <article class="soin-card${cls ? ' ' + cls : ''}">
+${entete ? entete + '\n' : ''}${contenu}
+        </article>
+      </div>
+    </section>`;
+  const enteteCentre = titre => `          <header class="carte-head">
+            <h2>${titre}</h2>
+            <span class="gold-line" aria-hidden="true"></span>
+          </header>`;
+
+  // 1 — Présentation : les trois blocs empilés dans une carte.
+  const presentation = carte('', '', pres.blocks.map(([h, texte]) =>
+    `          <h3 class="soin-sub">${h}</h3>
+          <p>${texte}</p>`).join('\n'));
+
+  // 2 — La cartographie, dans sa propre carte.
+  const cartographie = carte('', '', `          <figure class="illustration">
+            <a href="assets/reflexologie-cartographie.jpg" target="_blank" rel="noopener">
+              <img src="assets/reflexologie-cartographie.jpg" alt="Cartographie de réflexologie plantaire : zones réflexes des pieds correspondant aux organes et systèmes du corps" width="1600" height="2264" loading="lazy" />
+            </a>
+            <figcaption>Cartographie de réflexologie plantaire — © École Être, <a href="https://www.reflexos.fr" target="_blank" rel="noopener">reflexos.fr</a>. Reproduite avec leur autorisation.</figcaption>
+          </figure>`);
+
+  // 3 — Indications à gauche, contre-indications à droite.
+  const dansQuelCas = carte('dans-quel-cas', enteteCentre('Dans quel cas ?'), `          <div class="soin-grid">
+            <div class="soin-main">
+              <h3 class="soin-sub">Indications</h3>
+              ${iconList(ico.check, bloc(cas.blocks, 'Indications'))}
+            </div>
+            <div class="soin-side">
+              <h3 class="soin-sub">Contre-indications</h3>
+              <p>${bloc(cas.blocks, 'Contre-indications')}</p>
+              ${iconList(ico.alerte, suite(cas.blocks, 'Contre-indications')[0])}
+            </div>
+          </div>`, 'soin-card--teinte');
+
+  // 4 — Déroulé à gauche, bienfaits à droite, effets secondaires dessous.
+  const deroule = carte('bienfaits', enteteCentre('Le déroulé et les bienfaits'), `          <div class="soin-grid">
+            <div class="soin-main">
+              <h3 class="soin-sub">Déroulé d'une séance</h3>
+              <p>${bloc(bienfaits.blocks, "Déroulé d'une séance")}</p>
+${paras(suite(bienfaits.blocks, "Déroulé d'une séance"))}
+            </div>
+            <div class="soin-side">
+              <h3 class="soin-sub">Les bienfaits</h3>
+              ${iconList(ico.check, bloc(bienfaits.blocks, 'Les bienfaits'))}
+${mint(null, 'Effets secondaires possibles', [bloc(bienfaits.blocks, 'Effets secondaires possibles'), ...suite(bienfaits.blocks, 'Effets secondaires possibles')].join(' '))}
+            </div>
+          </div>`);
 
   const body = `    <section id="presentation" class="page-hero hero-rose">
       <div class="container">
@@ -690,51 +753,22 @@ function reflexologiePage() {
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="article">
-${renderBlocks(pres.blocks)}
-          <figure class="illustration">
-            <a href="assets/reflexologie-cartographie.jpg" target="_blank" rel="noopener">
-              <img src="assets/reflexologie-cartographie.jpg" alt="Cartographie de réflexologie plantaire : zones réflexes des pieds correspondant aux organes et systèmes du corps" width="1600" height="2264" loading="lazy" />
-            </a>
-            <figcaption>Cartographie de réflexologie plantaire — © École Être, <a href="https://www.reflexos.fr" target="_blank" rel="noopener">reflexos.fr</a>. Reproduite avec leur autorisation.</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
+${presentation}
 
-    <section id="dans-quel-cas" class="section section-creme">
-      <div class="container">
-        <div class="section-head">
-          <h2>Dans quel cas ?</h2>
-        </div>
-        <div class="article">
-${renderBlocks(cas.blocks)}
-        </div>
-      </div>
-    </section>
+${cartographie}
 
-    <section id="bienfaits" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Le déroulé et les bienfaits</h2>
-        </div>
-        <div class="article">
-${renderBlocks(bienfaits.blocks)}
-        </div>
-      </div>
-    </section>
+${dansQuelCas}
+
+${deroule}
 
 ${faqBlock(a, 'faq')}
 
-    <section class="section section-creme">
+    <section class="section">
       <div class="container">
-        <div class="article">
-          <div class="article-cta accent-rose">
-            <div class="bloc-actions" style="justify-content:center">
-              ${bookActions()}
-            </div>
+        <div class="article-cta">
+          <p>Une question ou envie de prendre rendez-vous ?</p>
+          <div class="bloc-actions" style="justify-content:center">
+            ${bookActions()}
           </div>
         </div>
       </div>
@@ -742,8 +776,6 @@ ${faqBlock(a, 'faq')}
   return shell({
     title: "Réflexologie — Clémentine Olive à Fosses (95)",
     description: `Réflexologie plantaire par Clémentine Olive à Fosses (95470). ${a.lead}`,
-    // bodyClass : cale les titres de section sur ceux des pages Pédicurie et
-    // Podologie, pour que les trois pages de soins soient typographiées pareil.
     active: 'reflexologie.html', bodyClass: 'page-reflexologie', body,
   });
 }
@@ -766,13 +798,16 @@ const ico = {
   heart:   '<svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-6.5-9A3.4 3.4 0 0 1 12 8a3.4 3.4 0 0 1 6.5 3c0 4.8-6.5 9-6.5 9z"/></svg>',
   ribbon:  '<svg viewBox="0 0 24 24"><path d="M9 13l-3 8 6-4 6 4-3-8"/><path d="M12 3c-2.4 2-2.4 6 0 9 2.4-3 2.4-7 0-9z"/></svg>',
   shield:  '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9.5C8.5 19 5 16 5 11V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  // Triangle d'attention : marque les contre-indications, par opposition à la coche.
+  alerte:  '<svg viewBox="0 0 24 24"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".7"/></svg>',
 };
 
 const pLg = i => `<span class="pastille pastille-lg" aria-hidden="true">${i}</span>`;
 const pSm = i => `<span class="pastille pastille-sm" aria-hidden="true">${i}</span>`;
 const iconList = (icon, items) => `<ul class="icon-list">\n${items.map(t => `                ${'<li>' + pSm(icon) + '<span>' + t + '</span></li>'}`).join('\n')}\n              </ul>`;
 const gradeList = items => `<ul class="grade-list">\n${items.map((t, i) => `                <li><span class="grade-num">${i}</span><span>${t}</span></li>`).join('\n')}\n              </ul>`;
-const mint = (icon, title, text) => `              <div class="mint-callout">${pSm(icon)}<div><h4>${title}</h4><p>${text}</p></div></div>`;
+// icon peut être null : l'encart est alors rendu sans pastille.
+const mint = (icon, title, text) => `              <div class="mint-callout${icon ? '' : ' mint-callout--nu'}">${icon ? pSm(icon) : ''}<div><h4>${title}</h4><p>${text}</p></div></div>`;
 const box = (title, inner) => `                <div class="info-box"><h4>${title}</h4>${inner}</div>`;
 const card = ({ id, icon, title, main, side, full = '', cls = '' }) => `    <section id="${id}" class="soin-sec">
       <div class="container">
