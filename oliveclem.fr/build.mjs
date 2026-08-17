@@ -48,7 +48,12 @@ const pedicurie = {
       blocks: [
         ['En quelques mots', "Une consultation régulière chez un pédicure-podologue permet de prévenir les risques de complication des pieds diabétiques liés à une neuropathie."],
         ['Une prise en charge par la Sécurité sociale', "Toute personne diabétique bénéficie d'au moins une séance par an prise en charge par la Sécurité sociale. Selon l'atteinte des membres inférieurs (gradation), cette prise en charge peut aller jusqu'à 8 séances par an, sur ordonnance."],
-        ['Tarifs & prise en charge', "<strong>Grade 0 et 1</strong> — 38 € la séance.<br />Prise en charge : 1 séance par an à hauteur de 30 € par la Sécurité sociale (pensez à demander votre bilan).<br /><br /><strong>Grade 2 et 3</strong> — prise en charge à 100 %, sur ordonnance : 1ʳᵉ séance 35,70 €, puis 30 € les séances suivantes.<br />Une gradation est réalisée à chaque nouvelle ordonnance."],
+        // Une entrée par grade, pour être rendues en liste à coches séparées
+        // d'un filet tiretté, comme la boîte des grades en regard.
+        ['Tarifs & prise en charge', [
+          "<strong>Grade 0 et 1</strong> — Prise en charge : 1 séance par an prise en charge à 100 % par la Sécurité sociale, soit 30 € (pensez à demander votre bilan).<br />Les séances suivantes sont à 38 €.",
+          "<strong>Grade 2 et 3</strong> — prise en charge à 100 %, sur ordonnance : 1ʳᵉ séance 35,70 €, puis 30 € les séances suivantes.<br />Une gradation est réalisée à chaque nouvelle ordonnance.",
+        ]],
         ['Les grades de prise en charge', ["<strong>Grade 0</strong> — absence de neuropathie sensitive (1 séance/an).", "<strong>Grade 1</strong> — neuropathie sensitive isolée, légère perte de sensibilité (1 séance/an).", "<strong>Grade 2</strong> — neuropathie sensitive associée à une artériopathie des membres inférieurs et/ou une déformation des pieds (5 séances/an).", "<strong>Grade 3</strong> — antécédent d'ulcération ou d'amputation, ou plaie ne cicatrisant pas depuis plus de 3 mois (8 séances/an)."]],
         ['Syndrome main-pied', "Une prise en charge du syndrome main-pied est également possible pour les patients sous traitement anti-cancéreux : 2 séances remboursées par la Sécurité sociale, sur prescription de votre oncologue."],
       ] },
@@ -56,7 +61,14 @@ const pedicurie = {
       teaser: "Un traitement par le froid, sans douleur, sans saignement et sans anesthésie.",
       blocks: [
         ['En quelques mots', "Le traitement des verrues plantaires utilise le Freezpen, un instrument de cryochirurgie précis. On vient « geler » la verrue : c'est sans douleur, sans saignement et sans anesthésie."],
-        ['Comment ça fonctionne', "Le Freezpen utilise l'oxyde nitreux, un gaz cryogénique qui agit à -85 °C. Cette basse température produit un choc thermique très rapide qui congèle les cellules de la verrue en toute sécurité. Grâce à trois embouts de diamètres différents, le geste est précis et protège les tissus sains autour de la lésion."],
+        // Les trois phrases de la cliente, découpées telles quelles pour être
+        // rendues en liste : aucun mot n'est modifié, seule la ponctuation de
+        // fin de phrase disparaît.
+        ['Comment ça fonctionne', [
+          "Le Freezpen utilise l'oxyde nitreux, un gaz cryogénique qui agit à -85 °C",
+          "Cette basse température produit un choc thermique très rapide qui congèle les cellules de la verrue en toute sécurité",
+          "Grâce à trois embouts de diamètres différents, le geste est précis et protège les tissus sains autour de la lésion",
+        ]],
         ['Prise en charge', "Le soin est pris en charge par la Sécurité sociale : jusqu'à 5 séances, à hauteur de 20 € par consultation."],
       ] },
   ],
@@ -184,7 +196,6 @@ const reflexologie = {
     ['Pour les plus jeunes :', ''],
     ["Séance enfant<span class='tarif-sub'>De 15 à 30 min</span>", '30 €', 'sub'],
     ["Séance étudiante<span class='tarif-sub'>De 30 à 45 min · sur présentation d'un justificatif</span>", '40 €', 'sub'],
-    ["Séance à domicile<span class='tarif-sub'>Environ 1h · selon le périmètre d'action (à préciser)</span>", '70 €'],
   ],
   tarifNote: "Pensez à demander une facture pour votre mutuelle. Paiement accepté : carte bancaire et espèces.",
 };
@@ -309,7 +320,9 @@ function jsonLd() {
     '@context': 'https://schema.org',
     '@type': ['MedicalBusiness', 'LocalBusiness'],
     name: 'Clémentine Olive — Pédicure-Podologue & Réflexologue',
-    description: "Pédicure-podologue diplômée d'État et réflexologue certifiée à Fosses (95). Soins de pédicurie, podologie, semelles orthopédiques et réflexologie, au cabinet et à domicile.",
+    // « à domicile » est rattaché à la pédicurie seule : la réflexologie ne
+    // se pratique qu'au cabinet depuis le retrait de la séance à domicile.
+    description: "Pédicure-podologue diplômée d'État et réflexologue certifiée à Fosses (95). Pédicurie au cabinet et à domicile, podologie, semelles orthopédiques et réflexologie.",
     address: { '@type': 'PostalAddress', streetAddress: ADRESSE.rue, postalCode: ADRESSE.cp, addressLocality: ADRESSE.ville, addressCountry: 'FR' },
     geo: { '@type': 'GeoCoordinates', latitude: GEO.lat, longitude: GEO.lng },
     telephone: TEL_PODO.tel,
@@ -510,7 +523,7 @@ ${mapEmbed()}
 function homePage() {
   return shell({
     title: "Clémentine Olive — Pédicure-Podologue & Réflexologue à Fosses (95)",
-    description: "Clémentine Olive, pédicure-podologue diplômée d'État et réflexologue certifiée à Fosses (95470). Soins de pédicurie, podologie, semelles et réflexologie, au cabinet et à domicile.",
+    description: "Clémentine Olive, pédicure-podologue et réflexologue à Fosses (95470). Pédicurie au cabinet et à domicile, podologie, semelles orthopédiques et réflexologie.",
     active: 'index.html', body: homeBody(),
   });
 }
@@ -578,13 +591,23 @@ function tarifsPage() {
         ? `            <li class="tarif-head"><span>${label}</span></li>`
         : `            <li${mod === 'sub' ? ' class="tarif-indent"' : ''}><span>${label}</span><span class="prix">${prix}</span></li>`).join('\n');
     return `        <div class="tarif-bloc${rose ? ' accent-rose' : ''}">
+          <img class="card-hero" src="assets/${a.slug}.webp" alt="" width="132" height="132" loading="lazy" />
           <h2>${a.label}</h2>
+          <span class="gold-line" aria-hidden="true"></span>
           <ul class="tarif-liste">
 ${rows}
           </ul>
           ${a.tarifNote ? `<p class="tarif-note">${a.tarifNote}</p>` : ''}
         </div>`;
-  }).join('\n');
+  });
+  // L'encart domicile suit le bloc Pédicurie : il ne concerne que ces soins,
+  // le matériel évoqué étant celui de la pédicurie.
+  const encartDomicile = `        <div class="tarifs-info">
+          <p><strong>Consultation à domicile</strong> — je me déplace avec mon matériel de pédicurie ; prévoyez simplement une serviette de toilette de taille moyenne.</p>
+          <p><strong>Zone d'action :</strong> Fosses, Marly-la-Ville, Survilliers, La Chapelle-en-Serval, Bellefontaine.</p>
+        </div>`;
+  const iPedicurie = ACTIVITIES.findIndex(a => a.slug === 'pedicurie');
+  blocs.splice(iPedicurie + 1, 0, encartDomicile);
   const body = `    <section class="page-hero">
       <div class="container">
         <h1>Tarifs</h1>
@@ -592,13 +615,9 @@ ${rows}
       </div>
     </section>
 
-    <section class="section section-creme">
+    <section class="section section-blanc">
       <div class="container tarifs-page">
-${blocs}
-        <div class="tarifs-info">
-          <p><strong>Consultation à domicile</strong> — je me déplace avec mon matériel de pédicurie ; prévoyez simplement une serviette de toilette de taille moyenne.</p>
-          <p><strong>Zone d'action :</strong> Fosses, Marly-la-Ville, Survilliers, La Chapelle-en-Serval, Bellefontaine.</p>
-        </div>
+${blocs.join('\n')}
       </div>
     </section>`;
   return shell({
@@ -795,7 +814,7 @@ ${mint(ico.heart, 'En toute douceur', B(s1.blocks, 'En toute douceur'))}`,
     side: `              <h3 class="soin-sub">Une prise en charge par la Sécurité sociale</h3>
               <p>${B(s2.blocks, 'Une prise en charge par la Sécurité sociale')}</p>`,
     full: `            <div class="box-duo">
-${box('Tarifs &amp; prise en charge', `<p>${B(s2.blocks, 'Tarifs & prise en charge')}</p>`)}
+${box('Tarifs &amp; prise en charge', iconList(ico.check, B(s2.blocks, 'Tarifs & prise en charge')))}
 ${box('Les grades de prise en charge', gradeList(B(s2.blocks, 'Les grades de prise en charge')))}
             </div>`,
   });
@@ -815,7 +834,7 @@ ${box('Les grades de prise en charge', gradeList(B(s2.blocks, 'Les grades de pri
               <p>${B(s3.blocks, 'En quelques mots')}</p>
 ${mint(ico.shield, 'Prise en charge', B(s3.blocks, 'Prise en charge'))}`,
     side: `              <h3 class="soin-sub">Comment ça fonctionne</h3>
-              <p>${B(s3.blocks, 'Comment ça fonctionne')}</p>`,
+              ${iconList(ico.check, B(s3.blocks, 'Comment ça fonctionne'))}`,
   });
 
   const body = `    <section class="pedi-hero">
@@ -836,7 +855,7 @@ ${cardSyndrome}
 ${card3}`;
   return shell({
     title: "Soins de pédicurie — Clémentine Olive à Fosses (95)",
-    description: `Soins de pédicurie par Clémentine Olive à Fosses (95470). ${a.lead}`,
+    description: "Soins de pédicurie à Fosses (95470) : je prends soin de vos pieds avec douceur, au cabinet comme à votre domicile. Clémentine Olive, pédicure-podologue.",
     active: 'pedicurie.html', body,
   });
 }
@@ -885,7 +904,7 @@ ${card1}
 ${card2}`;
   return shell({
     title: "Podologie : bilan et semelles orthopédiques — Clémentine Olive à Fosses (95)",
-    description: `Bilan podologique et semelles orthopédiques sur mesure par Clémentine Olive à Fosses (95470). ${a.lead}`,
+    description: "Bilan podologique et semelles orthopédiques sur mesure à Fosses (95470). J'analyse votre posture et votre marche pour soulager vos douleurs.",
     active: 'podologie.html', body,
   });
 }

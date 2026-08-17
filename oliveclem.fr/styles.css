@@ -264,7 +264,8 @@ a:focus-visible, button:focus-visible {
 .tarif-liste { list-style: none; margin-bottom: 22px; }
 .tarif-liste li {
   display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
-  padding: 12px 0; border-bottom: 1px dashed rgba(59,70,66,.15);
+  /* Filet pointillé menthe, comme .card-list sur l'accueil. */
+  padding: 12px 0; border-bottom: 1px dotted var(--ligne-menthe);
   font-size: var(--fs-sm);
 }
 .tarif-liste li:last-child { border-bottom: none; }
@@ -476,6 +477,11 @@ a:focus-visible, button:focus-visible {
 /* Listes à pastilles */
 .icon-list, .grade-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
 .icon-list li, .grade-list li { display: flex; gap: 14px; align-items: center; line-height: 1.45; color: var(--texte); }
+/* Dans les boîtes d'info seulement : filet tiretté entre les entrées, et
+   coche alignée sur la première ligne car les entrées y font plusieurs lignes. */
+.info-box .icon-list li + li,
+.info-box .grade-list li + li { border-top: 1px dashed var(--ligne-menthe); padding-top: 14px; }
+.info-box .icon-list li, .info-box .grade-list li { align-items: start; }
 .grade-num {
   flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
   background: var(--menthe); color: var(--turquoise); font-family: var(--font-head);
@@ -487,7 +493,9 @@ a:focus-visible, button:focus-visible {
   display: flex; gap: 16px; align-items: flex-start;
   background: var(--vert-clair); border-radius: var(--radius); padding: 18px 20px; margin-top: 22px;
 }
-.mint-callout h4 { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-lg); margin: 0 0 4px; }
+/* Même palier que .info-box h4 et les sous-titres : un titre d'encart ne pèse
+   jamais moins que le sous-titre qui le surplombe. */
+.mint-callout h4 { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-sous-titre); margin: 0 0 6px; }
 .mint-callout p { margin: 0; color: var(--texte); font-size: var(--fs-sm); line-height: 1.5; }
 
 /* Bloc pleine largeur sous la grille (tarifs/grades, encadrés) */
@@ -502,8 +510,10 @@ a:focus-visible, button:focus-visible {
    plus haute, laissant un grand blanc encadré sous la plus courte. */
 .box-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 0; align-items: start; }
 .info-box { background: var(--creme); border: 1px solid var(--bordure); border-radius: var(--radius); padding: 18px 20px; }
-/* Vert comme .mint-callout h4 : le brun est réservé au niveau sous-titre. */
-.info-box h4 { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-lg); margin: 0 0 10px; }
+/* Vert comme .mint-callout h4 : le brun est réservé au niveau sous-titre.
+   Taille alignée sur les sous-titres : un titre de boîte ne doit jamais peser
+   moins que le sous-titre qui le surplombe. */
+.info-box h4 { font-family: var(--font-head); color: var(--vert-fonce); font-size: var(--fs-sous-titre); margin: 0 0 14px; }
 .info-box p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; color: var(--texte); }
 
 .pedi-cta { text-align: center; background: var(--vert-clair); border-radius: var(--radius); padding: 36px 28px; }
@@ -588,13 +598,20 @@ a:focus-visible, button:focus-visible {
 .faq details[open] summary { padding-bottom: 6px; }
 .faq .faq-body { padding: 0 24px 22px; color: var(--texte); }
 
-/* ---------- Bloc tarif en bas d'activité ---------- */
+/* ---------- Bloc tarif ----------
+   Même enveloppe que .activity-card de l'accueil : fond blanc, angles carrés,
+   filet beige, aucune ombre. Et même en-tête : illustration ronde de 132 px,
+   titre, filet doré. */
 .tarif-bloc {
   width: 100%; max-width: 700px; margin: 0;
-  background: var(--blanc); border-radius: var(--radius); padding: 36px 34px;
-  box-shadow: var(--ombre-douce); border: 1px solid var(--bordure-douce);
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--blanc); border-radius: var(--radius); padding: 38px 32px 30px;
+  box-shadow: none; border: 1px solid var(--ligne);
 }
-.tarif-bloc h2 { text-align: center; margin-bottom: 22px; }
+.tarif-bloc .card-hero { display: block; width: 132px; height: 132px; margin: 0 0 18px; }
+.tarif-bloc h2 { text-align: center; margin: 0; font-size: 1.75rem; }
+.tarif-bloc .gold-line { margin: 14px 0 26px; }
+.tarif-bloc .tarif-liste { width: 100%; }
 .tarif-bloc.accent-rose h2 { color: var(--or-fonce); }
 .tarif-note {
   text-align: center; margin-top: 22px; color: var(--texte-doux); font-size: var(--fs-sm);
